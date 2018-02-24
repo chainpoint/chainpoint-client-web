@@ -30,6 +30,12 @@ class App extends Component {
 
   createProof(value) {
     const hash = sha256(value);
+
+    // Do not allow duplicates
+    if (this.state.proofs.some(proof => proof.hash === hash)) {
+      return false;
+    }
+
     const proof = {
       hash,
       proofs: [],
@@ -61,12 +67,26 @@ class App extends Component {
     return proof;
   }
 
-  checkProofs(handles) {
+  checkProofs({handles, timeout, delay = 12000, waitFor = 'cal'}) {
+    return sleep(delay)
+      .then(() => chainpoint.getProofs(handles))
+      .then(proofs => {
+        return proofs.some(proof => {
+          proof.anchorsComplete.contains(waitFor);
+        });
+      })
+      .then(isComplete => {
 
+      });
   }
 
   onProofSubmit(value) {
-    const proofs = [this.createProof(value), ...this.state.proofs];
+    const proof = this.createProof(value);
+    if (!proof) {
+      alert('Hash already added!');
+      return;
+    }
+    const proofs = [proof, ...this.state.proofs];
 
     this.setState({proofs});
   }
