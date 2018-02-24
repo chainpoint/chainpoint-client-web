@@ -4,6 +4,9 @@
   min-width: 600px;
 }
 
+.hash {
+  line-height: 30px;
+}
 .hash:after {
   padding-left: 1em;
   font-weight: bold;
@@ -14,4 +17,17 @@
 }
 .hash_state_has-proofs:after {
   content: 'proofs recieved';
+}
+
+.blockchain-label {
+  margin: 0 5px;
+  font-style: normal;
+  border: 1px solid;
+  padding: 1px 3px;
+  user-select: none;
+}
+
+.hash.hash_state_btc  .blockchain-label_name_btc, .hash.hash_state_cal  .blockchain-label_name_cal {
+  border-color: #58d670;
+  color: #58d670;
 }

@@ -11,6 +11,51 @@ class App extends Component {
     proofs: []
   };
 
+  componentWillMount() {
+    const cachedState = JSON.parse(window.localStorage.getItem('app-state'));
+    if (cachedState.proofs.length > 0) {
+      this.restartUpdateTasks(cachedState.proofs);
+    }
+    this.setState(cachedState || this.state);
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    window.localStorage.setItem('app-state', JSON.stringify(nextState));
+  }
+
+  restartUpdateTasks(proofs) {
+    const waitingProofs = proofs.filter(proof => {
+      return !proof.proofStatus.btc.isReady || !proof.proofStatus.btc.isReady
+    });
+
+    // TODO: refactor
+    waitingProofs.forEach(proof => {
+
+      if (proof.nodes.length === 0) {
+        // Need to get handles first
+        return;
+      }
+
+      if (!proof.proofStatus.btc.isReady) {
+        this.checkProofs({
+          hash: proof.hash,
+          handles: proof.nodes,
+          delay: 0,
+          waitFor: 'btc'
+        });
+      }
+
+      if (!proof.proofStatus.cal.isReady) {
+        this.checkProofs({
+          hash: proof.hash,
+          handles: proof.nodes,
+          delay: 0,
+          waitFor: 'cal'
+        });
+      }
+
+    });
+  }
   /**
    *
    * @param {string} hash
@@ -28,6 +73,30 @@ class App extends Component {
     this.setState({ proofs });
   }
 
+  setProofStatus(hash, blockchain, isReady, tryCount) {
+
+    const proofs = [...this.state.proofs];
+
+    const proofIndex = proofs.findIndex(proof => proof.hash === hash);
+    const proof = proofs[proofIndex];
+    const entry = proof && proof.proofStatus[blockchain];
+    if (entry) {
+      entry.isReady = isReady;
+      entry.tryCount = tryCount;
+      entry.lastTry = Date.now();
+    }
+
+    proof.proofStatus[blockchain] = entry;
+
+
+    this.setState({ proofs });
+  }
+
+  /**
+   *
+   * @param {string} value
+   * @returns {*}
+   */
   createProof(value) {
     const hash = sha256(value);
 
@@ -39,7 +108,19 @@ class App extends Component {
     const proof = {
       hash,
       proofs: [],
-      nodes: []
+      nodes: [],
+      proofStatus: {
+        cal: {
+          isReady: false,
+          tryCount: 0,
+          lastTry: null
+        },
+        btc: {
+          isReady: false,
+          tryCount: 0,
+          lastTry: null
+        }
+      }
     };
 
     // Submit each hash to three randomly selected Nodes
@@ -54,29 +135,39 @@ class App extends Component {
         console.log("Sleeping 12 seconds to wait for proofs to generate...");
         return proofHandles;
       })
-      .then((proofHandles) => sleep(12000, proofHandles))
-      .then((proofHandles) => chainpoint.getProofs(proofHandles))
-      .then((proofs) => {
-        console.log("Proof Objects: Expand objects below to inspect.");
-        console.log(proofs);
-
-        this.updateProofs(hash, 'proofs', proofs);
-        return proofs;
+      .then((handles) => {
+        this.checkProofs({hash, handles });
+        return handles;
       });
 
     return proof;
   }
 
-  checkProofs({handles, timeout, delay = 12000, waitFor = 'cal'}) {
+  /**
+   *
+   * @param {string} hash
+   * @param {Object[]} handles
+   * @param {number} timeout
+   * @param {number} delay
+   * @param {string} waitFor[cal]
+   */
+  checkProofs({hash, handles, timeout = 0, delay = 12000, waitFor = 'cal'}) {
+    console.log(`Checking for ${waitFor} proof for ${hash} in ${delay}ms`);
+
     return sleep(delay)
       .then(() => chainpoint.getProofs(handles))
       .then(proofs => {
-        return proofs.some(proof => {
-          proof.anchorsComplete.contains(waitFor);
-        });
+
+        this.updateProofs(hash, 'proofs', proofs);
+
+        return proofs.some(proof => proof.anchorsComplete.includes(waitFor));
       })
       .then(isComplete => {
 
+        this.setProofStatus(hash, waitFor, isComplete);
+
+        if(!isComplete) {
+        }
       });
   }
 

@@ -10,17 +10,15 @@ export default class MyProofs extends Component {
       classes.push('hash_state_has-proofs');
     }
 
-    return classes.join(' ');
-  }
+    if (proof.proofStatus.btc.isReady) {
+      classes.push('hash_state_btc');
+    }
 
-  getBlockchains(proof) {
-    const anchors = proof.proofs.map(proof => proof.anchorsComplete);
-    const uniqueAnchors = [...(new Set(Array.prototype.concat(...anchors)))];
-    return (
-      uniqueAnchors.length > 0 ?
-        <div><b>Submitted to:</b> {uniqueAnchors.join(', ')}</div>
-        : ''
-    );
+    if (proof.proofStatus.cal.isReady) {
+      classes.push('hash_state_cal');
+    }
+
+    return classes.join(' ');
   }
 
   render() {
@@ -29,7 +27,7 @@ export default class MyProofs extends Component {
       <div>
         <h3>My Proofs</h3>
         <ul>
-          { proofs.map(proof => (<li key={proof.hash} className={this.getClasses(proof)}>{proof.hash} {this.getBlockchains(proof)}</li>) )}
+          { proofs.map(proof => (<li key={proof.hash} className={this.getClasses(proof)}> <i className="blockchain-label blockchain-label_name_cal">cal</i><i className="blockchain-label  blockchain-label_name_btc">btc</i> {proof.hash}</li>) )}
         </ul>
       </div>
     );
