@@ -13,9 +13,12 @@ class App extends Component {
 
   componentWillMount() {
     const cachedState = JSON.parse(window.localStorage.getItem('app-state'));
+
     if (cachedState.proofs.length > 0) {
-      this.restartUpdateTasks(cachedState.proofs);
+      cachedState.proofs = this.restartUpdateTasks(cachedState.proofs);
+
     }
+
     this.setState(cachedState || this.state);
   }
 
@@ -24,37 +27,34 @@ class App extends Component {
   }
 
   restartUpdateTasks(proofs) {
-    const waitingProofs = proofs.filter(proof => {
-      return !proof.proofStatus.btc.isReady || !proof.proofStatus.btc.isReady
-    });
 
-    // TODO: refactor
-    waitingProofs.forEach(proof => {
+    // Runs check
+    const check = (proof, blockchain) =>
+      this.checkProofs({
+        hash: proof.hash,
+        handles: proof.nodes,
+        delay: 0,
+        waitFor: blockchain
+      });
+
+    return proofs.map(proof => {
 
       if (proof.nodes.length === 0) {
-        // Need to get handles first
-        return;
+        // Skip
+        return null;
       }
 
       if (!proof.proofStatus.btc.isReady) {
-        this.checkProofs({
-          hash: proof.hash,
-          handles: proof.nodes,
-          delay: 0,
-          waitFor: 'btc'
-        });
+        check(proof, 'btc');
       }
 
       if (!proof.proofStatus.cal.isReady) {
-        this.checkProofs({
-          hash: proof.hash,
-          handles: proof.nodes,
-          delay: 0,
-          waitFor: 'cal'
-        });
+        check(proof, 'cal');
       }
 
-    });
+      return proof;
+
+    }).filter(proof => proof !== null);
   }
   /**
    *
