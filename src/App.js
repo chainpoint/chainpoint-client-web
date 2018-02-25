@@ -5,25 +5,28 @@ import MyProofs from 'components/MyProofs';
 import { sha256 } from 'js-sha256';
 import chainpoint from 'chainpoint-client/bundle';
 import sleep from './utils/sleep';
+import VerifyProof from './components/VerifyProof';
 
 class App extends Component {
   state = {
-    proofs: []
+    proofs: [],
+    isVerifying: false
   };
 
   componentWillMount() {
-    const cachedState = JSON.parse(window.localStorage.getItem('app-state'));
+    let cachedState = JSON.parse(window.localStorage.getItem('proofs-state')) || [];
 
-    if (cachedState.proofs.length > 0) {
-      cachedState.proofs = this.restartUpdateTasks(cachedState.proofs);
-
+    if (cachedState.length > 0) {
+      cachedState = this.restartUpdateTasks(cachedState);
     }
 
-    this.setState(cachedState || this.state);
+    this.setState({
+      proofs: cachedState
+    });
   }
 
   componentWillUpdate(nextProps, nextState) {
-    window.localStorage.setItem('app-state', JSON.stringify(nextState));
+    window.localStorage.setItem('proofs-state', JSON.stringify(nextState.proofs));
   }
 
   restartUpdateTasks(proofs) {
@@ -180,11 +183,44 @@ class App extends Component {
     this.setState({proofs});
   }
 
+  onProofVerify(value) {
+    this.setState({
+      isVerifying: true
+    });
+
+    console.log('value to verify', value);
+    try {
+      chainpoint
+        .verifyProofs([value])
+        .then(result => {
+          console.log('Verified ', value);
+          this.setState({
+            isVerifying: false
+          });
+        })
+        .catch(error => {
+          console.error('Cannot verify', error);
+          this.setState({
+            isVerifying: false
+          });
+        })
+    } catch(error) {
+
+      this.setState({
+        isVerifying: false
+      });
+
+      console.error('Cannot verify', error);
+
+    }
+  }
+
   render() {
     return (
       <div className="App">
         <h1>The App</h1>
         <CreateProof onSubmit={this.onProofSubmit.bind(this)} />
+        <VerifyProof isVerifying={this.state.isVerifying} onSubmit={this.onProofVerify.bind(this)} />
         <MyProofs proofs={this.state.proofs} />
       </div>
     );
