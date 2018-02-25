@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export default class CreateProof extends Component {
   state = {
-    text: '123'
+    text: ''
   };
 
   render() {

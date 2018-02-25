@@ -187,8 +187,10 @@ class App extends Component {
     return (
       <div className="App">
         <h1>The App</h1>
-        <CreateProof onSubmit={this.onProofSubmit.bind(this)} />
-        <VerifyProof />
+        <div className="controls">
+          <CreateProof onSubmit={this.onProofSubmit.bind(this)}/>
+          <VerifyProof />
+        </div>
         <MyProofs proofs={this.state.proofs} />
       </div>
     );
