@@ -13,6 +13,17 @@ class App extends Component {
     isVerifying: false
   };
 
+  blockchains = [
+    {
+      id: 'btc',
+      retryInterval: 1000 * 60 * 10,
+    },
+    {
+      id: 'cal',
+      retryInterval: 1000 * 60,
+    }
+  ];
+
   componentWillMount() {
     let cachedState = JSON.parse(window.localStorage.getItem('proofs-state')) || [];
 
@@ -137,7 +148,18 @@ class App extends Component {
       })
       .then((handles) => {
         return sleep(12000)
-          .then(this.checkProofs({hash, handles }));
+          .then(() => {
+             const checkPromises = this.blockchains.map(blockchain => {
+              return this.checkProofs({
+                hash,
+                handles,
+                sleepBeforeRetry: blockchain.retryInterval,
+                waitFor: blockchain.id
+              });
+            });
+
+             return Promise.all(checkPromises);
+          });
       });
 
     return proof;
@@ -154,7 +176,9 @@ class App extends Component {
    * @param {string} [waitFor]
    */
   checkProofs({hash, handles, tryCount = 0, triesLimit = 10, sleepBeforeRetry = 1000 * 60, waitFor = 'cal'}) {
+
     console.log(`Checking for ${waitFor} proof for ${hash}`);
+    console.log(`Try №${tryCount}`);
 
     return chainpoint.getProofs(handles)
       .then(proofs => {
@@ -168,6 +192,17 @@ class App extends Component {
         this.setProofStatus(hash, waitFor, isComplete);
 
         if(!isComplete) {
+          sleep(sleepBeforeRetry)
+            .then(() =>
+              this.checkProofs({
+                hash,
+                handles,
+                tryCount: tryCount+1,
+                triesLimit,
+                sleepBeforeRetry,
+                waitFor
+              })
+            );
         }
       });
   }
