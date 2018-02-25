@@ -6,12 +6,14 @@ export default class VerifyProofContainer extends Component {
 
   state = {
     isVerifying: false,
-    errors: [],
+    error: '',
   };
 
   onProofVerify(value) {
     this.setState({
-      isVerifying: true
+      isVerifying: true,
+      isValid: null,
+      error: '',
     });
 
     console.log('value to verify', value);
@@ -21,19 +23,22 @@ export default class VerifyProofContainer extends Component {
         .then(result => {
           console.log('Verified ', value);
           this.setState({
-            isVerifying: false
+            isVerifying: false,
+            isValid: true
           });
         })
         .catch(error => {
           console.error('Cannot verify', error);
           this.setState({
-            isVerifying: false
+            isVerifying: false,
+            error: 'Cannot verify proof'
           });
         })
     } catch(error) {
 
       this.setState({
-        isVerifying: false
+        isVerifying: false,
+        error: 'Proof is not valid'
       });
 
       console.error('Cannot verify', error);
@@ -42,6 +47,6 @@ export default class VerifyProofContainer extends Component {
   }
 
   render() {
-    return <VerifyProof isVerifying={this.state.isVerifying} onSubmit={this.onProofVerify.bind(this)}/>
+    return <VerifyProof isValid={this.state.isValid} isVerifying={this.state.isVerifying} error={this.state.error} onSubmit={this.onProofVerify.bind(this)}/>
   }
 }
