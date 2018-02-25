@@ -6,6 +6,7 @@ import { sha256 } from 'js-sha256';
 import chainpoint from 'chainpoint-client/bundle';
 import sleep from './utils/sleep';
 import VerifyProof from './components/VerifyProof';
+import update from 'immutability-helper';
 
 class App extends Component {
   state = {
@@ -37,8 +38,8 @@ class App extends Component {
     });
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    window.localStorage.setItem('proofs-state', JSON.stringify(nextState.proofs));
+  componentDidUpdate(nextProps, nextState) {
+    window.localStorage.setItem('proofs-state', JSON.stringify(this.state.proofs));
   }
 
   restartUpdateTasks(proofs) {
