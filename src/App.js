@@ -76,7 +76,7 @@ class App extends Component {
    * @param {any} value
    */
   updateProofs(hash, property, value) {
-    const proofs = this.state.proofs.map(proof => {
+    const proofs = update(this.state.proofs, {}).map(proof => {
       if (proof.hash === hash) {
         proof[property] = value;
       }
@@ -89,7 +89,7 @@ class App extends Component {
   setProofStatus(hash, proofData, blockchain, isReady, tryCount) {
 
     console.log(arguments);
-    const proofs = [...this.state.proofs];
+    const proofs = update(this.state.proofs, {});
 
     const proofIndex = proofs.findIndex(proof => proof.hash === hash);
     const proof = proofs[proofIndex];
