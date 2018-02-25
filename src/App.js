@@ -16,10 +16,12 @@ class App extends Component {
     {
       id: 'btc',
       retryInterval: 1000 * 60 * 10,
+      sleepBeforeFirstRequest: 1000 * 60 * 90
     },
     {
       id: 'cal',
       retryInterval: 1000 * 60,
+      sleepBeforeFirstRequest: 12000
     }
   ];
 
@@ -83,8 +85,9 @@ class App extends Component {
     this.setState({ proofs });
   }
 
-  setProofStatus(hash, blockchain, isReady, tryCount) {
+  setProofStatus(hash, proofData, blockchain, isReady, tryCount) {
 
+    console.log(arguments);
     const proofs = [...this.state.proofs];
 
     const proofIndex = proofs.findIndex(proof => proof.hash === hash);
@@ -96,7 +99,12 @@ class App extends Component {
       entry.lastTry = Date.now();
     }
 
-    proof.proofStatus[blockchain] = entry;
+    // Save proof if wasnt saved before
+    if (proofData && !proofs[proofIndex].proofData) {
+      proofs[proofIndex].proofData = proofData;
+    }
+
+    proofs[proofIndex].proofStatus[blockchain] = entry;
 
 
     this.setState({ proofs });
@@ -119,6 +127,7 @@ class App extends Component {
       hash,
       proofs: [],
       nodes: [],
+      proofData: null,
       proofStatus: {
         cal: {
           isReady: false,
@@ -142,23 +151,22 @@ class App extends Component {
 
         this.updateProofs(hash, 'nodes', proofHandles);
 
-        console.log("Sleeping 12 seconds to wait for proofs to generate...");
         return proofHandles;
       })
       .then((handles) => {
-        return sleep(12000)
-          .then(() => {
              const checkPromises = this.blockchains.map(blockchain => {
-              return this.checkProofs({
-                hash,
-                handles,
-                sleepBeforeRetry: blockchain.retryInterval,
-                waitFor: blockchain.id
-              });
+              return sleep(blockchain.sleepBeforeFirstRequest)
+                .then(() => {
+                  this.checkProofs({
+                    hash,
+                    handles,
+                    sleepBeforeRetry: blockchain.retryInterval,
+                    waitFor: blockchain.id
+                  });
+                })
             });
 
              return Promise.all(checkPromises);
-          });
       });
 
     return proof;
@@ -184,11 +192,14 @@ class App extends Component {
 
         this.updateProofs(hash, 'proofs', proofs);
 
-        return proofs.some(proof => proof.anchorsComplete.includes(waitFor));
+        return proofs.find(proof => proof.anchorsComplete.includes(waitFor));
       })
-      .then(isComplete => {
+      .then(proof => {
 
-        this.setProofStatus(hash, waitFor, isComplete);
+        const isComplete = !!proof;
+        const proofData = isComplete && proof.proof;
+
+        this.setProofStatus(hash, proofData, waitFor, isComplete);
 
         if(!isComplete) {
           sleep(sleepBeforeRetry)

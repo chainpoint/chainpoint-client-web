@@ -21,13 +21,27 @@ export default class MyProofs extends Component {
     return classes.join(' ');
   }
 
+  renderProof(proof) {
+    return (
+      <li key={proof.hash} className={this.getClasses(proof)}>
+        <i className="blockchain-label blockchain-label_name_cal">cal</i>
+        <i className="blockchain-label  blockchain-label_name_btc">btc</i>
+          {proof.hash}
+         {
+          proof.proofData &&
+          <a href={`data:application/octet-stream,${proof.proofData}`} download="proof.txt">Get Proof</a>
+         }
+      </li>
+    )
+  }
+
   render() {
     const { proofs } = this.props;
     return (
       <div>
         <h3>My Proofs</h3>
         <ul>
-          { proofs.map(proof => (<li key={proof.hash} className={this.getClasses(proof)}> <i className="blockchain-label blockchain-label_name_cal">cal</i><i className="blockchain-label  blockchain-label_name_btc">btc</i> {proof.hash}</li>) )}
+          {proofs.map(proof => this.renderProof(proof))}
         </ul>
       </div>
     );

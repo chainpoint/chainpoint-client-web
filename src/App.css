@@ -34,7 +34,7 @@ button {
   content: 'waiting for proofs';
 }
 .hash_state_has-proofs:after {
-  content: 'proofs recieved';
+  content: '';
 }
 
 .blockchain-label {
