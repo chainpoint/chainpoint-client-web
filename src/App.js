@@ -9,8 +9,7 @@ import VerifyProof from './components/VerifyProof';
 
 class App extends Component {
   state = {
-    proofs: [],
-    isVerifying: false
+    proofs: []
   };
 
   blockchains = [
