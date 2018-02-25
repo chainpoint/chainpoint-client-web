@@ -36,13 +36,12 @@ class App extends Component {
       this.checkProofs({
         hash: proof.hash,
         handles: proof.nodes,
-        delay: 0,
         waitFor: blockchain
       });
 
     return proofs
       // Skip hashes without handles
-      .filter(proof => proof !== null)
+      .filter(proof => !proof.nodes || proof.nodes.length)
       .map(proof => {
 
       if (!proof.proofStatus.btc.isReady) {
@@ -137,8 +136,8 @@ class App extends Component {
         return proofHandles;
       })
       .then((handles) => {
-        this.checkProofs({hash, handles });
-        return handles;
+        return sleep(12000)
+          .then(this.checkProofs({hash, handles }));
       });
 
     return proof;
@@ -148,15 +147,16 @@ class App extends Component {
    *
    * @param {string} hash
    * @param {Object[]} handles
-   * @param {number} timeout
-   * @param {number} delay
-   * @param {string} waitFor[cal]
+   * @param {number} [tryCount=0]
+   * @param {number} [triesLimit=10]
+   * @param {number} [sleepBeforeRetry]
+   * @param {number} [delay]
+   * @param {string} [waitFor]
    */
-  checkProofs({hash, handles, timeout = 0, delay = 12000, waitFor = 'cal'}) {
-    console.log(`Checking for ${waitFor} proof for ${hash} in ${delay}ms`);
+  checkProofs({hash, handles, tryCount = 0, triesLimit = 10, sleepBeforeRetry = 1000 * 60, waitFor = 'cal'}) {
+    console.log(`Checking for ${waitFor} proof for ${hash}`);
 
-    return sleep(delay)
-      .then(() => chainpoint.getProofs(handles))
+    return chainpoint.getProofs(handles)
       .then(proofs => {
 
         this.updateProofs(hash, 'proofs', proofs);
