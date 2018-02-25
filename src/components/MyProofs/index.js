@@ -29,7 +29,7 @@ export default class MyProofs extends Component {
           {proof.hash}
          {
           proof.proofData &&
-          <a href={`data:application/octet-stream,${proof.proofData}`} download="proof.txt">Get Proof</a>
+          <a className="get-proof" href={`data:application/octet-stream,${proof.proofData}`} download="proof.txt">Get Proof</a>
          }
       </li>
     )

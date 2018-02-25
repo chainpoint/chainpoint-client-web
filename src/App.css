@@ -36,7 +36,9 @@ button {
 .hash_state_has-proofs:after {
   content: '';
 }
-
+.hash .get-proof {
+  margin-left: 10px;
+}
 .blockchain-label {
   margin: 0 5px;
   font-style: normal;
