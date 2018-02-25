@@ -37,12 +37,10 @@ class App extends Component {
         waitFor: blockchain
       });
 
-    return proofs.map(proof => {
-
-      if (proof.nodes.length === 0) {
-        // Skip
-        return null;
-      }
+    return proofs
+      // Skip hashes without handles
+      .filter(proof => proof !== null)
+      .map(proof => {
 
       if (!proof.proofStatus.btc.isReady) {
         check(proof, 'btc');
@@ -54,7 +52,7 @@ class App extends Component {
 
       return proof;
 
-    }).filter(proof => proof !== null);
+    });
   }
   /**
    *
