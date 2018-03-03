@@ -3,7 +3,7 @@ import './App.css';
 import CreateProof from 'components/CreateProof';
 import MyProofs from 'components/MyProofs';
 import { sha256 } from 'js-sha256';
-import chainpoint from 'chainpoint-client/bundle';
+import chainpoint from 'chainpoint-client/dist/bundle';
 import sleep from './utils/sleep';
 import VerifyProof from './components/VerifyProof';
 import update from 'immutability-helper';

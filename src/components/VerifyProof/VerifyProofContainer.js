@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import VerifyProof from './VerifyProof';
-import chainpoint from 'chainpoint-client/bundle';
+import chainpoint from 'chainpoint-client/dist/bundle';
 
 export default class VerifyProofContainer extends Component {
 
