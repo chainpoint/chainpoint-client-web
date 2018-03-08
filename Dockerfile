@@ -14,4 +14,4 @@ EXPOSE 3000
 
 RUN npm run build
 
-CMD [ "npx", "serve", "-s", "dist", "-port", "3000" ]
+CMD [ "npx", "serve", "-s", "build", "--port", "3000" ]
