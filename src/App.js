@@ -1,177 +1,60 @@
 import React, { Component } from 'react';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+
 import './App.css';
 import CreateProof from 'components/CreateProof';
 import MyProofs from 'components/MyProofs';
-import { sha256 } from 'js-sha256';
-import chainpoint from 'chainpoint-client/dist/bundle';
+import chainpoint from 'chainpoint-client/dist/bundle.web';
 import sleep from './utils/sleep';
 import VerifyProof from './components/VerifyProof';
-import update from 'immutability-helper';
+import reducers from './reducers';
+
+const initialState = {
+  proofs: []
+};
+
+const store = createStore(
+  reducers,
+  initialState,
+  compose(applyMiddleware(thunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({
+      latency: 0
+    })
+  )
+);
+
 
 class App extends Component {
-  state = {
-    proofs: []
-  };
 
-  blockchains = [
-    {
-      id: 'btc',
-      retryInterval: 1000 * 60 * 10,
-      sleepBeforeFirstRequest: 1000 * 60 * 90
-    },
-    {
-      id: 'cal',
-      retryInterval: 1000 * 60,
-      sleepBeforeFirstRequest: 12000
-    }
-  ];
-
-  componentWillMount() {
-    let cachedState = JSON.parse(window.localStorage.getItem('proofs-state')) || [];
-
-    if (cachedState.length > 0) {
-      cachedState = this.restartUpdateTasks(cachedState);
-    }
-
-    this.setState({
-      proofs: cachedState
-    });
-  }
-
-  componentDidUpdate(nextProps, nextState) {
-    window.localStorage.setItem('proofs-state', JSON.stringify(this.state.proofs));
-  }
-
-  restartUpdateTasks(proofs) {
-
-    // Runs check
-    const check = (proof, blockchain) =>
-      this.checkProofs({
-        hash: proof.hash,
-        handles: proof.nodes,
-        waitFor: blockchain
-      });
-
-    return proofs
-      // Skip hashes without handles
-      .filter(proof => !proof.nodes || proof.nodes.length)
-      .map(proof => {
-
-      if (!proof.proofStatus.btc.isReady) {
-        check(proof, 'btc');
-      }
-
-      if (!proof.proofStatus.cal.isReady) {
-        check(proof, 'cal');
-      }
-
-      return proof;
-
-    });
-  }
-  /**
-   *
-   * @param {string} hash
-   * @param {string} property
-   * @param {any} value
-   */
-  updateProofs(hash, property, value) {
-    const proofs = update(this.state.proofs, {}).map(proof => {
-      if (proof.hash === hash) {
-        proof[property] = value;
-      }
-      return proof;
-    });
-
-    this.setState({ proofs });
-  }
-
-  setProofStatus(hash, proofData, blockchain, isReady, tryCount) {
-
-    console.log(arguments);
-    const proofs = update(this.state.proofs, {});
-
-    const proofIndex = proofs.findIndex(proof => proof.hash === hash);
-    const proof = proofs[proofIndex];
-    const entry = proof && proof.proofStatus[blockchain];
-    if (entry) {
-      entry.isReady = isReady;
-      entry.tryCount = tryCount;
-      entry.lastTry = Date.now();
-    }
-
-    // Save proof if wasnt saved before
-    if (proofData && !proofs[proofIndex].proofData) {
-      proofs[proofIndex].proofData = proofData;
-    }
-
-    proofs[proofIndex].proofStatus[blockchain] = entry;
-
-
-    this.setState({ proofs });
-  }
-
-  /**
-   *
-   * @param {string} value
-   * @returns {*}
-   */
-  createProof(value) {
-    const hash = sha256(value);
-
-    // Do not allow duplicates
-    if (this.state.proofs.some(proof => proof.hash === hash)) {
-      return false;
-    }
-
-    const proof = {
-      hash,
-      proofs: [],
-      nodes: [],
-      proofData: null,
-      proofStatus: {
-        cal: {
-          isReady: false,
-          tryCount: 0,
-          lastTry: null
-        },
-        btc: {
-          isReady: false,
-          tryCount: 0,
-          lastTry: null
-        }
-      }
-    };
-
-    // Submit each hash to three randomly selected Nodes
-
-    chainpoint.submitHashes([hash])
-      .then(proofHandles => {
-        console.log("Submitted Proof Objects: Expand objects below to inspect.");
-        console.log(proofHandles);
-
-        this.updateProofs(hash, 'nodes', proofHandles);
-
-        return proofHandles;
-      })
-      .then((handles) => {
-             const checkPromises = this.blockchains.map(blockchain => {
-              return sleep(blockchain.sleepBeforeFirstRequest)
-                .then(() => {
-                  this.checkProofs({
-                    hash,
-                    handles,
-                    sleepBeforeRetry: blockchain.retryInterval,
-                    waitFor: blockchain.id
-                  });
-                })
-            });
-
-             return Promise.all(checkPromises);
-      });
-
-    return proof;
-  }
+  // restartUpdateTasks(proofs) {
+  //
+  //   // Runs check
+  //   const check = (proof, blockchain) =>
+  //     this.checkProofs({
+  //       hash: proof.hash,
+  //       handles: proof.nodes,
+  //       waitFor: blockchain
+  //     });
+  //
+  //   return proofs
+  //     // Skip hashes without handles
+  //     .filter(proof => !proof.nodes || proof.nodes.length)
+  //     .map(proof => {
+  //
+  //     if (!proof.proofStatus.btc.isReady) {
+  //       check(proof, 'btc');
+  //     }
+  //
+  //     if (!proof.proofStatus.cal.isReady) {
+  //       check(proof, 'cal');
+  //     }
+  //
+  //     return proof;
+  //
+  //   });
+  // }
 
   /**
    *
@@ -218,27 +101,18 @@ class App extends Component {
       });
   }
 
-  onProofSubmit(value) {
-    const proof = this.createProof(value);
-    if (!proof) {
-      alert('Hash already added!');
-      return;
-    }
-    const proofs = [proof, ...this.state.proofs];
-
-    this.setState({proofs});
-  }
-
   render() {
     return (
-      <div className="App">
-        <h1>The App</h1>
-        <div className="controls">
-          <CreateProof onSubmit={this.onProofSubmit.bind(this)}/>
-          <VerifyProof />
+      <Provider store={store}>
+        <div className="App">
+          <h1>The App</h1>
+          <div className="controls">
+            <CreateProof />
+            <VerifyProof />
+          </div>
+          <MyProofs />
         </div>
-        <MyProofs proofs={this.state.proofs} />
-      </div>
+      </Provider>
     );
   }
 }

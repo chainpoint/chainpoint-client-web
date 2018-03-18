@@ -1,6 +1,11 @@
 import  React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-export default class MyProofs extends Component {
+function mapStateToProps(state) {
+  return { proofs: state.proofs }
+}
+
+class MyProofs extends Component {
   getClasses(proof) {
     const classes = ['hash'];
     if (proof.nodes.length !== 0) {
@@ -47,3 +52,5 @@ export default class MyProofs extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps)(MyProofs);

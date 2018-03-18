@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
+import { addAndSubmitHash } from '../../actions';
+import { connect } from 'react-redux';
 
-export default class CreateProof extends Component {
+const mapDispatchToProps = dispatch => {
+  return {
+    addProof: content => dispatch(addAndSubmitHash(content))
+  };
+};
+
+
+class CreateProofUI extends Component {
   initialState = {
     text: '',
     file: null,
@@ -54,7 +63,7 @@ export default class CreateProof extends Component {
   onSubmit(event) {
     event.preventDefault();
     const value = this.state.file ? this.state.file.data : this.state.text;
-    this.props.onSubmit(value);
+    this.props.addProof(value);
     this.setState(this.initialState);
   }
 
@@ -109,3 +118,5 @@ export default class CreateProof extends Component {
     );
   }
 }
+
+export default connect(null, mapDispatchToProps)(CreateProofUI);
