@@ -74,7 +74,9 @@ const proofs = (state = [], action) => {
 
       set(newState, path, entry);
 
-      set(newState, `${hashIndex}.proofData`, action.proofData);
+      if (action.proofData) {
+        set(newState, `${hashIndex}.proofData`, action.proofData);
+      }
 
       return newState;
 
