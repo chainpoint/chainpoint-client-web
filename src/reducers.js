@@ -37,7 +37,7 @@ const proofs = (state = [], action) => {
         const proof = merge({}, item);
 
         if (proof.hash === action.hash) {
-          proof.handles = action.handles;
+          proof.nodes = action.handles;
         }
 
         return proof;
@@ -52,7 +52,7 @@ const proofs = (state = [], action) => {
         const proof = merge({}, item);
 
         if (proof.hash === action.hash) {
-          proof.nodes = action.proofs;
+          proof.proofs = action.proofs;
         }
 
         return proof;
