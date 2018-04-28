@@ -145,10 +145,10 @@ module.exports = {
           // Process JS with Babel.
           {
             test: /\.(js|jsx|mjs)$/,
-              include: [
-                  paths.appSrc,
-                  path.resolve(paths.appNodeModules, 'chainpoint-binary')
-              ],
+            include: [
+              paths.appSrc,
+              path.resolve(paths.appNodeModules, 'chainpoint-binary')
+            ],
             loader: require.resolve('babel-loader'),
             options: {
               
