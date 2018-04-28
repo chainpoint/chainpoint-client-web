@@ -1,6 +1,7 @@
 {
   "name": "proof-web-client",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "main": "./src/ProofApp.js",
   "private": true,
   "dependencies": {
     "autoprefixer": "7.1.6",
