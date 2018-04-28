@@ -1,0 +1,32 @@
+@import (reference) '~const.less';
+
+@c: .Link;
+
+@{c} {
+    color: #28a4fc;
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+
+    &:hover,
+    &:focus {
+        color: #0769d7;
+    }
+
+    &:active {
+        color: #054399;
+    }
+
+    &--contrast {
+        color: #8ad2fd;
+
+        &:hover {
+            color: #c3e7ff;
+        }
+
+        &:active {
+            color: #ffffff;
+        }
+    }
+}

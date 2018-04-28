@@ -1,0 +1,119 @@
+@import (reference) '~const.less';
+
+@c: .ButtonIcon;
+
+@{c} {
+    position: relative;
+    display: inline-block;
+
+    background: transparent;
+    border: 2px solid #eaecf2;
+    border-radius: 50%;
+
+    transition: background 0.4s ease, border-color 0.4s ease;
+    outline: none;
+
+    cursor: pointer;
+
+    svg {
+        transition: fill 0.4s ease;
+    }
+
+    &:hover {
+        background: #f8f9fb;
+        border-color: #f8f9fb;
+
+        svg {
+            fill: #1653c9;
+        }
+
+        &@{c}--arrowDown {
+            svg {
+                rect {
+                    fill: #1653c9;
+                }
+
+                path {
+                    stroke: #1653c9;
+                }
+            }
+        }
+    }
+
+    &:active {
+        svg {
+            fill: #054199;
+        }
+
+        &@{c}--arrowDown {
+            svg {
+                rect {
+                    fill: #054199;
+                }
+
+                path {
+                    stroke: #054199;
+                }
+            }
+        }
+    }
+
+    .isvg {
+        display: block;
+        width: 100%;
+        height: 100%;
+        font-size: 0;
+    }
+
+    &--help {
+        width: 24px;
+        height: 24px;
+
+        cursor: default;
+
+        svg {
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 8px;
+            height: 12px;
+            margin: auto;
+
+            fill: #19a2ff;
+        }
+    }
+
+    &--arrowDown {
+        width: 32px;
+        height: 32px;
+
+        svg {
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 14px;
+            height: 14px;
+            margin: auto;
+
+            transition: none;
+
+            rect {
+                fill: #19a2ff;
+
+                transition: fill 0.4s ease;
+            }
+
+            path {
+                stroke: #19a2ff;
+
+                transition: stroke 0.4s ease;
+            }
+        }
+    }
+}

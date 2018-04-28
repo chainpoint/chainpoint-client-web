@@ -1,0 +1,225 @@
+@import (reference) '~const.less';
+
+@c: .ProofList;
+
+@{c} {
+    min-height: 72px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+
+    background-color: #f8f9fb;
+
+    transition: height 0.5s ease;
+    overflow: hidden;
+
+    @media @mobile {
+        padding-top: 0;
+        padding-bottom: 0;
+        overflow: hidden;
+    }
+
+    &-inner {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    &-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &-item {
+        position: relative;
+        height: 48px;
+
+        @media @mobile {
+            height: 80px;
+        }
+
+        &:after {
+            content: '';
+            display: none;
+            position: absolute;
+            bottom: 0;
+            left: 24px;
+            right: 0;
+            height: 1px;
+            background-color: #eaecf2;
+
+            @media @mobile {
+                display: block;
+            }
+        }
+
+        &:only-child {
+            &:after {
+                display: none;
+            }
+        }
+    }
+
+    &-itemButton {
+        width: 100%;
+        height: 100%;
+        padding-left: 64px;
+        padding-right: 64px;
+        padding-bottom: 0;
+        padding-top: 0;
+        display: flex;
+        align-items: center;
+
+        font-family: inherit;
+
+        border: none;
+        background: none;
+        background-color: #f8f9fb;
+
+        transition: background-color 0.3s ease;
+
+        cursor: pointer;
+        outline: none;
+
+        &:hover,
+        &:focus {
+            background: #f1f3f7;
+        }
+
+        &:active {
+            background: #eaedf3;
+        }
+
+        @media @mobile {
+            padding-top: 9px;
+            padding-left: 24px;
+            padding-right: 24px;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-items: stretch;
+        }
+    }
+
+    &-itemTitle {
+        padding-right: 10px;
+        margin-top: -5px;
+        flex: 1;
+
+        font-size: 16px;
+        line-height: 2;
+        letter-spacing: normal;
+        text-align: left;
+        color: @colorText;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-right: 20px;
+
+        @media @mobile {
+            flex: initial;
+            width: ~'calc(100% - 50px)';
+            margin-top: 0;
+            padding-right: 0;
+            padding-right: 10px;
+
+            font-size: 14px;
+            line-height: 2.29;
+        }
+    }
+
+    &-itemDate {
+        width: 160px;
+        margin-top: -3px;
+
+        font-size: 14px;
+        line-height: 2.29;
+        letter-spacing: normal;
+        text-align: left;
+        color: @colorTextSecondary;
+        white-space: nowrap;
+
+        @media @mobile {
+            width: ~'calc(100% - 50px)';
+            margin-top: -7px;
+
+            font-size: 12px;
+            line-height: 2.67;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 10px;
+        }
+    }
+
+    &-itemStatus {
+        margin-top: -3px;
+
+        font-size: 14px;
+        line-height: 2.29;
+        letter-spacing: normal;
+        text-align: right;
+        color: @colorText;
+        white-space: nowrap;
+
+        width: 146px;
+
+        .Button {
+            margin-top: 1px;
+            margin-right: -16px;
+        }
+
+        @media @mobile {
+            width: 50px;
+            height: 40px;
+            padding-top: 13px;
+
+            font-size: 12px;
+            line-height: 2.67;
+
+            .ButtonIcon {
+                margin-top: 3px;
+            }
+        }
+    }
+
+    &-statusSpinner {
+        position: relative;
+        margin-left: 32px;
+        display: none;
+
+        @media @mobile {
+            display: block;
+        }
+    }
+
+    &-statusText {
+        @media @mobile {
+            display: none;
+        }
+    }
+
+    &-statusTime {
+        font-weight: 500;
+        white-space: nowrap;
+
+        @media @mobile {
+            margin-top: -2px;
+            display: block;
+
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 2.67;
+        }
+    }
+
+    &-showPopup {
+        padding-left: 64px;
+        margin-left: -16px;
+        margin-bottom: -1px;
+
+        @media @mobile {
+            padding-left: 24px;
+            margin-top: 5px;
+            margin-left: -17px;
+            margin-bottom: 2px;
+        }
+    }
+}

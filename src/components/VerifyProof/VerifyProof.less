@@ -1,0 +1,219 @@
+@import (reference) '~const.less';
+
+@c: .VerifyProof;
+
+@{c} {
+    position: relative;
+
+    &-contentWithHelp {
+        transition: filter 1s @easeOutExpo, opacity 1s @easeOutExpo;
+
+        @{c}--dropzoneActive & {
+            filter: blur(10px) !important;
+            opacity: 0.3;
+        }
+
+        @{c}--stateAnalysis & {
+            opacity: 0;
+            transition: filter 0.83s @easeOutExpo, opacity 0.83s @easeOutExpo;
+        }
+
+        @{c}--dropzoneActive@{c}--stateAnalysis & {
+            transition-delay: 0.5s, 0.5s;
+        }
+    }
+
+    &-content {
+        transition: filter 1s @easeOutExpo, opacity 1s @easeOutExpo;
+
+        @media @mobile {
+            padding-top: 19px;
+            padding-left: 24px;
+            padding-right: 24px;
+            padding-bottom: 32px;
+        }
+
+        @{c}--helpVisible & {
+            filter: blur(10px) !important;
+            opacity: 0.3;
+
+            @media @mobile {
+                filter: none !important;
+                opacity: 1;
+            }
+        }
+    }
+
+    &-sectionUpload {
+        position: relative;
+        height: 320px;
+        display: flex;
+        flex-direction: column;
+        padding-top: 48px;
+        padding-left: 64px;
+        padding-right: 10px;
+
+        @media @mobile {
+            padding-top: 0;
+            padding-left: 0;
+            height: 365px;
+        }
+    }
+
+    &-header {
+        @media @mobile {
+            margin-left: 16px;
+        }
+    }
+
+    &-label {
+        margin-top: 10px;
+
+        font-size: 22px;
+        font-weight: 500;
+        line-height: 1.82;
+        letter-spacing: -1.2px;
+        text-align: left;
+        color: #d3d8e4;
+
+        order: 2;
+
+        @media @mobile {
+            margin-top: -22px;
+            margin-left: 10px;
+
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.34;
+            letter-spacing: -1px;
+            text-align: center;
+        }
+    }
+
+    &-icon {
+        position: absolute;
+        bottom: -27px;
+        right: -10px;
+
+        transition: opacity 0.5s @easeOutQuart;
+
+        @media @mobile {
+            display: block;
+            position: static;
+
+            margin-top: 33px;
+            padding-left: 10px;
+
+            order: 1;
+
+            span {
+                display: block;
+                font-size: 0;
+            }
+
+            svg {
+                margin: 0 auto;
+                display: block;
+            }
+        }
+
+        @{c}--hasContent & {
+            opacity: 0;
+        }
+    }
+
+    &-inputFile {
+        position: absolute;
+        bottom: 44px;
+        left: 48px;
+
+        visibility: visible;
+        opacity: 1;
+        transition: visibility 0s @easeOutQuart 0s, opacity 0.5s @easeOutQuart;
+
+        @media @mobile {
+            position: static;
+            order: 3;
+            margin-top: 45px;
+        }
+
+        @{c}--hasContent & {
+            opacity: 0;
+            visibility: hidden;
+            transition: visibility 0s @easeOutQuart 0.5s, opacity 0.5s @easeOutQuart;
+            pointer-events: none;
+        }
+    }
+
+    &-helpIcon {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        padding: 10px;
+        z-index: 7;
+    }
+
+    &-help {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        visibility: hidden;
+
+        @{c}--helpVisible & {
+            visibility: visible;
+        }
+
+        z-index: 6;
+    }
+
+    &-dropMessage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        visibility: hidden;
+
+        z-index: 9;
+
+        @{c}--dropzoneActive & {
+            visibility: visible;
+        }
+    }
+
+    &-analysis {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        z-index: 8;
+
+        visibility: hidden;
+
+        @{c}--stateAnalysis & {
+            visibility: visible;
+        }
+    }
+
+    &-verifyStatus {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        z-index: 10;
+
+        visibility: hidden;
+
+        @{c}--stateCreated & {
+            visibility: visible;
+        }
+    }
+}

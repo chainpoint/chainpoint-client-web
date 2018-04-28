@@ -1,0 +1,34 @@
+@import (reference) '~const.less';
+
+@c: .ProofApp;
+
+@{c} {
+    &-create {
+    }
+
+    &-verify {
+        margin-top: 64px;
+
+        @media @mobile {
+            margin-top: 16px;
+        }
+    }
+}
+
+@{c},
+#proof-popup-root {
+    font-family: 'Gotham A', 'Gotham B', 'Helvetica', 'Arial', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
+    -ms-font-feature-settings: 'liga', 'kern';
+    -o-font-feature-settings: 'liga', 'kern';
+    font-feature-settings: 'liga', 'kern';
+
+    & *,
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+}

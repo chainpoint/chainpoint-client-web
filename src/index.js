@@ -1,73 +1,50 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware, compose } from 'redux';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
 
-import './index.css';
-import App from './App';
-import reducers from './reducers';
-import { checkProofs } from './actions';
+import {createPopup, POPUP_ROOT_ID} from 'common/popup';
+import ProofApp from 'ProofApp';
 
-const localStorageKey = 'proof-app-state';
+import {
+    AVAILABLE_DATA_ATTRS,
+    APP_NAME
+} from './config';
 
-// Restore app's state from local storage
-const storedState = JSON.parse(localStorage.getItem(localStorageKey)) || {};
+require('fonts.less');
 
-if (storedState.proofs) {
-  // Skip hashes without defined chainpoint nodes
-  storedState.proofs = storedState.proofs.filter(proof => !proof.nodes || proof.nodes.length);
-}
+const extractAttrs = (root) => {
+    const stub = () => {};
+    return AVAILABLE_DATA_ATTRS.reduce((acc, attr) => {
+        const data = root.getAttribute(`data-${attr}`);
 
-const initialState = storedState || {
-  proofs: []
+        acc[attr] = data || stub;
+        return acc;
+    }, {});
 };
 
-const store = createStore(
-  reducers,
-  initialState,
-  compose(applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({
-      latency: 0
-    })
-  )
-);
+const startApplication = (root, props) => {
+    ReactDOM.render(
+        <ProofApp {...props} />,
+        root
+    );
+};
 
+const initApplication = () => {
+    const root = document.getElementById(APP_NAME);
+    if (!root) {
+        throw new Error(`Container with id ${APP_NAME} doesn't exists`);
+    }
 
-store.subscribe(() =>
-  localStorage.setItem(localStorageKey, JSON.stringify(store.getState()))
-);
+    let popupRoot = document.getElementById(POPUP_ROOT_ID);
+    if (!popupRoot) {
+        createPopup(POPUP_ROOT_ID);
+    }
 
-restartUpdateTasks(store.getState().proofs);
+    if (window.chrome) {
+        document.documentElement.classList.add('isChrome');
+    }
 
-function restartUpdateTasks(proofs) {
+    const attrs = extractAttrs(root);
+    startApplication(root, attrs);
+};
 
-  // Runs check
-  const check = (proof, blockchain) =>
-
-    store.dispatch(checkProofs({
-      hash: proof.hash,
-      handles: proof.nodes,
-      waitFor: blockchain
-    }));
-
-   proofs.forEach(proof => {
-
-      if (!proof.proofStatus.btc.isReady) {
-        check(proof, 'btc');
-      }
-
-      if (!proof.proofStatus.cal.isReady) {
-        check(proof, 'cal');
-      }
-
-
-    });
-}
-
-
-
-ReactDOM.render((
-  <Provider store={store}>
-    <App />
-  </Provider>), document.getElementById('root'));
+document.addEventListener('DOMContentLoaded', initApplication);
