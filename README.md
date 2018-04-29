@@ -17,7 +17,7 @@ npm i git+ssh://git@github.com/Tierion/proof-web-client.git -S
 __YARN__
 
 ```bash
-yarn add git+ssh://git@github.com/Tierion/proof-web-client.git -S
+yarn add git+ssh://git@github.com/Tierion/proof-web-client.git
 ```
 
 ### HTML tag
