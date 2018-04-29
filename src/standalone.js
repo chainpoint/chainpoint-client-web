@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {createPopup, POPUP_ROOT_ID} from 'common/popup';
+import {createPopup, POPUP_ROOT_ID} from 'common/popupUtils';
 import ProofApp from 'ProofApp';
 
 require('index.css');

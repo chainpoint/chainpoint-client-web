@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import get from 'lodash/get';
 import set from 'lodash/set';
-import { createPopup, POPUP_ROOT_ID } from 'common/popup';
+import { createPopup, POPUP_ROOT_ID } from 'common/popupUtils';
 import VisibilitySensor from 'react-visibility-sensor';
 import withSizes from 'react-sizes';
 import fileDownload from 'js-file-download';

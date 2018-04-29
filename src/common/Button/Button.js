@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import SvgInline from 'react-inlinesvg';
 import { Link } from 'react-router-dom';

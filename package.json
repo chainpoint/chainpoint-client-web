@@ -67,7 +67,9 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "npm run build:injectedDist && npm run build:react:dist",
+    "build:injectedDist": "node scripts/build.js",
+    "build:react:dist": "node scripts/build-react.js",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
@@ -114,11 +116,13 @@
   },
   "devDependencies": {
     "base64-inline-loader": "^1.1.1",
+    "glob": "^7.1.2",
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
     "postcss-prefixer": "^2.1.0",
     "raw-loader": "^0.5.1",
     "static-site-generator-webpack-plugin": "^3.4.1",
-    "svg-sprite-loader": "^3.7.3"
+    "svg-sprite-loader": "^3.7.3",
+    "webpack-node-externals": "^1.7.2"
   }
 }
