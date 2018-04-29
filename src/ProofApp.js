@@ -267,12 +267,7 @@ class ProofApp extends Component {
             return;
         }
 
-        // Because browser can block multiple file downloads
-        // sleep between file downloads
-        sleep(0)
-            .then(() => this.downloadBinaryFormat(proofData, filename))
-            .then(() => sleep(1000))
-            .then(() => this.downloadJSONFormat(proofData, filename));
+        this.downloadJSONFormat(proofData, filename);
     };
 
     /**
