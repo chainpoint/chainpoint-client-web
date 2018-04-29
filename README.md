@@ -8,6 +8,18 @@ This library provides react components for creating and verifying [Chainpoint](h
 
 There are two ways to embed the UI components into the site.
 
+__NPM__
+
+```bash
+npm i git+ssh://git@github.com/Tierion/proof-web-client.git -S
+```
+
+__YARN__
+
+```bash
+yarn add git+ssh://git@github.com/Tierion/proof-web-client.git -S
+```
+
 ### HTML tag
 
 Proof-web-client provides two files for use in html pages:
