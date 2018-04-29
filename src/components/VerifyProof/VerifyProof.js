@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SvgInline from 'react-inlinesvg';
 import classNames from 'classnames';
 import Dropzone from 'react-dropzone';
+import ns from 'utils/ns';
 import {
     convertToLDJSON,
     verifyProofs
@@ -180,16 +181,16 @@ class VerifyProof extends Component {
 
         const { isMobile } = this.props;
 
-        let className = classNames('VerifyProof', {
-            'VerifyProof--helpVisible': helpVisible,
-            'VerifyProof--dropzoneActive': dropzoneActive,
-            'VerifyProof--stateAnalysis': analysisState,
-            'VerifyProof--stateCreated': creationState
+        let className = classNames('verifyProof', {
+            'verifyProof--helpVisible': helpVisible,
+            'verifyProof--dropzoneActive': dropzoneActive,
+            'verifyProof--stateAnalysis': analysisState,
+            'verifyProof--stateCreated': creationState
         });
 
         return (
             <InputBlock>
-                <div className={className}>
+                <div className={ns(className)}>
                     <Dropzone
                         // keep empty styles, to prevent Dropzone to insert it's own styles
                         style={{}}
@@ -204,24 +205,24 @@ class VerifyProof extends Component {
                     >
                         {/* Two levels of nesting content to be able to apply filter: blur separately
                             for just content and for content with help */}
-                        <div className="VerifyProof-contentWithHelp">
-                            <div className="VerifyProof-content">
-                                <section className="VerifyProof-sectionUpload">
-                                    <div className="VerifyProof-header">
+                        <div className={ns("verifyProof-contentWithHelp")}>
+                            <div className={ns("verifyProof-content")}>
+                                <section className={ns("verifyProof-sectionUpload")}>
+                                    <div className={ns("verifyProof-header")}>
                                         <Header>Verify proof</Header>
                                     </div>
 
                                     {isMobile ? (
-                                        <div className="VerifyProof-label">Add a .chp file here</div>
+                                        <div className={ns("verifyProof-label")}>Add a .chp file here</div>
                                     ) : (
-                                        <div className="VerifyProof-label">Drop a .chp file here</div>
+                                        <div className={ns("verifyProof-label")}>Drop a .chp file here</div>
                                     )}
 
-                                    <div className="VerifyProof-icon">
+                                    <div className={ns("verifyProof-icon")}>
                                         <SvgInline src={chpFile} />
                                     </div>
 
-                                    <div className="VerifyProof-inputFile">
+                                    <div className={ns("verifyProof-inputFile")}>
                                         <Button
                                             title="Choose file"
                                             grow={isMobile}
@@ -233,14 +234,14 @@ class VerifyProof extends Component {
                             </div>
 
                             <div
-                                className="VerifyProof-helpIcon"
+                                className={ns("verifyProof-helpIcon")}
                                 onMouseEnter={this.mouseEnter}
                                 onMouseLeave={this.mouseLeave}
                             >
                                 <ButtonIcon icon="help" onClick={this.onShowHelp} />
                             </div>
 
-                            <div className="VerifyProof-help">
+                            <div className={ns("verifyProof-help")}>
                                 {helpVisible && isMobile ? (
                                     <HelpPopup onHidePopup={this.onHideHelp} />
                                 ) : (
@@ -249,11 +250,11 @@ class VerifyProof extends Component {
                             </div>
                         </div>
 
-                        <div className="VerifyProof-dropMessage">
+                        <div className={ns("verifyProof-dropMessage")}>
                             <DropMessage visible={dropzoneActive} analysing={analysisState} />
                         </div>
 
-                        <div className="VerifyProof-analysis">
+                        <div className={ns("verifyProof-analysis")}>
                             <ProofAnalysis
                                 visible={analysisState || creationState}
                                 dropzoneActive={dropzoneActive}
@@ -262,7 +263,7 @@ class VerifyProof extends Component {
                         </div>
 
                         {file && (
-                            <div className="VerifyProof-verifyStatus">
+                            <div className={ns("verifyProof-verifyStatus")}>
                                 <VerifyStatus
                                     visible={creationState}
                                     analysing={analysisState}

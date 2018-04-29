@@ -19,3 +19,5 @@ export const AVAILABLE_DATA_ATTRS = [
 	'onChangeVerifyAnalysisStatus',
 	'onChangeVerifySuccessStatus'
 ];
+
+export const CSS_PREFIX = 'PAC';

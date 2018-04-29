@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import fecha from 'fecha';
 import SvgInline from 'react-inlinesvg';
+import ns from 'utils/ns';
 
 import Spinner from 'components/Spinner/Spinner';
 import Button from 'common/Button/Button';
@@ -65,7 +66,7 @@ class MyProofs extends Component {
 
         return (
             <div
-                className="MyProofs"
+                className={ns("myProofs")}
                 ref={node => (this.scrollNode = node)}
                 onScroll={this.onScroll}
                 style={{
@@ -79,29 +80,29 @@ class MyProofs extends Component {
                         109}px, rgba(255,255,255,${this.state.topOpacity}))`
                 }}
             >
-                <ul className="MyProofs-list">
+                <ul className={ns("myProofs-list")}>
                     {proofs.map(proof => {
                         const isCalReady = proof.proofStatus.cal.isReady;
                         const isBtcReady = proof.proofStatus.btc.isReady;
 
                         return (
-                            <li className="MyProofs-item" key={proof.id}>
+                            <li className={ns("myProofs-item")} key={proof.id}>
                                 <div
-                                    className="MyProofs-itemButton"
+                                    className={ns("myProofs-itemButton")}
                                     onClick={this.onShowProofItemPopup}
                                     data-id={proof.id}
                                 >
-                                    <div className="MyProofs-itemTitle">{proof.filename}</div>
-                                    <div className="MyProofs-itemCalendarStatus">
+                                    <div className={ns("myProofs-itemTitle")}>{proof.filename}</div>
+                                    <div className={ns("myProofs-itemCalendarStatus")}>
                                         {isCalReady ? <SvgInline src={ready} /> : <Spinner />}
                                         <span>Chainpoint Calendar</span>
                                     </div>
-                                    <div className="MyProofs-itemBtcStatus">
+                                    <div className={ns("myProofs-itemBtcStatus")}>
                                         {isBtcReady ? <SvgInline src={ready} /> : <Spinner />}
                                         <span>BTC</span>
                                     </div>
-                                    <div className="MyProofs-itemDate">{fecha.format(proof.date, DATE_FORMAT)}</div>
-                                    <div className="MyProofs-itemStatus">
+                                    <div className={ns("myProofs-itemDate")}>{fecha.format(proof.date, DATE_FORMAT)}</div>
+                                    <div className={ns("myProofs-itemStatus")}>
                                         {isBtcReady ? (
                                             isMobile || isLaptop ? (
                                                 <ButtonIcon
@@ -117,11 +118,11 @@ class MyProofs extends Component {
                                             )
                                         ) : (
                                             <span>
-                                                <div className="MyProofs-statusSpinner">
+                                                <div className={ns("myProofs-statusSpinner")}>
                                                     <Spinner />
                                                 </div>
-                                                <span className="MyProofs-statusText">result within</span>{' '}
-                                                <span className="MyProofs-statusTime">~90 min</span>
+                                                <span className={ns("myProofs-statusText")}>result within</span>{' '}
+                                                <span className={ns("myProofs-statusTime")}>~90 min</span>
                                             </span>
                                         )}
                                     </div>

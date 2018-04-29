@@ -6,6 +6,7 @@ import { createPopup, POPUP_ROOT_ID } from 'common/popup';
 import VisibilitySensor from 'react-visibility-sensor';
 import withSizes from 'react-sizes';
 import fileDownload from 'js-file-download';
+import ns from 'utils/ns';
 
 import ProofPopup from 'components/ProofPopup/ProofPopup';
 import CreateProof from 'components/CreateProof/CreateProof';
@@ -311,8 +312,8 @@ class ProofApp extends Component {
 
         return (
             <ProofAppContext.Provider value={{ isMobile, isLaptop }}>
-                <div className="ProofApp">
-                    <div className="ProofApp-create">
+                <div className={ns("proofApp")}>
+                    <div className={ns("proofApp-create")}>
                         <VisibilitySensor onChange={onAppearCreate} offset={{ bottom: 50 }} partialVisibility="bottom">
                             <CreateProof
                                 proofs={proofs}
@@ -334,7 +335,7 @@ class ProofApp extends Component {
                         />
                     )}
 
-                    <div className="ProofApp-verify">
+                    <div className={ns("proofApp-verify")}>
                         <VisibilitySensor onChange={onAppearVerify} minTopValue={125} partialVisibility={true}>
                             <VerifyProof
                                 onChangeVerifyAnalysisStatus={onChangeVerifyAnalysisStatus}

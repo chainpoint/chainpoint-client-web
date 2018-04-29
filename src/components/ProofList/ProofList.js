@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import fecha from 'fecha';
+import ns from 'utils/ns';
 
 import Button from 'common/Button/Button';
 import ButtonIcon from 'common/ButtonIcon/ButtonIcon';
@@ -42,24 +43,24 @@ class ProofList extends Component {
         }
 
         return (
-            <div className="ProofList" style={{ height }}>
-                <div className="ProofList-inner" ref={node => (this.innerNode = node)}>
-                    <ul className="ProofList-list">
+            <div className={ns("proofList")} style={{ height }}>
+                <div className={ns("proofList-inner")} ref={node => (this.innerNode = node)}>
+                    <ul className={ns("proofList-list")}>
                         {proofs.slice(0, PROOFS_TO_SHOW).map(proof => {
                             const isBtcReady = proof.proofStatus.btc.isReady;
 
                             return (
-                                <li className="ProofList-item" key={proof.id}>
+                                <li className={ns("proofList-item")} key={proof.id}>
                                     <div
-                                        className="ProofList-itemButton"
+                                        className={ns("proofList-itemButton")}
                                         onClick={this.onShowProofItemPopup}
                                         data-id={proof.id}
                                     >
-                                        <div className="ProofList-itemTitle">{proof.filename}</div>
-                                        <div className="ProofList-itemDate">
+                                        <div className={ns("proofList-itemTitle")}>{proof.filename}</div>
+                                        <div className={ns("proofList-itemDate")}>
                                             {fecha.format(proof.date, DATE_FORMAT)}
                                         </div>
-                                        <div className="ProofList-itemStatus">
+                                        <div className={ns("proofList-itemStatus")}>
                                             {isBtcReady ? (
                                                 isMobile ? (
                                                     <ButtonIcon
@@ -75,11 +76,11 @@ class ProofList extends Component {
                                                 )
                                             ) : (
                                                 <span>
-                                                    <div className="ProofList-statusSpinner">
+                                                    <div className={ns("proofList-statusSpinner")}>
                                                         <Spinner />
                                                     </div>
-                                                    <span className="ProofList-statusText">result within</span>{' '}
-                                                    <span className="ProofList-statusTime">~90 min</span>
+                                                    <span className={ns("proofList-statusText")}>result within</span>{' '}
+                                                    <span className={ns("proofList-statusTime")}>~90 min</span>
                                                 </span>
                                             )}
                                         </div>
@@ -90,7 +91,7 @@ class ProofList extends Component {
                     </ul>
 
                     {proofs.length > PROOFS_TO_SHOW && (
-                        <div className="ProofList-showPopup">
+                        <div className={ns("proofList-showPopup")}>
                             <Button
                                 title={`${proofs.length - PROOFS_TO_SHOW} more proof${proofs.length > 4 ? 's' : ''}`}
                                 type="flat"

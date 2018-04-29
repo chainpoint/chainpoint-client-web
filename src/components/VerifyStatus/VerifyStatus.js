@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import SvgInline from 'react-inlinesvg';
+import ns from 'utils/ns';
 
 import Button from 'common/Button/Button';
 import tickWhite from 'svg/tick-white.svg';
@@ -13,25 +14,25 @@ class VerifyStatus extends Component {
     render() {
         const { visible, verifySuccess, analysing, inputting, filename, onAddAnotherVerify, isMobile } = this.props;
 
-        const className = classNames('VerifyStatus', {
-            'VerifyStatus--visible': visible,
-            'VerifyStatus--analysing': analysing,
-            'VerifyStatus--inputting': inputting,
-            'VerifyStatus--success': verifySuccess,
-            'VerifyStatus--fail': !verifySuccess
+        const className = classNames('verifyStatus', {
+            'verifyStatus--visible': visible,
+            'verifyStatus--analysing': analysing,
+            'verifyStatus--inputting': inputting,
+            'verifyStatus--success': verifySuccess,
+            'verifyStatus--fail': !verifySuccess
         });
 
         return (
-            <div className={className}>
-                <header className="VerifyStatus-header">
-                    <div className="VerifyStatus-icon">
+            <div className={ns(className)}>
+                <header className={ns("verifyStatus-header")}>
+                    <div className={ns("verifyStatus-icon")}>
                         {verifySuccess ? <SvgInline src={tickWhite} /> : <SvgInline src={notVerified} />}
                     </div>
-                    <div className="VerifyStatus-title">{verifySuccess ? 'File Verified' : 'File not Verified'}</div>
-                    <div className="VerifyStatus-filename">{filename}</div>
+                    <div className={ns("verifyStatus-title")}>{verifySuccess ? 'File Verified' : 'File not Verified'}</div>
+                    <div className={ns("verifyStatus-filename")}>{filename}</div>
                 </header>
 
-                <div className="VerifyStatus-text">
+                <div className={ns("verifyStatus-text")}>
                     {verifySuccess ? (
                         <span>
                             Some text explaining that the file has a correct record in the blockchain that proves its
@@ -44,7 +45,7 @@ class VerifyStatus extends Component {
                     )}
                 </div>
 
-                <div className="VerifyStatus-button">
+                <div className={ns("verifyStatus-button")}>
                     <Button type="solid" grow={isMobile} title="Verify another file" onClick={onAddAnotherVerify} />
                 </div>
             </div>

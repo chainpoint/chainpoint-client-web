@@ -5,6 +5,7 @@ import SvgInline from 'react-inlinesvg';
 import Header from 'common/Header/Header';
 import { POPUP_ROOT_ID } from 'common/popup';
 import cross from 'svg/cross.svg';
+import ns from 'utils/ns';
 
 import './Popup.less';
 
@@ -66,22 +67,22 @@ class Popup extends Component {
         return ReactDOM.createPortal(
             // Any valid React child: JSX, strings, arrays, etc.
             this.state.mounted ? (
-                <div className={`Popup ${className}`} ref={node => (this.popupNode = node)}>
-                    <div className="Popup-inner">
-                        <div className="Popup-overlay" onClick={onHidePopup} />
+                <div className={ns(`popup ${className}`)} ref={node => (this.popupNode = node)}>
+                    <div className={ns("popup-inner")}>
+                        <div className={ns("popup-overlay")} onClick={onHidePopup} />
 
-                        <div className="Popup-content">
-                            <button className="Popup-close" onClick={onHidePopup}>
+                        <div className={ns("popup-content")}>
+                            <button className={ns("popup-close")} onClick={onHidePopup}>
                                 <SvgInline src={cross} />
                             </button>
 
                             {header && (
-                                <div className="Popup-header">
+                                <div className={ns("popup-header")}>
                                     <Header>{header}</Header>
                                 </div>
                             )}
 
-                            <div className="Popup-body">{this.props.children}</div>
+                            <div className={ns("popup-body")}>{this.props.children}</div>
                         </div>
                     </div>
                 </div>

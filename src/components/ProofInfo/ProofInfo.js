@@ -4,6 +4,7 @@ import {
     getFormattedJSON,
     convertToLDJSON
 } from '../../utils/API';
+import ns from 'utils/ns';
 
 import Button from 'common/Button/Button';
 import ProofText from 'components/ProofText/ProofText';
@@ -162,8 +163,8 @@ class ProofInfo extends Component {
         const codeTitle = this.getProofCodeTitle(isCalReady, isBtcReady);
 
         return (
-            <div className="ProofInfo">
-                <div className="ProofInfo-backButton">
+            <div className={ns("proofInfo")}>
+                <div className={ns("proofInfo-backButton")}>
                     <Button
                         type="flat"
                         title="All proofs"
@@ -174,7 +175,7 @@ class ProofInfo extends Component {
                 </div>
 
                 <div
-                    className="ProofInfo-content"
+                    className={ns("proofInfo-content")}
                     ref={node => (this.textarea = node)}
                     onScroll={this.onScroll}
                     style={{
@@ -188,25 +189,25 @@ class ProofInfo extends Component {
                         109}px, rgba(255,255,255,${this.state.topOpacity}))`
                     }}
                 >
-                    <div className="ProofInfo-info">
-                        <div className="ProofInfo-infoText">
+                    <div className={ns("proofInfo-info")}>
+                        <div className={ns("proofInfo-infoText")}>
                             <ProofText proof={proof} />
                         </div>
 
-                        <div className="ProofInfo-infoStatusList">
+                        <div className={ns("proofInfo-infoStatusList")}>
                             {!isBtcReady && (
-                                <div className="ProofInfo-infoStatus">
+                                <div className={ns("proofInfo-infoStatus")}>
                                     <span>
-                                        <span className="MyProofs-statusTime">~90 min</span>{' '}
-                                        <span className="MyProofs-statusText">left</span>
+                                        <span className={ns("myProofs-statusTime")}>~90 min</span>{' '}
+                                        <span className={ns("myProofs-statusText")}>left</span>
                                     </span>
                                 </div>
                             )}
-                            <div className="ProofInfo-infoStatus">
+                            <div className={ns("proofInfo-infoStatus")}>
                                 {isCalReady ? <SvgInline src={ready} /> : <Spinner />}
                                 <span>Chainpoint Calendar Proof</span>
                             </div>
-                            <div className="ProofInfo-infoStatus">
+                            <div className={ns("proofInfo-infoStatus")}>
                                 {isBtcReady ? <SvgInline src={ready} /> : <Spinner />}
                                 <span>Bitcoin Proof</span>
                             </div>
@@ -215,13 +216,13 @@ class ProofInfo extends Component {
 
                     {hasEnoughInfo && (
                         <React.Fragment>
-                            <hr className="ProofInfo-hr" />
+                            <hr className={ns("proofInfo-hr")} />
 
-                            <div className="ProofInfo-code">
-                                <div className="ProofInfo-codeHeader">{codeTitle}</div>
+                            <div className={ns("proofInfo-code")}>
+                                <div className={ns("proofInfo-codeHeader")}>{codeTitle}</div>
 
                                 {!isMobile && (
-                                    <div className="ProofInfo-codeControls">
+                                    <div className={ns("proofInfo-codeControls")}>
                                         <Button
                                             type="flat"
                                             title="Copy code"
@@ -238,7 +239,7 @@ class ProofInfo extends Component {
                                     </div>
                                 )}
 
-                                <div className="ProofInfo-codeBody">{proofLDJson}</div>
+                                <div className={ns("proofInfo-codeBody")}>{proofLDJson}</div>
                             </div>
                         </React.Fragment>
                     )}
@@ -248,7 +249,7 @@ class ProofInfo extends Component {
                 {isMobile && (
                     <div>
                         {hasEnoughInfo && (
-                            <div className="ProofInfo-codeControls">
+                            <div className={ns("proofInfo-codeControls")}>
                                 <Button
                                     type="solid"
                                     title="Copy code"
@@ -265,7 +266,7 @@ class ProofInfo extends Component {
                             </div>
                         )}
 
-                        <button className="ProofInfo-backButtonIcon" onClick={this.onShowProofPopup}>
+                        <button className={ns("proofInfo-backButtonIcon")} onClick={this.onShowProofPopup}>
                             <SvgInline src={arrowBackBig} />
                         </button>
                     </div>

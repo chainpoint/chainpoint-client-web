@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import Dropzone from 'react-dropzone';
 import {sha3_256 as sha256} from 'js-sha3';
 import {submitHash} from '../../utils/API';
+import ns from 'utils/ns';
 
 import files from 'svg/files.svg';
 import Header from 'common/Header/Header';
@@ -174,13 +175,13 @@ class CreateProof extends Component {
         const { helpVisible, text, dropzoneActive, inputState, analysisState, creationState } = this.state;
         const { proofs, isMobile, onShowProofPopup, onDownloadProof } = this.props;
 
-        let className = classNames('CreateProof', {
-            'CreateProof--helpVisible': helpVisible,
-            'CreateProof--hasContent': text.length !== 0,
-            'CreateProof--hasProofs': proofs.length !== 0,
-            'CreateProof--dropzoneActive': dropzoneActive,
-            'CreateProof--stateAnalysis': analysisState,
-            'CreateProof--stateCreation': creationState
+        let className = classNames('createProof', {
+            'createProof--helpVisible': helpVisible,
+            'createProof--hasContent': text.length !== 0,
+            'createProof--hasProofs': proofs.length !== 0,
+            'createProof--dropzoneActive': dropzoneActive,
+            'createProof--stateAnalysis': analysisState,
+            'createProof--stateCreation': creationState
         });
 
         let placeholder = 'Write text, hash or drop a file here';
@@ -192,7 +193,7 @@ class CreateProof extends Component {
 
         return (
             <InputBlock>
-                <div className={className}>
+                <div className={ns(className)}>
                     <Dropzone
                         style={{}}
                         ref={node => {
@@ -206,15 +207,15 @@ class CreateProof extends Component {
                     >
                         {/* Two levels of nesting content to be able to apply filter: blur separately
                             for just content and for content with help */}
-                        <div className="CreateProof-contentWithHelp">
-                            <div className="CreateProof-content">
-                                <section className="CreateProof-sectionUpload">
-                                    <div className="CreateProof-header">
+                        <div className={ns("createProof-contentWithHelp")}>
+                            <div className={ns("createProof-content")}>
+                                <section className={ns("createProof-sectionUpload")}>
+                                    <div className={ns("createProof-header")}>
                                         <Header>Create proof</Header>
                                     </div>
 
-                                    <div className="CreateProof-input">
-                                        <div className="CreateProof-inputInner">
+                                    <div className={ns("createProof-input")}>
+                                        <div className={ns("createProof-inputInner")}>
                                             <Textarea
                                                 grow={true}
                                                 placeholder={placeholder}
@@ -226,7 +227,7 @@ class CreateProof extends Component {
                                         </div>
                                     </div>
 
-                                    <div className="CreateProof-createButton">
+                                    <div className={ns("createProof-createButton")}>
                                         <Button
                                             title="Create proof"
                                             grow={isMobile}
@@ -235,11 +236,11 @@ class CreateProof extends Component {
                                         />
                                     </div>
 
-                                    <div className="CreateProof-icon">
+                                    <div className={ns("createProof-icon")}>
                                         <SvgInline src={files} />
                                     </div>
 
-                                    <div className="CreateProof-inputFile">
+                                    <div className={ns("createProof-inputFile")}>
                                         <Button
                                             title="Choose file"
                                             grow={isMobile ? true : false}
@@ -250,7 +251,7 @@ class CreateProof extends Component {
                                 </section>
 
                                 {proofs.length !== 0 && (
-                                    <section className="CreateProof-sectionList">
+                                    <section className={ns("createProof-sectionList")}>
                                         <ProofList
                                             proofs={proofs}
                                             onDownloadProof={onDownloadProof}
@@ -261,14 +262,14 @@ class CreateProof extends Component {
                             </div>
 
                             <div
-                                className="CreateProof-helpIcon"
+                                className={ns("createProof-helpIcon")}
                                 onMouseEnter={this.mouseEnter}
                                 onMouseLeave={this.mouseLeave}
                             >
                                 <ButtonIcon icon="help" onClick={this.onShowHelp} />
                             </div>
 
-                            <div className="CreateProof-help">
+                            <div className={ns("createProof-help")}>
                                 {helpVisible && isMobile ? (
                                     <HelpPopup onHidePopup={this.onHideHelp} />
                                 ) : (
@@ -277,11 +278,11 @@ class CreateProof extends Component {
                             </div>
                         </div>
 
-                        <div className="CreateProof-dropMessage">
+                        <div className={ns("createProof-dropMessage")}>
                             <DropMessage visible={dropzoneActive} analysing={analysisState} />
                         </div>
 
-                        <div className="CreateProof-analysis">
+                        <div className={ns("createProof-analysis")}>
                             <ProofAnalysis
                                 visible={analysisState || creationState}
                                 creating={creationState}
@@ -289,7 +290,7 @@ class CreateProof extends Component {
                             />
                         </div>
 
-                        <div className="CreateProof-creation">
+                        <div className={ns("createProof-creation")}>
                             <ProofCreation
                                 isMobile={isMobile}
                                 visible={creationState}

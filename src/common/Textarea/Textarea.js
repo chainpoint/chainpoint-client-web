@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import ContainerDimensions from 'react-container-dimensions';
 import TextareaAutosize from 'react-textarea-autosize';
+import ns from 'utils/ns';
 
 import './Textarea.less';
 
@@ -56,22 +57,22 @@ class Textarea extends Component {
 
         const characterCount = value.length;
 
-        const className = classNames('Textarea', {
-            'Textarea--text-large': characterCount < 40,
-            'Textarea--text-medium': characterCount >= 40 && characterCount < 200,
-            'Textarea--text-small': characterCount >= 200,
-            'Textarea--placeholderCentered': placeholderCentered,
-            'Textarea--grow': grow
+        const className = classNames('textarea', {
+            'textarea--text-large': characterCount < 40,
+            'textarea--text-medium': characterCount >= 40 && characterCount < 200,
+            'textarea--text-small': characterCount >= 200,
+            'textarea--placeholderCentered': placeholderCentered,
+            'textarea--grow': grow
         });
 
         return (
-            <div className={className}>
+            <div className={ns(className)}>
                 <ContainerDimensions>
                     {({ height }) => {
                         return (
                             <TextareaAutosize
                                 inputRef={node => (this.textarea = node)}
-                                className="Textarea-input"
+                                className={ns("textarea-input")}
                                 placeholder={placeholder}
                                 value={value}
                                 onChange={this.onChange}
@@ -86,7 +87,7 @@ class Textarea extends Component {
                         );
                     }}
                 </ContainerDimensions>
-                <div className="Textarea-border" />
+                <div className={ns("textarea-border")} />
             </div>
         );
     }

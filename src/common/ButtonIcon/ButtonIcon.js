@@ -4,6 +4,7 @@ import SvgInline from 'react-inlinesvg';
 
 import arrowDown from 'svg/arrow-down.svg';
 import help from 'svg/help.svg';
+import ns from 'utils/ns';
 
 import './ButtonIcon.less';
 
@@ -16,11 +17,11 @@ class ButtonIcon extends Component {
     render() {
         const { icon, onClick } = this.props;
 
-        const className = classNames('ButtonIcon', `ButtonIcon--${icon}`);
+        const className = classNames('buttonIcon', `buttonIcon--${icon}`);
 
         return (
-            <button className={className} onClick={onClick}>
-                <span className="ButtonIcon-icon">
+            <button className={ns(className)} onClick={onClick}>
+                <span className={ns("buttonIcon-icon")}>
                     <SvgInline src={ICONS[icon]} />
                 </span>
             </button>

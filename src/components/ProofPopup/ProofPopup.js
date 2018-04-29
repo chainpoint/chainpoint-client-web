@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import ns from 'utils/ns';
 
 import Popup from 'common/Popup/Popup';
 import MyProofs from 'components/MyProofs/MyProofs';
@@ -31,16 +32,16 @@ class ProofPopup extends Component {
             header = isProofReady ? 'Proof is ready' : 'Proof is being created';
         }
 
-        const className = classNames('ProofPopup', {
-            'ProofPopup--myProofs': proof === null,
-            'ProofPopup--proofInfo': proof !== null
+        const className = classNames('proofPopup', {
+            'proofPopup--myProofs': proof === null,
+            'proofPopup--proofInfo': proof !== null
         });
 
         return (
-            <Popup onHidePopup={onHidePopup} header={header} className={proof && `Popup--proofInfo`}>
-                <div className={className}>
+            <Popup onHidePopup={onHidePopup} header={header} className={proof && ns(`popup--proofInfo`)}>
+                <div className={ns(className)}>
                     {proof ? (
-                        <div className="ProofPopup-item">
+                        <div className={ns("proofPopup-item")}>
                             <ProofInfo
                                 proof={proof}
                                 onDownloadProof={onDownloadProof}
@@ -48,7 +49,7 @@ class ProofPopup extends Component {
                             />
                         </div>
                     ) : (
-                        <div className="ProofPopup-list">
+                        <div className={ns("proofPopup-list")}>
                             <MyProofs
                                 proofs={proofs}
                                 onDownloadProof={onDownloadProof}

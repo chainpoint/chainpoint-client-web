@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ns from 'utils/ns';
 
 import Popup from 'common/Popup/Popup';
 import Help from 'components/Help/Help';
@@ -11,7 +12,7 @@ class HelpPopup extends Component {
 
         return (
             <Popup onHidePopup={onHidePopup} header="Help: Create a Proof">
-                <div className="HelpPopup">
+                <div className={ns("helpPopup")}>
                     <Help visible={true} />
                 </div>
             </Popup>

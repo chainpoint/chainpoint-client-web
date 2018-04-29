@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import ns from 'utils/ns';
 
 import './Input.less';
 
@@ -13,22 +14,22 @@ class Input extends Component {
     render() {
         const { value, placeholder, placeholderCentered, isValid, errorMessage } = this.props;
 
-        const className = classNames('Input', {
-            'Input--isInvalid': !isValid,
-            'Input--placeholderCentered': placeholderCentered
+        const className = classNames('input', {
+            'input--isInvalid': !isValid,
+            'input--placeholderCentered': placeholderCentered
         });
 
         return (
-            <div className={className}>
+            <div className={ns(className)}>
                 <input
                     type="text"
-                    className="Input-input"
+                    className={ns("input-input")}
                     placeholder={placeholder}
                     value={value}
                     onChange={this.onChange}
                 />
-                <div className="Input-border" />
-                {errorMessage && <div className="Input-error">{errorMessage}</div>}
+                <div className={ns("input-border")} />
+                {errorMessage && <div className={ns("input-error")}>{errorMessage}</div>}
             </div>
         );
     }
