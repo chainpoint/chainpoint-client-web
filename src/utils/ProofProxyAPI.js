@@ -36,16 +36,14 @@ const storeProofs = (proofs) => {
 const getProofs = (handles) => {
 	const uuids = handles.reduce((acc, {hashIdNode}) => [...acc, hashIdNode], []);
 
-	const apiUrl = `${PROOF_PROXY_BASE_URL.GET}/${uuids[0]}`;
-	// CORS. Uncomment when proofs.chainpoint.org
-	// adding response header access-control-expose-headers hashids
-	// const opts = {
-	// 	headers: {
-	// 		hashids: uuids
-	// 	}
-	// };
+	const apiUrl = `${PROOF_PROXY_BASE_URL.GET}`;
+	const opts = {
+		headers: {
+			hashids: uuids
+		}
+	};
 
-	return axois.get(apiUrl)
+	return axois.get(apiUrl, opts)
 		.then(({data}) => {
 			if (isEmpty(data)) {
 				return;
