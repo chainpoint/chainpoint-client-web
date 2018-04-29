@@ -11,13 +11,13 @@ export const APP_NAME = 'proof-app-client';
  * @type {string[]}
  */
 export const AVAILABLE_DATA_ATTRS = [
-	'onAppearCreate',
-	'onAppearVerify',
-	'onChangeProofCount',
-	'onChangeCreateStatus',
-	'onChangeVerifyFailStatus',
-	'onChangeVerifyAnalysisStatus',
-	'onChangeVerifySuccessStatus'
+    'onAppearCreate',
+    'onAppearVerify',
+    'onChangeProofCount',
+    'onChangeCreateStatus',
+    'onChangeVerifyFailStatus',
+    'onChangeVerifySuccessStatus',
+    'onChangeVerifyAnalysisStatus'
 ];
 
 export const CSS_PREFIX = 'PAC';

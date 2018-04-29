@@ -14,9 +14,13 @@ require('fonts.less');
 const extractAttrs = (root) => {
     const stub = () => {};
     return AVAILABLE_DATA_ATTRS.reduce((acc, attr) => {
+        let globFn;
         const data = root.getAttribute(`data-${attr}`);
+        if (data) {
+            globFn = window[data];
+        }
 
-        acc[attr] = data || stub;
+        acc[attr] = typeof globFn === 'function' ? globFn : stub;
         return acc;
     }, {});
 };
