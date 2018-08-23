@@ -27,7 +27,6 @@ class CreateProof extends Component {
         helpVisible: false,
         text: '',
         dropzoneActive: false,
-
         inputState: true,
         analysisState: false,
         creationState: false

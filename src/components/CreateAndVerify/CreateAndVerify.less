@@ -1,0 +1,92 @@
+@import (reference) '~const.less';
+
+@c: .createAndVerify;
+
+@{c} {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px dashed black;
+  padding: 24px;
+
+  .instructions {
+    width: 100%;
+    display: flex;
+    @media @mobile {
+      flex-direction: column;
+    }
+  }
+  
+  .instruction {
+    flex: 1;
+    text-align: center;
+  }
+
+  &-dropMessage {
+    visibility: hidden;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+    @{c}--dropzoneActive & {
+      visibility: visible;
+    }
+  }
+
+  &-analysis {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      z-index: 8;
+
+      visibility: hidden;
+
+      @{c}--stateAnalysis & {
+          visibility: visible;
+      }
+  }
+
+  &-creation {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 10;
+
+    visibility: hidden;
+
+    @{c}--stateCreation & {
+        visibility: visible;
+    }
+  }
+
+  &-verifyStatus {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 10;
+
+    visibility: hidden;
+
+    @{c}--stateCreated & {
+        visibility: visible;
+    }
+  }
+
+  &-help {
+    width: 100%;
+    text-align: right;
+  }
+  
+}
