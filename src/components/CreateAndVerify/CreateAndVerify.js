@@ -57,11 +57,11 @@ class CreateAndVerify extends Component {
         if (proofs.length === 0) {
           submitHash(hash)
             .then((handles) => {
-              this.setState({creationState: true});
-              this.props.onChangeCreateStatus(true);
+              this.setState({creationState: true})
+              this.props.onChangeCreateStatus(true)
 
-              data.handles = handles;
-              onAddProof(data);
+              data.handles = handles
+              onAddProof(data)
 
               // Timeout to allow ProofAnalysis component do exit animation
               setTimeout(() => {
@@ -73,13 +73,13 @@ class CreateAndVerify extends Component {
         } else {
           submitHash(hash)
             .then((handles) => {
-              this.props.onChangeCreateStatus(true);
+              this.props.onChangeCreateStatus(true)
 
-              data.handles = handles;
+              data.handles = handles
               
-              onAddProof(data);
+              onAddProof(data)
 
-              // this.setState({ inputState: true, text: '' });
+              // this.setState({ inputState: true, text: '' })
 
               // Timeout to allow ProofAnalysis component do exit animation
               setTimeout(() => {
@@ -104,7 +104,7 @@ class CreateAndVerify extends Component {
                 analysisState: false
               })
             }, 1200)
-          });
+          })
         }, 1200)
       })
     }, 1200)
