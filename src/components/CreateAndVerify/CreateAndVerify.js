@@ -13,7 +13,8 @@ import ProofCreation from '../ProofCreation/ProofCreation'
 import VerifyStatus from '../VerifyStatus/VerifyStatus'
 import ProofList from '../ProofList/ProofList'
 
-import chpIcon from '../../svg/chp-file.svg'
+import createIcon from '../../svg/create.svg'
+import verifyIcon from '../../svg/verify.svg'
 import './CreateAndVerify.less'
 
 const l = input => console.log(input)
@@ -248,7 +249,9 @@ class CreateAndVerify extends Component {
           <div className={ns('instructions')}>
             <div className={ns('instruction createProof')}>
               <h3>Create Proof</h3>
-              <img src={chpIcon} alt="create proof icon" />
+              <div className={ns('icon')}>
+                <img src={createIcon} alt="create proof icon" />
+              </div>
               <div>
                 <h5>Drag & Drop</h5>
                 <p>or browse your files</p>
@@ -256,7 +259,9 @@ class CreateAndVerify extends Component {
             </div>
             <div className={ns('instruction verifyProof')}>
               <h3>Verify Proof</h3>
-              <img src={chpIcon} alt="verify proof icon" />
+              <div className={ns('icon')}>
+                <img src={verifyIcon} alt="verify proof icon" />
+              </div>
               <div>
                 <h5>Choose a .CHP File</h5>
                 <p>to verify a chainpoint proof</p>
@@ -264,7 +269,14 @@ class CreateAndVerify extends Component {
             </div>
           </div>
           <div className={ns('notice')}>
-            Your file will not be uploaded, just analyzed in the browser
+            <div className={ns('notice-text')}>
+              Your file will not be uploaded, just analyzed in the browser
+            </div>
+            <div className={ns('advanced-text')}>
+              <a href="#" onClick={() => alert('Not Yet Implemented!')}>
+                advanced
+              </a>
+            </div>
           </div>
           <div className={ns('createAndVerify-dropMessage')}>
             <DropMessage visible={dropzoneActive} analysing={analysisState} />
