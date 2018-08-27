@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
 import classnames from 'classnames'
-import {sha3_256 as sha256} from 'js-sha3';
+import { sha3_256 as sha256 } from 'js-sha3'
 
 import ns from 'utils/ns'
-import {
-  convertToLDJSON,
-  submitHash,
-  verifyProofs
-} from 'utils/API'
-
+import { convertToLDJSON, submitHash, verifyProofs } from 'utils/API'
 
 import DropMessage from '../DropMessage/DropMessage'
 import ButtonIcon from '../../common/ButtonIcon/ButtonIcon'
@@ -20,6 +15,8 @@ import ProofList from '../ProofList/ProofList'
 
 import chpIcon from '../../svg/chp-file.svg'
 import './CreateAndVerify.less'
+
+const l = input => console.log(input)
 
 class CreateAndVerify extends Component {
   state = {
@@ -43,71 +40,61 @@ class CreateAndVerify extends Component {
       inputState: false
     })
 
-    const reader = new FileReader();
+    setTimeout(() => {
+      this.setState({
+        dropzoneActive: false
+      })
+    }, 1200)
+
+    const reader = new FileReader()
     reader.onload = () => {
-      const fileAsBinaryString = reader.result;
-      file.data = fileAsBinaryString;
-      const hash = sha256(file.data);
+      const fileAsBinaryString = reader.result
+      file.data = fileAsBinaryString
+      const hash = sha256(file.data)
       const data = {
         hash,
         filename: file.name
       }
 
-        // We show creationState only for the first proof
-        if (proofs.length === 0) {
-          submitHash(hash)
-            .then((handles) => {
-              this.setState({creationState: true})
-              this.props.onChangeCreateStatus(true)
+      // We show creationState only for the first proof
+      if (proofs.length === 0) {
+        submitHash(hash).then(handles => {
+          this.setState({ creationState: true })
+          this.props.onChangeCreateStatus(true)
 
-              data.handles = handles
-              onAddProof(data)
+          data.handles = handles
+          onAddProof(data)
 
-              // Timeout to allow ProofAnalysis component do exit animation
-              setTimeout(() => {
-                this.setState({
-                  analysisState: false
-                })
-              }, 600)
+          // Timeout to allow ProofAnalysis component do exit animation
+          setTimeout(() => {
+            this.setState({
+              analysisState: false
             })
-        } else {
-          submitHash(hash)
-            .then((handles) => {
-              this.props.onChangeCreateStatus(true)
+          }, 1600)
+        })
+      } else {
+        submitHash(hash).then(handles => {
+          this.setState({ creationState: true })
+          this.props.onChangeCreateStatus(true)
 
-              data.handles = handles
-              
-              onAddProof(data)
+          data.handles = handles
 
-              // this.setState({ inputState: true, text: '' })
+          onAddProof(data)
 
-              // Timeout to allow ProofAnalysis component do exit animation
-              setTimeout(() => {
-                this.setState({
-                  analysisState: false
-                })
-              }, 600)
-            })
-        }
+          // this.setState({ inputState: true, text: '' })
+
+          // Timeout to allow ProofAnalysis component do exit animation
+          setTimeout(() => {
+            this.setState({ analysisState: false })
+          }, 1600)
+        })
+      }
     }
 
     reader.onabort = () => console.log('file reading was aborted')
     reader.onerror = () => console.log('file reading has failed')
 
     reader.readAsBinaryString(file)
-
-    setTimeout(() => {
-      this.setState({ dropzoneActive: false }, () => {
-        setTimeout(() => {this.setState({creationState: true}, () => {
-            setTimeout(() => {
-              this.setState({
-                analysisState: false
-              })
-            }, 1200)
-          })
-        }, 1200)
-      })
-    }, 1200)
   }
   verifyProof = file => {
     this.setState({
@@ -158,15 +145,11 @@ class CreateAndVerify extends Component {
     }
   }
   onAddAnotherFile = () => {
-    this.setState({
-      dropzoneActive: false,
-      inputState: false,
-      analysisState: false,
-      creationState: false,
-      file: ''
-    })
+    setTimeout(() => {
+      this.setState({ creationState: false })
+    }, 1680)
   }
-  onVerifyFail = () => {  
+  onVerifyFail = () => {
     this.setState({
       creationState: true,
       verifySuccess: false,
@@ -181,17 +164,17 @@ class CreateAndVerify extends Component {
       verifySuccess: true,
       analysisState: false
     })
-    this.props.onChangeVerifySuccessStatus(true);
+    this.props.onChangeVerifySuccessStatus(true)
     this.onVerifyAnalysisEnd()
   }
   onVerifyAnalysisEnd = () => {
     setTimeout(() => {
       this.setState({
-          analysisState: false
-      });
+        analysisState: false
+      })
 
-      this.props.onChangeVerifyAnalysisStatus(false);
-    }, 600);
+      this.props.onChangeVerifyAnalysisStatus(false)
+    }, 600)
   }
   onDragEnter = () => {
     this.setState({
@@ -206,13 +189,13 @@ class CreateAndVerify extends Component {
   onDrop = files => {
     const file = files[0]
     file.data = null
-    if(file.name.indexOf('.chp') > -1) {
+    if (file.name.indexOf('.chp') > -1) {
       this.verifyProof(file)
     } else {
       this.createProof(file)
     }
   }
-  reset () {
+  reset() {
     this.setState({
       dropzoneActive: false,
       file: '',
@@ -225,7 +208,7 @@ class CreateAndVerify extends Component {
       isCreation: false
     })
   }
-  render () {
+  render() {
     const {
       analysisState,
       creationState,
@@ -237,14 +220,10 @@ class CreateAndVerify extends Component {
       verifySuccess
     } = this.state
 
-    const {
-      proofs,
-      onDownloadProof,
-      onShowProofPopup
-    } = this.props
-    
+    const { proofs, onDownloadProof, onShowProofPopup } = this.props
+
     const classNames = classnames({
-      'createAndVerify': true,
+      createAndVerify: true,
       'createAndVerify--dropzoneActive': dropzoneActive,
       'createAndVerify--stateAnalysis': analysisState,
       'createAndVerify--stateCreation': creationState && isCreation,
@@ -254,7 +233,6 @@ class CreateAndVerify extends Component {
 
     return (
       <div>
-
         <Dropzone
           onDragEnter={this.onDragEnter}
           onDragLeave={this.onDragLeave}
@@ -265,12 +243,12 @@ class CreateAndVerify extends Component {
           style={{}}
         >
           <div className={ns('createAndVerify-help')}>
-            <ButtonIcon icon='help'  />
+            <ButtonIcon icon="help" />
           </div>
           <div className={ns('instructions')}>
             <div className={ns('instruction createProof')}>
               <h3>Create Proof</h3>
-              <img src={chpIcon} alt='create proof icon' />
+              <img src={chpIcon} alt="create proof icon" />
               <div>
                 <h5>Drag & Drop</h5>
                 <p>or browse your files</p>
@@ -278,7 +256,7 @@ class CreateAndVerify extends Component {
             </div>
             <div className={ns('instruction verifyProof')}>
               <h3>Verify Proof</h3>
-              <img src={chpIcon} alt='verify proof icon' />
+              <img src={chpIcon} alt="verify proof icon" />
               <div>
                 <h5>Choose a .CHP File</h5>
                 <p>to verify a chainpoint proof</p>
@@ -286,54 +264,50 @@ class CreateAndVerify extends Component {
             </div>
           </div>
           <div className={ns('notice')}>
-              Your file will not be uploaded, just analyzed in the browser
+            Your file will not be uploaded, just analyzed in the browser
           </div>
           <div className={ns('createAndVerify-dropMessage')}>
-            <DropMessage visible={dropzoneActive} analysing={analysisState} />      
+            <DropMessage visible={dropzoneActive} analysing={analysisState} />
           </div>
           <div className={ns('createAndVerify-analysis')}>
             <ProofAnalysis
-                visible={analysisState || creationState}
-                creating={creationState}
-                dropzoneActive={dropzoneActive}
+              visible={analysisState || creationState}
+              creating={creationState}
+              dropzoneActive={dropzoneActive}
             />
           </div>
           <div className={ns('createAndVerify-creation')}>
             <ProofCreation
-                isMobile={false}
-                visible={creationState && isCreation}
-                analysing={analysisState}
-                // inputting={inputState}
-                onAddAnotherFile={this.reset.bind(this)}
+              isMobile={false}
+              visible={creationState && isCreation}
+              analysing={analysisState}
+              // inputting={inputState}
+              onAddAnotherFile={this.reset.bind(this)}
             />
           </div>
-          {
-            file && (
-              <div className={ns('createAndVerify-verifyStatus')}>
-                <VerifyStatus
-                    visible={creationState && isVerification}
-                    analysing={analysisState}
-                    inputting={false}
-                    filename={file.name}
-                    verifySuccess={verifySuccess}
-                    onAddAnotherVerify={this.reset.bind(this)}
-                />
-              </div>
-            )
-          }
+          {file && (
+            <div className={ns('createAndVerify-verifyStatus')}>
+              <VerifyStatus
+                visible={creationState && isVerification}
+                analysing={analysisState}
+                inputting={false}
+                filename={file.name}
+                verifySuccess={verifySuccess}
+                onAddAnotherVerify={this.reset.bind(this)}
+              />
+            </div>
+          )}
         </Dropzone>
         <div>
-          {
-            proofs.length !== 0 && (
-              <section className={ns("createProof-sectionList")}>
-                <ProofList
-                  proofs={proofs}
-                  onDownloadProof={onDownloadProof}
-                  onShowProofPopup={onShowProofPopup}
-                />
-              </section>
-            )
-          }
+          {proofs.length !== 0 && (
+            <section className={ns('createProof-sectionList')}>
+              <ProofList
+                proofs={proofs}
+                onDownloadProof={onDownloadProof}
+                onShowProofPopup={onShowProofPopup}
+              />
+            </section>
+          )}
         </div>
       </div>
     )
