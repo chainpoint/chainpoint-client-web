@@ -1,29 +1,28 @@
-import React, { Component } from 'react';
-import cloneDeep from 'lodash/cloneDeep';
-import get from 'lodash/get';
-import set from 'lodash/set';
-import { createPopup, POPUP_ROOT_ID } from 'common/popupUtils';
-import VisibilitySensor from 'react-visibility-sensor';
-import withSizes from 'react-sizes';
-import fileDownload from 'js-file-download';
-import ns from 'utils/ns';
+import React, { Component } from 'react'
+import cloneDeep from 'lodash/cloneDeep'
+import get from 'lodash/get'
+import set from 'lodash/set'
+import { createPopup, POPUP_ROOT_ID } from 'common/popupUtils'
+// import VisibilitySensor from 'react-visibility-sensor'
+import withSizes from 'react-sizes'
+import fileDownload from 'js-file-download'
+import ns from 'utils/ns'
 
-import ProofPopup from 'components/ProofPopup/ProofPopup';
-import CreateProof from 'components/CreateProof/CreateProof';
-import VerifyProof from 'components/VerifyProof/VerifyProof';
-import CreateAndVerify from 'components/CreateAndVerify/CreateAndVerify';
-import { WIDTH_MOBILE, WIDTH_LAPTOP } from 'common/const';
-import {STORAGE_KEY, BLOCKCHAIN} from './constants';
-import {
-  convertsToBinary,
-  convertToLDJSON,
-  checkProofs
-} from './utils/API';
-import {sleep} from './utils/sleep';
+import ProofPopup from 'components/ProofPopup/ProofPopup'
+// import CreateProof from 'components/CreateProof/CreateProof'
+// import VerifyProof from 'components/VerifyProof/VerifyProof'
+import CreateAndVerify from 'components/CreateAndVerify/CreateAndVerify'
+import { WIDTH_MOBILE, WIDTH_LAPTOP } from 'common/const'
+import { STORAGE_KEY, BLOCKCHAIN } from './constants'
+import { convertsToBinary, convertToLDJSON, checkProofs } from './utils/API'
+import { sleep } from './utils/sleep'
 
-import './ProofApp.less';
+import './ProofApp.less'
 
-export const ProofAppContext = React.createContext({ isMobile: false, isLaptop: false });
+export const ProofAppContext = React.createContext({
+  isMobile: false,
+  isLaptop: false
+})
 
 class ProofApp extends Component {
   /**
@@ -51,29 +50,29 @@ class ProofApp extends Component {
         lastTry: null
       }
     }
-  });
+  })
 
   constructor(props) {
-    super(props);
+    super(props)
 
-    let popupRoot = document.getElementById(POPUP_ROOT_ID);
+    let popupRoot = document.getElementById(POPUP_ROOT_ID)
     if (!popupRoot) {
-      createPopup(POPUP_ROOT_ID);
+      createPopup(POPUP_ROOT_ID)
     }
 
-    let proofs = [];
-    const savedProofs = localStorage.getItem(STORAGE_KEY);
+    let proofs = []
+    const savedProofs = localStorage.getItem(STORAGE_KEY)
 
     if (savedProofs) {
-      proofs = this.restoreData(savedProofs);
+      proofs = this.restoreData(savedProofs)
     }
 
     this.state = {
       proofs,
       popupVisible: false,
-      popupProofId: null,
-    };
-    this.initPollingProcess(proofs);
+      popupProofId: null
+    }
+    this.initPollingProcess(proofs)
   }
 
   /**
@@ -84,98 +83,98 @@ class ProofApp extends Component {
    * @param handles
    * @returns {void}
    */
-  onAddProof = ({filename, hash, handles}) => {
-    const isDuplicate = this.checkDuplicates(hash);
+  onAddProof = ({ filename, hash, handles }) => {
+    const isDuplicate = this.checkDuplicates(hash)
 
     if (isDuplicate) {
-      return;
+      return
     }
 
-    const proofs = this.state.proofs;
-    const id = proofs ? proofs.length + 1 : 0;
-    const proof =  {
+    const proofs = this.state.proofs
+    const id = proofs ? proofs.length + 1 : 0
+    const proof = {
       ...this.getProofInitialState(),
       id,
       hash,
       filename,
       nodes: handles
-    };
+    }
 
-    this.setState(prevState => {
-      return {
-        proofs: [
-          proof,
-          ...prevState.proofs
-        ]
-      };
-    }, ()  => this.save());
-    this.startPollingForProof(proof);
-  };
+    this.setState(
+      prevState => {
+        return {
+          proofs: [proof, ...prevState.proofs]
+        }
+      },
+      () => this.save()
+    )
+    this.startPollingForProof(proof)
+  }
 
   onProofsReceived = (hash, receivedProofs) => {
-    const proofs = this.state.proofs.map((proof) => {
+    const proofs = this.state.proofs.map(proof => {
       if (proof.hash === hash) {
-        proof.proofs = receivedProofs;
+        proof.proofs = receivedProofs
       }
 
-      return proof;
-    });
+      return proof
+    })
 
-    this.setState({proofs}, () => this.save());
-  };
+    this.setState({ proofs }, () => this.save())
+  }
 
-  updateProof = ({hash, proofData, waitFor, blockchainType, isReady}) => {
-    let proofs = cloneDeep(this.state.proofs);
-    const proofIndex = proofs.findIndex((proof) => proof.hash === hash);
+  updateProof = ({ hash, proofData, waitFor, blockchainType, isReady }) => {
+    let proofs = cloneDeep(this.state.proofs)
+    const proofIndex = proofs.findIndex(proof => proof.hash === hash)
 
     if (!~proofIndex) {
-      return;
+      return
     }
 
-    const entryStatusPath = `${proofIndex}.proofStatus.${blockchainType}`;
-    const entryDataPath = `${proofIndex}.proofData`;
-    const entry = get(proofs, entryStatusPath);
-    const hasDone = !!(entry.isReady && get(proofs, entryDataPath));
+    const entryStatusPath = `${proofIndex}.proofStatus.${blockchainType}`
+    const entryDataPath = `${proofIndex}.proofData`
+    const entry = get(proofs, entryStatusPath)
+    const hasDone = !!(entry.isReady && get(proofs, entryDataPath))
 
     if (hasDone) {
-      return;
+      return
     }
 
-    entry.isReady = isReady;
-    entry.tryCount = entry.tryCount + 1;
-    entry.lastTry = Date.now();
+    entry.isReady = isReady
+    entry.tryCount = entry.tryCount + 1
+    entry.lastTry = Date.now()
 
-    set(proofs, entryStatusPath, entry);
+    set(proofs, entryStatusPath, entry)
 
     if (proofData) {
-      set(proofs, entryDataPath, proofData);
+      set(proofs, entryDataPath, proofData)
     }
 
-    this.setState({proofs}, () => this.save());
-  };
+    this.setState({ proofs }, () => this.save())
+  }
 
   onHidePopup = () => {
     this.setState({
       popupVisible: false,
       popupProofId: null
-    });
-  };
+    })
+  }
 
   onShowPopup = id => {
     this.setState({
       popupVisible: true,
       popupProofId: id !== undefined ? id : null
-    });
-  };
+    })
+  }
 
   onDownloadProof = (e, proof) => {
-    e.stopPropagation();
-    this.downloadProof(proof);
-  };
+    e.stopPropagation()
+    this.downloadProof(proof)
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.proofs.length !== prevState.proofs.length) {
-      this.props.onChangeProofCount(this.state.proofs.length);
+      this.props.onChangeProofCount(this.state.proofs.length)
     }
   }
 
@@ -186,7 +185,7 @@ class ProofApp extends Component {
    * @returns {boolean}
    */
   checkDuplicates(hash) {
-    return this.state.proofs.some((proof) => proof.hash === hash);
+    return this.state.proofs.some(proof => proof.hash === hash)
   }
 
   /**
@@ -196,12 +195,12 @@ class ProofApp extends Component {
    * @returns {void}
    */
   initPollingProcess(proofs) {
-    proofs.forEach((proof) => {
+    proofs.forEach(proof => {
       // for btc
-      this.checkProofs(proof, BLOCKCHAIN[0]);
+      this.checkProofs(proof, BLOCKCHAIN[0])
       // for cal
-      this.checkProofs(proof, BLOCKCHAIN[1]);
-    });
+      this.checkProofs(proof, BLOCKCHAIN[1])
+    })
   }
 
   /**
@@ -210,8 +209,11 @@ class ProofApp extends Component {
    * @returns {void}
    */
   startPollingForProof(proof) {
-    BLOCKCHAIN.forEach((blockchain) => sleep(blockchain.sleepBeforeFirstRequest)
-        .then(() => this.checkProofs(proof, blockchain)));
+    BLOCKCHAIN.forEach(blockchain =>
+      sleep(blockchain.sleepBeforeFirstRequest).then(() =>
+        this.checkProofs(proof, blockchain)
+      )
+    )
   }
 
   /**
@@ -221,8 +223,8 @@ class ProofApp extends Component {
    * @returns {void}
    */
   checkProofs(proof, blockchain = {}) {
-    const updateProof = this.updateProof;
-    const onProofsReceived = this.onProofsReceived;
+    const updateProof = this.updateProof
+    const onProofsReceived = this.onProofsReceived
 
     checkProofs({
       updateProof,
@@ -231,7 +233,7 @@ class ProofApp extends Component {
       handles: proof.nodes,
       sleepBeforeRetry: blockchain.retryInterval,
       waitFor: blockchain.id
-    });
+    })
   }
 
   /**
@@ -239,8 +241,8 @@ class ProofApp extends Component {
    * @returns {void}
    */
   save() {
-    const {proofs} = this.state;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(proofs));
+    const { proofs } = this.state
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(proofs))
   }
 
   /**
@@ -249,9 +251,9 @@ class ProofApp extends Component {
    * @returns {Object}
    */
   restoreData(savedProofs) {
-    const data = JSON.parse(savedProofs);
-    data.forEach((proof) => proof.date = new Date(proof.date));
-    return data;
+    const data = JSON.parse(savedProofs)
+    data.forEach(proof => (proof.date = new Date(proof.date)))
+    return data
   }
 
   /**
@@ -259,18 +261,15 @@ class ProofApp extends Component {
    * @param {Object} proof
    * @returns {void}
    */
-  downloadProof = (proof) => {
-    const {
-      proofData,
-      filename
-    } = proof;
+  downloadProof = proof => {
+    const { proofData, filename } = proof
 
     if (!proofData) {
-      return;
+      return
     }
 
-    this.downloadJSONFormat(proofData, filename);
-  };
+    this.downloadJSONFormat(proofData, filename)
+  }
 
   /**
    * Downloads file in binary format
@@ -279,10 +278,10 @@ class ProofApp extends Component {
    * @returns {void}
    */
   downloadBinaryFormat(data, name) {
-    const filename = `${name}.chp`;
-    const convertedData = convertsToBinary(data);
+    const filename = `${name}.chp`
+    const convertedData = convertsToBinary(data)
 
-    fileDownload(convertedData, filename);
+    fileDownload(convertedData, filename)
   }
 
   /**
@@ -292,33 +291,33 @@ class ProofApp extends Component {
    * @returns {void}
    */
   downloadJSONFormat(data, name) {
-    const filename = `${name}.chp.json`;
-    const convertedData = JSON.stringify(convertToLDJSON(data));
+    const filename = `${name}.chp.json`
+    const convertedData = JSON.stringify(convertToLDJSON(data))
 
-    fileDownload(convertedData, filename);
+    fileDownload(convertedData, filename)
   }
 
   render() {
-    const { popupVisible, proofs, popupProofId } = this.state;
+    const { popupVisible, proofs, popupProofId } = this.state
     const {
       isMobile,
       isLaptop,
-      onAppearCreate,
-      onAppearVerify,
+      // onAppearCreate,
+      // onAppearVerify,
       onChangeCreateStatus,
       onChangeVerifyAnalysisStatus,
       onChangeVerifySuccessStatus,
       onChangeVerifyFailStatus
-    } = this.props;
+    } = this.props
 
     return (
       <ProofAppContext.Provider value={{ isMobile, isLaptop }}>
-        <div className={ns("proofApp")}>
-          <div className={ns("proofApp-create-and-verify")}>
+        <div className={ns('proofApp')}>
+          <div className={ns('proofApp-create-and-verify')}>
             <CreateAndVerify
-              proofs = {proofs}
-              onAddProof = {this.onAddProof}
-              onShowProofPopup = {this.onShowPopup}
+              proofs={proofs}
+              onAddProof={this.onAddProof}
+              onShowProofPopup={this.onShowPopup}
               onDownloadProof={this.onDownloadProof}
               onChangeCreateStatus={onChangeCreateStatus}
               onChangeVerifyAnalysisStatus={onChangeVerifyAnalysisStatus}
@@ -359,7 +358,7 @@ class ProofApp extends Component {
           </div> */}
         </div>
       </ProofAppContext.Provider>
-    );
+    )
   }
 }
 
@@ -367,11 +366,11 @@ ProofApp.defaultProps = {
   onAppearCreate: () => {},
   onChangeCreateStatus: () => {},
   onChangeProofCount: () => {}
-};
+}
 
 const mapSizesToProps = ({ width }) => ({
   isMobile: width <= WIDTH_MOBILE,
   isLaptop: width > WIDTH_MOBILE && width <= WIDTH_LAPTOP
-});
+})
 
-export default withSizes(mapSizesToProps)(ProofApp);
+export default withSizes(mapSizesToProps)(ProofApp)

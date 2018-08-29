@@ -6,6 +6,8 @@ import { sha3_256 as sha256 } from 'js-sha3'
 import ns from 'utils/ns'
 import { convertToLDJSON, submitHash, verifyProofs } from 'utils/API'
 
+import Help from '../Help/Help'
+import HelpPopup from '../HelpPopup/HelpPopup'
 import DropMessage from '../DropMessage/DropMessage'
 import ButtonIcon from '../../common/ButtonIcon/ButtonIcon'
 import ProofAnalysis from '../ProofAnalysis/ProofAnalysis'
@@ -16,8 +18,6 @@ import ProofList from '../ProofList/ProofList'
 import createIcon from '../../svg/create.svg'
 import verifyIcon from '../../svg/verify.svg'
 import './CreateAndVerify.less'
-
-const l = input => console.log(input)
 
 class CreateAndVerify extends Component {
   state = {
@@ -79,7 +79,6 @@ class CreateAndVerify extends Component {
           this.props.onChangeCreateStatus(true)
 
           data.handles = handles
-
           onAddProof(data)
 
           // this.setState({ inputState: true, text: '' })
@@ -196,6 +195,19 @@ class CreateAndVerify extends Component {
       this.createProof(file)
     }
   }
+  onBrowseFiles = () => {
+    this.dropzoneRef.open()
+  }
+  onMouseEnter = () => {
+    if (!this.props.isMobile) {
+      this.setState({ helpVisible: true })
+    }
+  }
+  onMouseLeave = () => {
+    if (!this.props.isMobile) {
+      this.setState({ helpVisible: false })
+    }
+  }
   reset() {
     this.setState({
       dropzoneActive: false,
@@ -221,7 +233,7 @@ class CreateAndVerify extends Component {
       verifySuccess
     } = this.state
 
-    const { proofs, onDownloadProof, onShowProofPopup } = this.props
+    const { proofs, onDownloadProof, onShowProofPopup, isMobile } = this.props
 
     const classNames = classnames({
       createAndVerify: true,
@@ -242,9 +254,23 @@ class CreateAndVerify extends Component {
           multiple={false}
           className={ns(classNames)}
           style={{}}
+          ref={node => {
+            this.dropzoneRef = node
+          }}
         >
+          <div
+            className={ns('createAndVerify-help-icon')}
+            onMouseEnter={this.onMouseEnter}
+            onMouseLeave={this.onMouseLeave}
+          >
+            <ButtonIcon icon="help" onClick={this.showHelp} />
+          </div>
           <div className={ns('createAndVerify-help')}>
-            <ButtonIcon icon="help" />
+            {helpVisible && isMobile ? (
+              <HelpPopup onHidePopup={this.onHideHelp} />
+            ) : (
+              <Help visible={helpVisible} />
+            )}
           </div>
           <div className={ns('instructions')}>
             <div className={ns('instruction createProof')}>
@@ -254,7 +280,9 @@ class CreateAndVerify extends Component {
               </div>
               <div>
                 <h5>Drag & Drop</h5>
-                <p>or browse your files</p>
+                <p>
+                  or <a onClick={this.onBrowseFiles}>browse</a> your files
+                </p>
               </div>
             </div>
             <div className={ns('instruction verifyProof')}>
@@ -273,9 +301,7 @@ class CreateAndVerify extends Component {
               Your file will not be uploaded, just analyzed in the browser
             </div>
             <div className={ns('advanced-text')}>
-              <a href="#" onClick={() => alert('Not Yet Implemented!')}>
-                advanced
-              </a>
+              <a onClick={() => alert('Not Yet Implemented!')}>advanced</a>
             </div>
           </div>
           <div className={ns('createAndVerify-dropMessage')}>

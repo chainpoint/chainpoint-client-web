@@ -15,6 +15,9 @@
 
   a {
     color: @colorLinkBlue;
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   h3 {
@@ -22,7 +25,7 @@
   }
 
   h5 {
-    margin-bottom: 0;
+    margin-bottom: @sizeExtraSmall;
     margin-top: @sizeSmall;
     font-size: @fontSmall;
   }
@@ -139,9 +142,24 @@
     }
   }
 
-  &-help {
+  &-help-icon {
     width: 100%;
     text-align: right;
+    z-index: 10;
+  }
+  &-help {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    z-index: 9;
+    visibility: hidden;
+
+    @{c}--helpVisible & {
+      visibility: visible;
+    }
   }
 }
 
