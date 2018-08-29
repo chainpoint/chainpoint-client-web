@@ -81,6 +81,26 @@
     }
   }
 
+  &-input {
+    padding: @sizeLarge;
+    position: absolute;
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-inputInner {
+    border: 2px solid @colorLinkBlue;
+    border-radius: 5px;
+    width: 80%;
+  }
+
   &-dropMessage {
     visibility: hidden;
     background: #fff;
@@ -142,11 +162,15 @@
     }
   }
 
-  &-help-icon {
-    width: 100%;
+  &-help-icon,
+  &-close-icon {
     text-align: right;
+    position: absolute;
     z-index: 10;
+    top: @sizeSmall;
+    right: @sizeSmall;
   }
+
   &-help {
     position: absolute;
     top: 0;

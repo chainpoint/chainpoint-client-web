@@ -9,11 +9,15 @@ import { convertToLDJSON, submitHash, verifyProofs } from 'utils/API'
 import Help from '../Help/Help'
 import HelpPopup from '../HelpPopup/HelpPopup'
 import DropMessage from '../DropMessage/DropMessage'
-import ButtonIcon from '../../common/ButtonIcon/ButtonIcon'
 import ProofAnalysis from '../ProofAnalysis/ProofAnalysis'
 import ProofCreation from '../ProofCreation/ProofCreation'
 import VerifyStatus from '../VerifyStatus/VerifyStatus'
 import ProofList from '../ProofList/ProofList'
+
+// Common
+import ButtonIcon from '../../common/ButtonIcon/ButtonIcon'
+import Button from '../../common/Button/Button'
+import Textarea from '../../common/Textarea/Textarea'
 
 import createIcon from '../../svg/create.svg'
 import verifyIcon from '../../svg/verify.svg'
@@ -23,13 +27,15 @@ class CreateAndVerify extends Component {
   state = {
     dropzoneActive: false,
     file: '',
+    text: '',
     inputState: false,
     analysisState: false,
     creationState: false,
     helpVisible: false,
     verifySuccess: false,
     isVerification: false,
-    isCreation: false
+    isCreation: false,
+    mode: 0 // 0 == drag and drop, 1 == text input
   }
   createProof = file => {
     const { proofs, onAddProof } = this.props
@@ -198,6 +204,18 @@ class CreateAndVerify extends Component {
   onBrowseFiles = () => {
     this.dropzoneRef.open()
   }
+  onCreateText = () => {
+    const { text } = this.state
+    const file = new Blob([text], { type: 'text/plain' })
+
+    file.data = null
+    file.name = text.slice(0, 28)
+
+    this.createProof(file)
+  }
+  onChangeText = value => {
+    this.setState({ text: value })
+  }
   onMouseEnter = () => {
     if (!this.props.isMobile) {
       this.setState({ helpVisible: true })
@@ -207,6 +225,24 @@ class CreateAndVerify extends Component {
     if (!this.props.isMobile) {
       this.setState({ helpVisible: false })
     }
+  }
+  onShowHelp = e => {
+    e.preventDefault()
+    this.setState({
+      helpVisible: true
+    })
+  }
+  onShowTextInput = e => {
+    e.preventDefault()
+    this.setState({
+      mode: 1
+    })
+  }
+  onHideTextInput = e => {
+    e.preventDefault()
+    this.setState({
+      mode: 0
+    })
   }
   reset() {
     this.setState({
@@ -230,7 +266,9 @@ class CreateAndVerify extends Component {
       helpVisible,
       isCreation,
       isVerification,
-      verifySuccess
+      verifySuccess,
+      text,
+      mode
     } = this.state
 
     const { proofs, onDownloadProof, onShowProofPopup, isMobile } = this.props
@@ -243,6 +281,10 @@ class CreateAndVerify extends Component {
       'createAndVerify--stateCreated': creationState && isVerification,
       'createAndVerify--helpVisible': helpVisible
     })
+
+    const placeholder = !isMobile ? 'Enter your hash' : 'Enter hash'
+
+    const mobileTextareaHeight = proofs.length !== 0 ? 192 : 272
 
     return (
       <div>
@@ -258,13 +300,43 @@ class CreateAndVerify extends Component {
             this.dropzoneRef = node
           }}
         >
-          <div
-            className={ns('createAndVerify-help-icon')}
-            onMouseEnter={this.onMouseEnter}
-            onMouseLeave={this.onMouseLeave}
-          >
-            <ButtonIcon icon="help" onClick={this.showHelp} />
-          </div>
+          {mode === 0 ? (
+            <div
+              className={ns('createAndVerify-help-icon')}
+              onMouseEnter={this.onMouseEnter}
+              onMouseLeave={this.onMouseLeave}
+            >
+              <ButtonIcon icon="help" onClick={this.onShowHelp} />
+            </div>
+          ) : (
+            <div className={ns('createAndVerify-close-icon')}>
+              <ButtonIcon icon="close" onClick={this.onHideTextInput} />
+            </div>
+          )}
+
+          {mode !== 0 ? (
+            <div className={ns('createAndVerify-input')}>
+              <h3>Create Proof</h3>
+              <div className={ns('createAndVerify-inputInner')}>
+                <Textarea
+                  grow={true}
+                  placeholder={placeholder}
+                  value={text}
+                  onChange={this.onChangeText}
+                  placeholderCentered={isMobile}
+                  maxHeight={isMobile ? mobileTextareaHeight : 142}
+                />
+              </div>
+              <div className={ns('createProof-createButton')}>
+                <Button
+                  title="Create proof"
+                  grow={isMobile}
+                  type="primary"
+                  onClick={this.onCreateText}
+                />
+              </div>
+            </div>
+          ) : null}
           <div className={ns('createAndVerify-help')}>
             {helpVisible && isMobile ? (
               <HelpPopup onHidePopup={this.onHideHelp} />
@@ -301,7 +373,7 @@ class CreateAndVerify extends Component {
               Your file will not be uploaded, just analyzed in the browser
             </div>
             <div className={ns('advanced-text')}>
-              <a onClick={() => alert('Not Yet Implemented!')}>advanced</a>
+              <a onClick={this.onShowTextInput}>advanced</a>
             </div>
           </div>
           <div className={ns('createAndVerify-dropMessage')}>
