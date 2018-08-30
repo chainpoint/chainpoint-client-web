@@ -28,7 +28,7 @@ class CreateAndVerify extends Component {
     dropzoneActive: false,
     file: '',
     text: '',
-    inputState: false,
+    inputState: true,
     analysisState: false,
     creationState: false,
     helpVisible: false,
@@ -64,37 +64,20 @@ class CreateAndVerify extends Component {
       }
 
       // We show creationState only for the first proof
-      if (proofs.length === 0) {
-        submitHash(hash).then(handles => {
-          this.setState({ creationState: true })
-          this.props.onChangeCreateStatus(true)
+      submitHash(hash).then(handles => {
+        this.setState({ creationState: true })
+        this.props.onChangeCreateStatus(true)
 
-          data.handles = handles
-          onAddProof(data)
+        data.handles = handles
+        onAddProof(data)
 
-          // Timeout to allow ProofAnalysis component do exit animation
-          setTimeout(() => {
-            this.setState({
-              analysisState: false
-            })
-          }, 1600)
-        })
-      } else {
-        submitHash(hash).then(handles => {
-          this.setState({ creationState: true })
-          this.props.onChangeCreateStatus(true)
-
-          data.handles = handles
-          onAddProof(data)
-
-          // this.setState({ inputState: true, text: '' })
-
-          // Timeout to allow ProofAnalysis component do exit animation
-          setTimeout(() => {
-            this.setState({ analysisState: false })
-          }, 1600)
-        })
-      }
+        // Timeout to allow ProofAnalysis component do exit animation
+        // setTimeout(() => {
+        //   this.setState({
+        //     analysisState: false
+        //   })
+        // }, 600)
+      })
     }
 
     reader.onabort = () => console.log('file reading was aborted')
@@ -149,11 +132,6 @@ class CreateAndVerify extends Component {
     } else {
       reader.readAsArrayBuffer(file)
     }
-  }
-  onAddAnotherFile = () => {
-    setTimeout(() => {
-      this.setState({ creationState: false })
-    }, 1680)
   }
   onVerifyFail = () => {
     this.setState({
@@ -246,16 +224,31 @@ class CreateAndVerify extends Component {
   }
   reset() {
     this.setState({
-      dropzoneActive: false,
-      file: '',
-      inputState: false,
+      inputState: true,
+      text: '',
       analysisState: false,
-      creationState: false,
-      helpVisible: false,
-      verifySuccess: false,
-      isVerification: false,
-      isCreation: false
+      mode: 0
     })
+
+    // Timeout to allow ProofCreation component to do exit animation
+    setTimeout(() => {
+      this.setState({ creationState: false })
+    }, 1680)
+    // setTimeout(() => {
+    //   this.setState({
+    //     dropzoneActive: false,
+    //     file: '',
+    //     text: '',
+    //     inputState: true,
+    //     analysisState: false,
+    //     creationState: false,
+    //     helpVisible: false,
+    //     verifySuccess: false,
+    //     isVerification: false,
+    //     isCreation: false,
+    //     mode: 0
+    //   })
+    // }, 1680)
   }
   render() {
     const {
@@ -264,6 +257,7 @@ class CreateAndVerify extends Component {
       dropzoneActive,
       file,
       helpVisible,
+      inputState,
       isCreation,
       isVerification,
       verifySuccess,
@@ -279,7 +273,8 @@ class CreateAndVerify extends Component {
       'createAndVerify--stateAnalysis': analysisState,
       'createAndVerify--stateCreation': creationState && isCreation,
       'createAndVerify--stateCreated': creationState && isVerification,
-      'createAndVerify--helpVisible': helpVisible
+      'createAndVerify--helpVisible': helpVisible,
+      'createAndVerify--hasProofs': proofs.length !== 0
     })
 
     const placeholder = !isMobile ? 'Enter your hash' : 'Enter hash'
@@ -391,7 +386,7 @@ class CreateAndVerify extends Component {
               isMobile={false}
               visible={creationState && isCreation}
               analysing={analysisState}
-              // inputting={inputState}
+              inputting={inputState}
               onAddAnotherFile={this.reset.bind(this)}
             />
           </div>
