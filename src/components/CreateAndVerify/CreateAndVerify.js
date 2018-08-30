@@ -53,7 +53,7 @@ class CreateAndVerify extends Component {
     }, 1200)
 
     const reader = new FileReader()
-    console.log('created new reader')
+
     reader.onload = () => {
       const fileAsBinaryString = reader.result
       file.data = fileAsBinaryString
@@ -63,8 +63,6 @@ class CreateAndVerify extends Component {
         filename: file.name
       }
 
-      console.log('submitting hash')
-
       submitHash(hash).then(handles => {
         this.setState({ creationState: true })
         this.props.onChangeCreateStatus(true)
@@ -73,11 +71,11 @@ class CreateAndVerify extends Component {
         onAddProof(data)
 
         // Timeout to allow ProofAnalysis component do exit animation
-        // setTimeout(() => {
-        //   this.setState({
-        //     analysisState: false
-        //   })
-        // }, 600)
+        setTimeout(() => {
+          this.setState({
+            analysisState: false
+          })
+        }, 600)
       })
     }
 
@@ -229,6 +227,7 @@ class CreateAndVerify extends Component {
     this.setState({
       inputState: true,
       text: '',
+      file: '',
       analysisState: false,
       mode: 0
     })
