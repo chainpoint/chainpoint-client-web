@@ -17,7 +17,6 @@ import ProofList from '../ProofList/ProofList'
 // Common
 import ButtonIcon from '../../common/ButtonIcon/ButtonIcon'
 import Button from '../../common/Button/Button'
-import Textarea from '../../common/Textarea/Textarea'
 
 import createIcon from '../../svg/create.svg'
 import verifyIcon from '../../svg/verify.svg'
@@ -35,7 +34,7 @@ class CreateAndVerify extends Component {
     verifySuccess: false,
     isVerification: false,
     isCreation: false,
-    mode: 0 // 0 == drag and drop, 1 == text input
+    mode: 1 // 0 == drag and drop, 1 == text input
   }
   createProof = file => {
     const { proofs, onAddProof } = this.props
@@ -54,6 +53,7 @@ class CreateAndVerify extends Component {
     }, 1200)
 
     const reader = new FileReader()
+    console.log('created new reader')
     reader.onload = () => {
       const fileAsBinaryString = reader.result
       file.data = fileAsBinaryString
@@ -63,7 +63,8 @@ class CreateAndVerify extends Component {
         filename: file.name
       }
 
-      // We show creationState only for the first proof
+      console.log('submitting hash')
+
       submitHash(hash).then(handles => {
         this.setState({ creationState: true })
         this.props.onChangeCreateStatus(true)
@@ -191,8 +192,10 @@ class CreateAndVerify extends Component {
 
     this.createProof(file)
   }
-  onChangeText = value => {
-    this.setState({ text: value })
+  onChangeText = e => {
+    this.setState({
+      text: e.target.value
+    })
   }
   onMouseEnter = () => {
     if (!this.props.isMobile) {
@@ -234,21 +237,6 @@ class CreateAndVerify extends Component {
     setTimeout(() => {
       this.setState({ creationState: false })
     }, 1680)
-    // setTimeout(() => {
-    //   this.setState({
-    //     dropzoneActive: false,
-    //     file: '',
-    //     text: '',
-    //     inputState: true,
-    //     analysisState: false,
-    //     creationState: false,
-    //     helpVisible: false,
-    //     verifySuccess: false,
-    //     isVerification: false,
-    //     isCreation: false,
-    //     mode: 0
-    //   })
-    // }, 1680)
   }
   render() {
     const {
@@ -278,8 +266,6 @@ class CreateAndVerify extends Component {
     })
 
     const placeholder = !isMobile ? 'Enter your hash' : 'Enter hash'
-
-    const mobileTextareaHeight = proofs.length !== 0 ? 192 : 272
 
     return (
       <div>
@@ -313,13 +299,11 @@ class CreateAndVerify extends Component {
             <div className={ns('createAndVerify-input')}>
               <h3>Create Proof</h3>
               <div className={ns('createAndVerify-inputInner')}>
-                <Textarea
-                  grow={true}
-                  placeholder={placeholder}
+                <input
+                  type="text"
                   value={text}
                   onChange={this.onChangeText}
-                  placeholderCentered={isMobile}
-                  maxHeight={isMobile ? mobileTextareaHeight : 142}
+                  placeholder={placeholder}
                 />
               </div>
               <div className={ns('createProof-createButton')}>
