@@ -389,7 +389,7 @@ class CreateAndVerify extends Component {
         </Dropzone>
         <div>
           {proofs.length !== 0 && (
-            <section className={ns('createProof-sectionList')}>
+            <section className={ns('createAndVerify-sectionList')}>
               <ProofList
                 proofs={proofs}
                 onDownloadProof={onDownloadProof}
