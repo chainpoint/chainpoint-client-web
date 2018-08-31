@@ -34,7 +34,7 @@ class CreateAndVerify extends Component {
     verifySuccess: false,
     isVerification: false,
     isCreation: false,
-    mode: 1 // 0 == drag and drop, 1 == text input
+    mode: 0 // 0 == drag and drop, 1 == text input
   }
   createProof = file => {
     const { proofs, onAddProof } = this.props
@@ -237,6 +237,7 @@ class CreateAndVerify extends Component {
       this.setState({ creationState: false })
     }, 1680)
   }
+  noOp = () => {}
   render() {
     const {
       analysisState,
@@ -269,9 +270,9 @@ class CreateAndVerify extends Component {
     return (
       <div>
         <Dropzone
-          onDragEnter={this.onDragEnter}
-          onDragLeave={this.onDragLeave}
-          onDrop={this.onDrop}
+          onDragEnter={mode === 0 ? this.onDragEnter : this.noOp}
+          onDragLeave={mode === 0 ? this.onDragLeave : this.noOp}
+          onDrop={mode === 0 ? this.onDrop : this.noOp}
           disableClick={true}
           multiple={false}
           className={ns(classNames)}
@@ -308,9 +309,9 @@ class CreateAndVerify extends Component {
               <div className={ns('createProof-createButton')}>
                 <Button
                   title="Create proof"
-                  grow={isMobile}
-                  type="primary"
                   onClick={this.onCreateText}
+                  disabled={text.length !== 64}
+                  type="secondary"
                 />
               </div>
             </div>
