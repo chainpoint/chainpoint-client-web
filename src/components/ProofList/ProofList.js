@@ -57,6 +57,9 @@ class ProofList extends Component {
             </li>
             {proofs.slice(0, PROOFS_TO_SHOW).map(proof => {
               const isBtcReady = proof.proofStatus.btc.isReady
+              let eta = isBtcReady
+                ? 0
+                : (Date.now() - (proof.date.getTime() + 90 * 6e4)) / 6e4
 
               return (
                 <li className={ns('proofList-item')} key={proof.id}>
@@ -90,11 +93,9 @@ class ProofList extends Component {
                           <div className={ns('proofList-statusSpinner')}>
                             <Spinner />
                           </div>
-                          <span className={ns('proofList-statusText')}>
-                            result within
-                          </span>{' '}
+                          <span className={ns('proofList-statusText')} />{' '}
                           <span className={ns('proofList-statusTime')}>
-                            ~90 min
+                            ~{parseInt(Math.abs(eta))} min
                           </span>
                         </span>
                       )}
