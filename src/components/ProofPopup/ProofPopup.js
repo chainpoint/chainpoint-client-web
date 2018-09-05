@@ -14,6 +14,9 @@ import back from 'svg/arr-back-big.svg'
 import './ProofPopup.less'
 
 class ProofPopup extends Component {
+  onShowProofPopup() {
+    this.props.onShowProofPopup(null)
+  }
   render() {
     const {
       onShowProofPopup,
@@ -46,13 +49,13 @@ class ProofPopup extends Component {
       <Header>
         {proof ? (
           <button
-            onClick={() => onShowProofPopup(null)}
+            onClick={this.onShowProofPopup.bind(this)}
             className={ns('popup-back')}
           >
-            <img src={back} />
+            <img src={back} alt="back arrow" />
           </button>
         ) : null}
-        <span>All Proofs ({proofs.length})</span>
+        <span>All Proofs {proof ? null : `(${proofs.length})`}</span>
         <button className={ns('popup-close')} onClick={onHidePopup}>
           <SvgInline src={cross} />
         </button>

@@ -81,9 +81,20 @@ class MyProofs extends Component {
         }}
       >
         <ul className={ns('myProofs-list')}>
+          <li className={ns('myProofs-items-header')}>
+            <div className={ns('myProofs-header')}>
+              <div className={ns('myProofs-headerTitle')}>ID</div>
+              <div className={ns('myProofs-headerDate')}>Submitted</div>
+              <div className={ns('myProofs-headerStatus')}>Status</div>
+            </div>
+          </li>
           {proofs.map(proof => {
             const isCalReady = proof.proofStatus.cal.isReady
             const isBtcReady = proof.proofStatus.btc.isReady
+
+            let eta = isBtcReady
+              ? 0
+              : (Date.now() - (proof.date.getTime() + 90 * 6e4)) / 6e4
 
             return (
               <li className={ns('myProofs-item')} key={proof.id}>
@@ -93,15 +104,10 @@ class MyProofs extends Component {
                   data-id={proof.id}
                 >
                   <div className={ns('myProofs-itemTitle')}>
-                    {proof.filename}
-                  </div>
-                  <div className={ns('myProofs-itemCalendarStatus')}>
-                    {isCalReady ? <SvgInline src={ready} /> : <Spinner />}
-                    <span>Chainpoint Calendar</span>
-                  </div>
-                  <div className={ns('myProofs-itemBtcStatus')}>
-                    {isBtcReady ? <SvgInline src={ready} /> : <Spinner />}
-                    <span>BTC</span>
+                    <span className={ns('myProofs-itemId')}>{proof.hash}</span>
+                    <span className={ns('myProofs-itemName')}>
+                      filename: {proof.filename}
+                    </span>
                   </div>
                   <div className={ns('myProofs-itemDate')}>
                     {fecha.format(proof.date, DATE_FORMAT)}
@@ -114,14 +120,12 @@ class MyProofs extends Component {
                       />
                     ) : (
                       <span>
-                        <div className={ns('myProofs-statusSpinner')}>
+                        <div className={ns('proofList-statusSpinner')}>
                           <Spinner />
                         </div>
-                        <span className={ns('myProofs-statusText')}>
-                          result within
-                        </span>{' '}
-                        <span className={ns('myProofs-statusTime')}>
-                          ~90 min
+                        <span className={ns('proofList-statusText')} />{' '}
+                        <span className={ns('proofList-statusTime')}>
+                          ~{parseInt(Math.abs(eta), 10)} min
                         </span>
                       </span>
                     )}

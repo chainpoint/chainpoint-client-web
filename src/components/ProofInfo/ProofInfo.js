@@ -178,25 +178,41 @@ class ProofInfo extends Component {
         >
           <div className={ns('proofInfo-info')}>
             <div className={ns('proofInfo-infoText')}>
-              <ProofText proof={proof} />
+              <ProofText
+                proof={proof}
+                isCalReady={isCalReady}
+                isBtcReady={isBtcReady}
+              />
             </div>
 
             <div className={ns('proofInfo-infoStatusList')}>
-              {!isBtcReady && (
-                <div className={ns('proofInfo-infoStatus')}>
-                  <span>
-                    <span className={ns('myProofs-statusTime')}>~90 min</span>{' '}
-                    <span className={ns('myProofs-statusText')}>left</span>
-                  </span>
-                </div>
-              )}
               <div className={ns('proofInfo-infoStatus')}>
                 {isCalReady ? <SvgInline src={ready} /> : <Spinner />}
-                <span>Chainpoint Calendar Proof</span>
+                <span>
+                  Calendar
+                  {isCalReady ? (
+                    <span>
+                      &nbsp;|{' '}
+                      <a target="_blank" href="https://tierion.com">
+                        block 12345
+                      </a>
+                    </span>
+                  ) : null}
+                </span>
               </div>
               <div className={ns('proofInfo-infoStatus')}>
                 {isBtcReady ? <SvgInline src={ready} /> : <Spinner />}
-                <span>Bitcoin Proof</span>
+                <span>
+                  Bitcoin
+                  {isBtcReady ? (
+                    <span>
+                      &nbsp;|{' '}
+                      <a target="_blank" href="https://chainpoint.org">
+                        block 67890
+                      </a>
+                    </span>
+                  ) : null}
+                </span>
               </div>
             </div>
           </div>
