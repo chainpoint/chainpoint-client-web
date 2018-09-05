@@ -3,121 +3,129 @@
 @c: .popup;
 
 @{c} {
-    position: fixed;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 11;
+
+  &-overlay {
+    position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+    height: 100%;
 
-    z-index: 11;
+    background-color: #000000;
 
-    &-overlay {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 100%;
+    opacity: 0.2;
+    transition: opacity 0.5s ease;
 
-        background-color: #000000;
+    cursor: pointer;
 
-        opacity: 0.2;
-        transition: opacity 0.5s ease;
+    z-index: 1;
 
-        cursor: pointer;
+    @media @mobile {
+      opacity: 0.4;
+    }
+  }
 
-        z-index: 1;
+  &-inner {
+    position: relative;
+    height: 100vh;
+    padding: 64px 96px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-        @media @mobile {
-            opacity: 0.4;
-        }
+    @media @mobile {
+      padding: 8px;
+    }
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 10px 30px 0 rgba(104, 115, 142, 0.3);
+
+    z-index: 2;
+
+    @{c}--myProofs & {
+      max-height: 100%;
+      height: auto;
+    }
+  }
+
+  &-header {
+    background: @colorText;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    height: 64px;
+    width: 100%;
+    display: flex;
+
+    @media @mobile {
+      padding-top: 11px;
+      padding-left: 24px;
+      padding-right: 24px;
+      margin: 0;
+    }
+  }
+
+  &-body {
+    flex: 1;
+    height: 0;
+  }
+
+  &-back {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
+  &-close {
+    border: none;
+    background: none;
+    margin: 0;
+    padding: 0;
+
+    transition: opacity 0.3s ease;
+    margin-left: auto;
+
+    cursor: pointer;
+    outline: none;
+
+    z-index: 5;
+
+    .isvg {
+      display: block;
+      font-size: 0;
     }
 
-    &-inner {
-        position: relative;
-        height: 100vh;
-        padding: 64px 96px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        @media @mobile {
-            padding: 8px;
-        }
+    &:hover,
+    &:focus {
+      opacity: 0.5;
     }
 
-    &-content {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        position: relative;
-
-        border-radius: 8px;
-        background-color: #ffffff;
-        box-shadow: 0 10px 30px 0 rgba(104, 115, 142, 0.3);
-
-        z-index: 2;
-
-        @{c}--myProofs & {
-            max-height: 100%;
-            height: auto;
-        }
+    @media @mobile {
+      position: absolute;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      top: auto;
+      margin-left: auto;
+      margin-right: auto;
+      width: 16px;
+      height: 16px;
     }
-
-    &-header {
-        padding: 48px 64px 0;
-        margin-bottom: 35px;
-
-        @media @mobile {
-            padding-top: 11px;
-            padding-left: 24px;
-            padding-right: 24px;
-            margin: 0;
-        }
-    }
-
-    &-body {
-        flex: 1;
-        height: 0;
-    }
-
-    &-close {
-        position: absolute;
-        top: 32px;
-        right: 32px;
-
-        border: none;
-        background: none;
-        margin: 0;
-        padding: 0;
-
-        transition: opacity 0.3s ease;
-
-        cursor: pointer;
-        outline: none;
-
-        z-index: 5;
-
-        .isvg {
-            display: block;
-            font-size: 0;
-        }
-
-        &:hover,
-        &:focus {
-            opacity: 0.5;
-        }
-
-        @media @mobile {
-            position: absolute;
-            bottom: 24px;
-            left: 0;
-            right: 0;
-            top: auto;
-            margin-left: auto;
-            margin-right: auto;
-            width: 16px;
-            height: 16px;
-        }
-    }
+  }
 }

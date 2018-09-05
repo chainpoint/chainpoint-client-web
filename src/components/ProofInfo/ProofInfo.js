@@ -161,16 +161,6 @@ class ProofInfo extends Component {
 
     return (
       <div className={ns('proofInfo')}>
-        <div className={ns('proofInfo-backButton')}>
-          <Button
-            type="flat"
-            title="All proofs"
-            uppercase={false}
-            prefixIcon="arrowBack"
-            onClick={this.onShowProofPopup}
-          />
-        </div>
-
         <div
           className={ns('proofInfo-content')}
           ref={node => (this.textarea = node)}

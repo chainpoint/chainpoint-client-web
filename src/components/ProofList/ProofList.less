@@ -114,8 +114,8 @@
     margin-top: -5px;
     flex: 1;
 
-    font-size: 16px;
-    line-height: 2;
+    font-size: @fontSmall;
+    line-height: 1.5;
     letter-spacing: normal;
     text-align: left;
     color: @colorText;
@@ -123,6 +123,21 @@
     overflow: hidden;
     text-overflow: ellipsis;
     padding-right: 20px;
+
+    @{c}-itemId,
+    @{c}-itemName {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @{c}-itemId {
+      font-size: @fontExtraSmall;
+    }
+
+    @{c}-itemName {
+      font-size: @fontMicro;
+      color: @colorDarkGray;
+    }
 
     @media @mobile {
       flex: initial;
@@ -195,9 +210,10 @@
   &-headerTitle,
   &-headerDate,
   &-headerStatus {
-    color: @colorStratos;
-    font-size: 12px;
-    font-family: @fontFamilyBold;
+    color: @colorDarkGray;
+    font-size: 13px;
+    font-family: @fontFamilyHeading;
+    font-weight: bold;
     @media @mobile {
       padding-top: 0;
     }

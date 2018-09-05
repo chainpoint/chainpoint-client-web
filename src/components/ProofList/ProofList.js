@@ -69,25 +69,20 @@ class ProofList extends Component {
                     data-id={proof.id}
                   >
                     <div className={ns('proofList-itemTitle')}>
-                      {proof.filename}
+                      <div className={ns('proofList-itemId')}>{proof.hash}</div>
+                      <div className={ns('proofList-itemName')}>
+                        filename: {proof.filename}
+                      </div>
                     </div>
                     <div className={ns('proofList-itemDate')}>
                       {fecha.format(proof.date, DATE_FORMAT)}
                     </div>
                     <div className={ns('proofList-itemStatus')}>
                       {isBtcReady ? (
-                        isMobile ? (
-                          <ButtonIcon
-                            icon="arrowDown"
-                            onClick={e => onDownloadProof(e, proof)}
-                          />
-                        ) : (
-                          <Button
-                            title="Download"
-                            type="flat"
-                            onClick={e => onDownloadProof(e, proof)}
-                          />
-                        )
+                        <ButtonIcon
+                          icon="arrowDown"
+                          onClick={e => onDownloadProof(e, proof)}
+                        />
                       ) : (
                         <span>
                           <div className={ns('proofList-statusSpinner')}>
@@ -95,7 +90,7 @@ class ProofList extends Component {
                           </div>
                           <span className={ns('proofList-statusText')} />{' '}
                           <span className={ns('proofList-statusTime')}>
-                            ~{parseInt(Math.abs(eta))} min
+                            ~{parseInt(Math.abs(eta), 10)} min
                           </span>
                         </span>
                       )}

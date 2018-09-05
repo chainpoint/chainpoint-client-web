@@ -297,7 +297,7 @@ class CreateAndVerify extends Component {
 
           {mode !== 0 ? (
             <div className={ns('createAndVerify-input')}>
-              <h3>Create Proof</h3>
+              <h3>CREATE PROOF</h3>
               <div className={ns('createAndVerify-inputInner')}>
                 <input
                   type="text"
@@ -316,6 +316,7 @@ class CreateAndVerify extends Component {
               </div>
             </div>
           ) : null}
+
           <div className={ns('createAndVerify-help')}>
             {helpVisible && isMobile ? (
               <HelpPopup onHidePopup={this.onHideHelp} />
@@ -325,7 +326,7 @@ class CreateAndVerify extends Component {
           </div>
           <div className={ns('instructions')}>
             <div className={ns('instruction createProof')}>
-              <h3>Create Proof</h3>
+              <h3>CREATE PROOF</h3>
               <div className={ns('icon')}>
                 <img src={createIcon} alt="create proof icon" />
               </div>
@@ -337,12 +338,14 @@ class CreateAndVerify extends Component {
               </div>
             </div>
             <div className={ns('instruction verifyProof')}>
-              <h3>Verify Proof</h3>
+              <h3>VERIFY PROOF</h3>
               <div className={ns('icon')}>
                 <img src={verifyIcon} alt="verify proof icon" />
               </div>
               <div>
-                <h5>Choose a .CHP File</h5>
+                <h5>
+                  Choose a <span>.CHP</span> File
+                </h5>
                 <p>to verify a chainpoint proof</p>
               </div>
             </div>
