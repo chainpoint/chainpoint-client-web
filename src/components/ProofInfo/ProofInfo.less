@@ -40,6 +40,7 @@
   &-info {
     display: flex;
 
+    margin-bottom: @sizeTiny;
     @media @mobile, @laptop {
       flex-direction: column;
     }
@@ -55,7 +56,14 @@
 
   &-infoStatusList {
     width: 31.3%;
-    margin-top: 1px;
+
+    color: @colorDarkGray;
+    h3 {
+      margin: 0 0 @sizeExtraSmall 0;
+      font-size: @fontSmall;
+      font-family: @fontFamilyBold;
+      line-height: 1;
+    }
 
     @media @mobile, @laptop {
       width: 100%;
@@ -66,10 +74,10 @@
 
   &-infoStatus {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
 
     font-size: 14px;
-    line-height: 1.71;
+    margin-top: 8px;
 
     .isvg {
       display: inline-block;
@@ -92,10 +100,6 @@
       font-size: 12px;
       line-height: 2;
     }
-
-    & + @{c}-infoStatus {
-      margin-top: 1px;
-    }
   }
 
   &-hr {
@@ -113,7 +117,8 @@
   }
 
   &-code {
-    position: relative;
+    display: flex;
+    flex-direction: column;
     width: 100%;
   }
 
@@ -135,10 +140,9 @@
   }
 
   &-codeControls {
-    position: absolute;
-    top: -10px;
-    right: -15px;
-
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
     @media @mobile {
       top: auto;
       bottom: 64px;
@@ -154,11 +158,17 @@
   }
 
   &-codeBody {
-    font-family: 'RobotoMono', monospace;
-    font-size: 12px;
-    line-height: 1.33;
+    font-family: @fontFamilyCode;
+    background: @colorLighterGray;
+    padding: @sizeExtraLarge @sizeLarge;
+    margin-top: @sizeSmall;
+    font-size: @fontTiny;
+    line-height: @fontSmall;
+    border-radius: @borderRadius;
     color: #2c3240;
     white-space: pre-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &-backButtonIcon {

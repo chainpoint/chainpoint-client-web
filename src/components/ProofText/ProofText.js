@@ -13,32 +13,36 @@ const DATE_FORMAT = 'MM/DD/YYYY HH:mma'
 const ProofTextList = ({ proof }) => {
   const isCalReady = proof.proofStatus.cal.isReady
   const isBtcReady = proof.proofStatus.btc.isReady
+  let idText =
+    isCalReady && proof.proofs.length
+      ? proof.proofs[0].hashIdNode
+      : 'Waiting for chp node to return hash id'
   return (
     <div>
-      <div className={ns('proofText-row')}>
-        <div className={ns('proofText-name')}>Id</div>
-        <div className={ns('proofText-value')}>{proof.hash}</div>
+      <div className={ns('proofText-row proofText-id')}>
+        <div className={ns('proofText-name')}>Id:</div>
+        <div className={ns('proofText-value')}>{idText}</div>
       </div>
 
       <div className={ns('proofText-row')}>
-        <div className={ns('proofText-name')}>File</div>
+        <div className={ns('proofText-name')}>File:</div>
         <div className={ns('proofText-value')}>{proof.filename}</div>
       </div>
 
       <div className={ns('proofText-row')}>
-        <div className={ns('proofText-name')}>Hash</div>
+        <div className={ns('proofText-name')}>Hash:</div>
         <div className={ns('proofText-value')}>{proof.hash}</div>
       </div>
 
       <div className={ns('proofText-row')}>
-        <div className={ns('proofText-name')}>Submitted</div>
+        <div className={ns('proofText-name')}>Submitted:</div>
         <div className={ns('proofText-value')}>
           {fecha.format(proof.date, DATE_FORMAT)}
         </div>
       </div>
 
       <div className={ns('proofText-row')}>
-        <div className={ns('proofText-name')}>Status</div>
+        <div className={ns('proofText-name')}>Status:</div>
         <div className={ns('proofText-value')}>
           {isCalReady
             ? isBtcReady

@@ -5,7 +5,8 @@
 @{c} {
   position: relative;
   font-size: 14px;
-  line-height: 1.72;
+  line-height: 1;
+  font-family: @fontFamilyRegular;
 
   &:after {
     display: none;
@@ -32,7 +33,9 @@
 
   &-row {
     display: flex;
-
+    &:not(:first-of-type) {
+      margin-top: @sizeSmall;
+    }
     @media @mobile {
       display: block;
 
@@ -45,15 +48,15 @@
   &-name {
     width: 112px;
     flex-shrink: 0;
-
-    color: @colorTextSecondary;
+    color: @colorDarkerGray;
+    font-family: @fontFamilyBold;
   }
 
   &-value {
     word-wrap: break-word;
     flex: 1;
     width: 0;
-
+    color: @colorDarkGray;
     @media @mobile {
       margin-top: 4px;
       width: auto;
@@ -63,13 +66,12 @@
     }
   }
 
-  &-button {
-    margin-left: -17px;
-    margin-top: -7px;
-  }
-
   &-dropdown {
     padding-top: 12px;
     padding-bottom: 8px;
+  }
+  &-id {
+    font-size: @fontSmall;
+    font-family: @fontFamilyBold;
   }
 }

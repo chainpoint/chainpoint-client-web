@@ -132,22 +132,29 @@ class ProofInfo extends Component {
     return getFormattedJSON(ldJSON)
   }
 
-  /**
-   * Returns title for proof code
-   * @param {boolean} isCalReady
-   * @param {boolean} isBtcReady
-   * @returns {string|void}
-   */
-  getProofCodeTitle(isCalReady, isBtcReady) {
-    if (isBtcReady) {
-      return 'Bitcoin proof'
-    }
+  getAnchorsFromFormattedProof(ldJson) {
+    const proofJson = JSON.parse(ldJson)
+    let anchors = {}
 
-    if (isCalReady) {
-      return 'Chainpoint calendar proof'
-    }
+    if (proofJson && proofJson.branches) {
+      const calBranch = proofJson.branches.find(
+        branch => branch.label === 'cal_anchor_branch'
+      )
+      const calAnchorOp = calBranch && calBranch.ops.find(op => op.anchors)
 
-    return
+      anchors.cal =
+        (calAnchorOp && calAnchorOp.anchors && calAnchorOp.anchors[0]) || null
+
+      const btcBranch =
+        calBranch &&
+        calBranch.branches &&
+        calBranch.branches.find(branch => branch.label === 'btc_anchor_branch')
+
+      const btcAnchorOp = btcBranch && btcBranch.ops.find(op => op.anchors)
+      anchors.btc =
+        (btcAnchorOp && btcAnchorOp.anchors && btcAnchorOp.anchors[0]) || null
+    }
+    return anchors
   }
 
   render() {
@@ -157,7 +164,9 @@ class ProofInfo extends Component {
     const hasEnoughInfo = isCalReady || isBtcReady
 
     const proofLDJson = this.getFormattedProof(proof)
-    const codeTitle = this.getProofCodeTitle(isCalReady, isBtcReady)
+    const anchors = hasEnoughInfo
+      ? this.getAnchorsFromFormattedProof(proofLDJson)
+      : {}
 
     return (
       <div className={ns('proofInfo')}>
@@ -186,6 +195,7 @@ class ProofInfo extends Component {
             </div>
 
             <div className={ns('proofInfo-infoStatusList')}>
+              <h3>Anchors</h3>
               <div className={ns('proofInfo-infoStatus')}>
                 {isCalReady ? <SvgInline src={ready} /> : <Spinner />}
                 <span>
@@ -193,8 +203,8 @@ class ProofInfo extends Component {
                   {isCalReady ? (
                     <span>
                       &nbsp;|{' '}
-                      <a target="_blank" href="https://tierion.com">
-                        block 12345
+                      <a target="_blank" href={anchors.cal.uris[0]}>
+                        block {anchors.cal.anchor_id}
                       </a>
                     </span>
                   ) : null}
@@ -207,8 +217,8 @@ class ProofInfo extends Component {
                   {isBtcReady ? (
                     <span>
                       &nbsp;|{' '}
-                      <a target="_blank" href="https://chainpoint.org">
-                        block 67890
+                      <a target="_blank" href={anchors.btc.uris[0]}>
+                        block {anchors.btc.anchor_id}
                       </a>
                     </span>
                   ) : null}
@@ -219,11 +229,7 @@ class ProofInfo extends Component {
 
           {hasEnoughInfo && (
             <React.Fragment>
-              <hr className={ns('proofInfo-hr')} />
-
               <div className={ns('proofInfo-code')}>
-                <div className={ns('proofInfo-codeHeader')}>{codeTitle}</div>
-
                 {!isMobile && (
                   <div className={ns('proofInfo-codeControls')}>
                     <Button
@@ -236,7 +242,7 @@ class ProofInfo extends Component {
                       className={ns('proofInfo-copyButton')}
                     />
                     <Button
-                      type="secondary"
+                      type="download"
                       title="Download proof"
                       onClick={e => onDownloadProof(e, proof)}
                     />

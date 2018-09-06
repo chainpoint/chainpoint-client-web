@@ -7,7 +7,7 @@
         </linearGradient>
     </defs>
     <g fill="none" fill-rule="evenodd">
-        <circle cx="9" cy="9" r="9" fill="url(#a)"/>
+        <circle cx="9" cy="9" r="9" fill="#5AC461"/>
         <path fill="#FFF" d="M4 7.878l2.875 4.755h2.604L13.493 5.5h-2.6L8.09 10.422 6.563 7.878z"/>
     </g>
 </svg>
