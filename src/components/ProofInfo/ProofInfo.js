@@ -198,7 +198,7 @@ class ProofInfo extends Component {
               <h3>Anchors</h3>
               <div className={ns('proofInfo-infoStatus')}>
                 {isCalReady ? <SvgInline src={ready} /> : <Spinner />}
-                <span>
+                <span className={ns('proofInfo-infoStatusLink')}>
                   Calendar
                   {isCalReady ? (
                     <span>
@@ -212,7 +212,7 @@ class ProofInfo extends Component {
               </div>
               <div className={ns('proofInfo-infoStatus')}>
                 {isBtcReady ? <SvgInline src={ready} /> : <Spinner />}
-                <span>
+                <span className={ns('proofInfo-infoStatusLink')}>
                   Bitcoin
                   {isBtcReady ? (
                     <span>

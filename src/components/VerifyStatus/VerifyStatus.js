@@ -4,15 +4,42 @@ import SvgInline from 'react-inlinesvg'
 import ns from 'utils/ns'
 
 import Button from 'common/Button/Button'
+import ButtonIcon from 'common/ButtonIcon/ButtonIcon'
 import tickWhite from 'svg/tick-white.svg'
 import notVerified from 'svg/not-verified.svg'
 import { ProofAppContext } from 'ProofApp'
 
 import './VerifyStatus.less'
-
+import chpIcon from '../../svg/verify.svg'
+import createIcon from '../../svg/create.svg'
+import close from '../../svg/close.svg'
 class VerifyStatus extends Component {
-  render () {
-    const { visible, verifySuccess, analysing, inputting, filename, onAddAnotherVerify, isMobile } = this.props
+  getSuccessMessage() {
+    return (
+      <React.Fragment>
+        This Chainpoint proof is anchored to the Bitcoin blockchain in{' '}
+        <b>block 535700.</b>
+      </React.Fragment>
+    )
+  }
+  getErrorMessage() {
+    return (
+      <React.Fragment>
+        <b>Error message:</b> could not find a merkle root with enough power for
+        the flux capacitor.
+      </React.Fragment>
+    )
+  }
+  render() {
+    const {
+      visible,
+      verifySuccess,
+      analysing,
+      inputting,
+      filename,
+      onAddAnotherVerify,
+      isMobile
+    } = this.props
 
     const className = classNames('verifyStatus', {
       'verifyStatus--visible': visible,
@@ -24,30 +51,57 @@ class VerifyStatus extends Component {
 
     return (
       <div className={ns(className)}>
+        <div className={ns('verifyStatus-close')}>
+          <button onClick={onAddAnotherVerify}>
+            <SvgInline src={close} />
+          </button>
+        </div>
         <header className={ns('verifyStatus-header')}>
-          <div className={ns('verifyStatus-icon')}>
-            {verifySuccess ? <SvgInline src={tickWhite} /> : <SvgInline src={notVerified} />}
+          <img
+            src={verifySuccess ? chpIcon : close}
+            alt="chainpoint icon"
+            className={ns('verifyStatus-icon')}
+          />
+          <div className={ns('verifyStatus-details')}>
+            <h3>
+              {verifySuccess
+                ? 'PROOF IS VERIFIED'
+                : 'ERROR - PROOF NOT VERIFIED'}
+            </h3>
+            {verifySuccess ? (
+              <div>
+                <span>ID:</span> 5cf0a860-0f52-11e7-947d-7fde4e7ca024
+              </div>
+            ) : null}
+            <p>
+              {verifySuccess
+                ? this.getSuccessMessage()
+                : this.getErrorMessage()}
+            </p>
           </div>
-          <div className={ns('verifyStatus-title')}>{verifySuccess ? 'File Verified' : 'File not Verified'}</div>
-          <div className={ns('verifyStatus-filename')}>{filename}</div>
         </header>
-
-        <div className={ns('verifyStatus-text')}>
-          {verifySuccess ? (
-            <span>
-                Some text explaining that the file has a correct record in the blockchain that proves its
-                timestamp and integrity.
-            </span>
-          ) : (
-            <span>
-                Some text explaining that the file does not have a correct record in the blockchain.
-            </span>
-          )}
-        </div>
-
-        <div className={ns('verifyStatus-button')}>
-          <Button type='solid' grow={isMobile} title='Verify another file' onClick={onAddAnotherVerify} />
-        </div>
+        {verifySuccess ? (
+          <footer className={ns('verifyStatus-footer')}>
+            <img
+              src={createIcon}
+              alt="chainpoint icon"
+              className={ns('verifyStatus-icon')}
+            />
+            <div className={ns('verifyStatus-details')}>
+              <h4>
+                <span>Original Data Verification </span>
+                (Optional)
+              </h4>
+              <p>Verify your proof against a copy of the original data.</p>
+              <p>
+                Drag &amp; drop or <a>browse</a> your files.{' '}
+              </p>
+              <p>
+                Your file will not be uploaded, just analyzed in the browser.
+              </p>
+            </div>
+          </footer>
+        ) : null}
       </div>
     )
   }

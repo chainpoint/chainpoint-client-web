@@ -1,11 +1,11 @@
-import chainPoint from 'chainpoint-client/dist/bundle.web';
-import chainBinary from 'chainpoint-binary';
-import JSONFormatter from 'json-fmt';
+import chainPoint from 'chainpoint-client/dist/bundle.web'
+import chainBinary from 'chainpoint-binary'
+import JSONFormatter from 'json-fmt'
 
-import * as ProofProxyAPI from './ProofProxyAPI';
-import {sleep} from './sleep';
+import * as ProofProxyAPI from './ProofProxyAPI'
+import { sleep } from './sleep'
 
-const fmt = new JSONFormatter(JSONFormatter.PRETTY);
+const fmt = new JSONFormatter(JSONFormatter.PRETTY)
 
 /**
  * Converts a Chainpoint proof
@@ -13,18 +13,18 @@ const fmt = new JSONFormatter(JSONFormatter.PRETTY);
  * @param proof
  * @returns {string|void}
  */
-const convertsToBinary = (proof) => {
-    const ldJSON = convertToLDJSON(proof);
-    if (!ldJSON) {
-        return;
-    }
+const convertsToBinary = proof => {
+  const ldJSON = convertToLDJSON(proof)
+  if (!ldJSON) {
+    return
+  }
 
-    try {
-        return chainBinary.objectToBinarySync(ldJSON);
-    } catch (e) {
-        return;
-    }
-};
+  try {
+    return chainBinary.objectToBinarySync(ldJSON)
+  } catch (e) {
+    return
+  }
+}
 
 /**
  * Converts a Chainpoint binary proof
@@ -32,51 +32,51 @@ const convertsToBinary = (proof) => {
  * @param {Object} proof
  * @returns {Object|void}
  */
-const convertToLDJSON = (proof) => {
-    try {
-        return chainBinary.binaryToObjectSync(proof);
-    } catch (e) {
-        return;
-    }
-};
+const convertToLDJSON = proof => {
+  try {
+    return chainBinary.binaryToObjectSync(proof)
+  } catch (e) {
+    return
+  }
+}
 
 /**
  * Stringify and beautifies object
  * @param {Object} obj
  * @returns {string|void}
  */
-const getFormattedJSON = (obj) => {
-    try {
-        const strJSON = JSON.stringify(obj);
-        fmt.append(strJSON);
+const getFormattedJSON = obj => {
+  try {
+    const strJSON = JSON.stringify(obj)
+    fmt.append(strJSON)
 
-        const formatted = fmt.flush();
-        fmt.reset();
+    const formatted = fmt.flush()
+    fmt.reset()
 
-        return formatted;
-    } catch (e) {
-        fmt.reset();
-        return;
-    }
-};
+    return formatted
+  } catch (e) {
+    fmt.reset()
+    return
+  }
+}
 
 /**
  * Verify proofs
  * @param proofs
  * @returns {Array<Object>}
  */
-const verifyProofs = (proofs) => chainPoint.verifyProofs(proofs);
+const verifyProofs = proofs => chainPoint.verifyProofs(proofs)
 
 /**
  * Submits hash
  * @param hash
  * @return {Array<{uri: String, hash: String, hashIdNode: String}>}
  */
-const submitHash = (hash) => chainPoint.submitHashes([hash])
-    .then((handles) => {
-        ProofProxyAPI.storeProofHandles(handles);
-        return handles;
-    });
+const submitHash = hash =>
+  chainPoint.submitHashes([hash]).then(handles => {
+    ProofProxyAPI.storeProofHandles(handles)
+    return handles
+  })
 
 /**
  * Periodically checking
@@ -92,58 +92,67 @@ const submitHash = (hash) => chainPoint.submitHashes([hash])
  * @returns {void}
  */
 const checkProofs = ({
-    hash,
-    handles,
-    tryCount = 0,
-    triesLimit = 10,
-    sleepBeforeRetry = 1000 * 60,
-    waitFor = 'cal',
-    updateProof,
-    onProofsReceived
+  hash,
+  handles,
+  tryCount = 0,
+  triesLimit = 10,
+  sleepBeforeRetry = 1000 * 60,
+  waitFor = 'cal',
+  updateProof,
+  onProofsReceived
 }) => {
-    chainPoint.getProofs(handles)
-        // Save proofs into ProofProxy
-        .then((proofs) => {
-            ProofProxyAPI.storeProofs(proofs);
-            return proofs;
-        })
-        // if chainPoint client doesn't work as expected
-        // fallback to ProofProxy
-        .catch(() => ProofProxyAPI.getProofs(handles))
-        .then((proofs) => {
-            onProofsReceived(hash, proofs);
-            return proofs.find(proof => proof.anchorsComplete.includes(waitFor));
-        })
-        .then((proof) => {
-            const isReady = !!proof;
-            const proofData = isReady && proof.proof;
+  chainPoint
+    .getProofs(handles)
+    // Save proofs into ProofProxy
+    .then(proofs => {
+      console.log(handles)
+      ProofProxyAPI.storeProofs(proofs)
+      return proofs
+    })
+    // if chainPoint client doesn't work as expected
+    // fallback to ProofProxy
+    .catch(() => {
+      ProofProxyAPI.getProofs(handles)
+    })
+    .then(proofs => {
+      onProofsReceived(hash, proofs)
+      return proofs.find(proof => proof.anchorsComplete.includes(waitFor))
+    })
+    .then(proof => {
+      const isReady = !!proof
+      const proofData = isReady && proof.proof
 
-            updateProof({hash, proofData, waitFor, blockchainType: waitFor, isReady});
+      updateProof({
+        hash,
+        proofData,
+        waitFor,
+        blockchainType: waitFor,
+        isReady
+      })
 
-            if (!isReady) {
-                sleep(sleepBeforeRetry)
-                    .then(() => {
-                        checkProofs({
-                            hash,
-                            handles,
-                            tryCount: tryCount + 1,
-                            triesLimit,
-                            sleepBeforeRetry,
-                            waitFor,
-                            updateProof,
-                            onProofsReceived
-                        });
-                    });
-            }
+      if (!isReady) {
+        sleep(sleepBeforeRetry).then(() => {
+          checkProofs({
+            hash,
+            handles,
+            tryCount: tryCount + 1,
+            triesLimit,
+            sleepBeforeRetry,
+            waitFor,
+            updateProof,
+            onProofsReceived
+          })
         })
-        .catch(() => {});
-};
+      }
+    })
+    .catch(() => {})
+}
 
 export {
-    convertsToBinary,
-    getFormattedJSON,
-    convertToLDJSON,
-    verifyProofs,
-    checkProofs,
-    submitHash
-};
+  convertsToBinary,
+  getFormattedJSON,
+  convertToLDJSON,
+  verifyProofs,
+  checkProofs,
+  submitHash
+}

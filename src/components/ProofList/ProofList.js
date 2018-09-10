@@ -8,6 +8,7 @@ import Spinner from 'components/Spinner/Spinner'
 
 import './ProofList.less'
 import { ProofAppContext } from 'ProofApp'
+import { validateSha256 as validateHash } from 'utils/validation'
 
 const DATE_FORMAT = 'MM/DD/YYYY HH:mma'
 const PROOFS_TO_SHOW = 3
@@ -57,9 +58,18 @@ class ProofList extends Component {
             </li>
             {proofs.slice(0, PROOFS_TO_SHOW).map(proof => {
               const isBtcReady = proof.proofStatus.btc.isReady
-              let eta = isBtcReady
+              const idText =
+                proof.proofStatus.cal.isReady &&
+                proof.proofs &&
+                proof.proofs.length
+                  ? proof.proofs[0].hashIdNode
+                  : 'Waiting for chp node to return hash id'
+
+              const eta = isBtcReady
                 ? 0
                 : (Date.now() - (proof.date.getTime() + 90 * 6e4)) / 6e4
+
+              const isHash = validateHash(proof.filename)
 
               return (
                 <li className={ns('proofList-item')} key={proof.id}>
@@ -69,9 +79,9 @@ class ProofList extends Component {
                     data-id={proof.id}
                   >
                     <div className={ns('proofList-itemTitle')}>
-                      <div className={ns('proofList-itemId')}>{proof.hash}</div>
+                      <div className={ns('proofList-itemId')}>{idText}</div>
                       <div className={ns('proofList-itemName')}>
-                        filename: {proof.filename}
+                        {`${isHash ? 'hash:' : 'file:'} ${proof.filename}`}
                       </div>
                     </div>
                     <div className={ns('proofList-itemDate')}>

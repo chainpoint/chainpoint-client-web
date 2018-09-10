@@ -11,6 +11,7 @@ import ready from 'svg/ready.svg'
 import { ProofAppContext } from 'ProofApp'
 
 import './MyProofs.less'
+import { validateSha256 as validateHash } from 'utils/validation'
 
 const DATE_FORMAT = 'MM/DD/YYYY HH:mma'
 
@@ -91,10 +92,16 @@ class MyProofs extends Component {
           {proofs.map(proof => {
             const isCalReady = proof.proofStatus.cal.isReady
             const isBtcReady = proof.proofStatus.btc.isReady
+            const idText =
+              isCalReady && proof.proofs && proof.proofs.length
+                ? proof.proofs[0].hashIdNode
+                : 'Waiting for chp node to return hash id'
 
-            let eta = isBtcReady
+            const eta = isBtcReady
               ? 0
               : (Date.now() - (proof.date.getTime() + 90 * 6e4)) / 6e4
+
+            const isHash = validateHash(proof.filename)
 
             return (
               <li className={ns('myProofs-item')} key={proof.id}>
@@ -104,9 +111,9 @@ class MyProofs extends Component {
                   data-id={proof.id}
                 >
                   <div className={ns('myProofs-itemTitle')}>
-                    <span className={ns('myProofs-itemId')}>{proof.hash}</span>
+                    <span className={ns('myProofs-itemId')}>{idText}</span>
                     <span className={ns('myProofs-itemName')}>
-                      filename: {proof.filename}
+                      {`${isHash ? 'hash:' : 'file:'} ${proof.filename}`}
                     </span>
                   </div>
                   <div className={ns('myProofs-itemDate')}>
@@ -115,7 +122,7 @@ class MyProofs extends Component {
                   <div className={ns('myProofs-itemStatus')}>
                     {isBtcReady ? (
                       <ButtonIcon
-                        icon="arrowDown"
+                        icon="check"
                         onClick={e => onDownloadProof(e, proof)}
                       />
                     ) : (

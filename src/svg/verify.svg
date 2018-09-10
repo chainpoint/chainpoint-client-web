@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="74px" height="74px" viewBox="0 0 74 74" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
     <title>Illustrations/Verify</title>
     <desc>Created with Sketch.</desc>
@@ -10,33 +10,18 @@
         </linearGradient>
         <path d="M3.10862447e-15,46.8332781 L3.10862447e-15,4 C3.10862447e-15,1.790861 1.790861,0 4,0 L44,0 C46.209139,0 48,1.790861 48,4 L48,46.8332781 C41.6309221,52.5337572 33.2202532,56 24,56 C14.7797468,56 6.36907791,52.5337572 0,46.8332781 Z" id="path-2"></path>
     </defs>
-    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Components/Prompt" transform="translate(-435.000000, -119.000000)">
-            <g id="Group">
-                <g id="Verify" transform="translate(320.000000, 76.000000)">
-                    <g id="Illustrations/Verify" transform="translate(112.000000, 40.000000)">
-                        <g id="Illustration" transform="translate(4.000000, 4.000000)">
-                            <circle id="Gradient" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="36" cy="36" r="36"></circle>
-                            <g id="Sheet" transform="translate(12.000000, 16.000000)">
-                                <mask id="mask-3" fill="white">
-                                    <use xlink:href="#path-2"></use>
-                                </mask>
-                                <use id="Combined-Shape" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-2"></use>
-                                <path d="M7,42 L41,42 C41.5522847,42 42,42.4477153 42,43 C42,43.5522847 41.5522847,44 41,44 L7,44 C6.44771525,44 6,43.5522847 6,43 C6,42.4477153 6.44771525,42 7,42 Z M7,36 L41,36 C41.5522847,36 42,36.4477153 42,37 C42,37.5522847 41.5522847,38 41,38 L7,38 C6.44771525,38 6,37.5522847 6,37 C6,36.4477153 6.44771525,36 7,36 Z M7,30 L41,30 C41.5522847,30 42,30.4477153 42,31 C42,31.5522847 41.5522847,32 41,32 L7,32 C6.44771525,32 6,31.5522847 6,31 C6,30.4477153 6.44771525,30 7,30 Z M7,24 L41,24 C41.5522847,24 42,24.4477153 42,25 C42,25.5522847 41.5522847,26 41,26 L7,26 C6.44771525,26 6,25.5522847 6,25 C6,24.4477153 6.44771525,24 7,24 Z" id="Lines" fill="#CFCFCF" fill-rule="nonzero" mask="url(#mask-3)"></path>
-                                <g id="Chainpoint-Logo" mask="url(#mask-3)" fill-rule="nonzero">
-                                    <g transform="translate(13.000000, 4.000000)">
-                                        <polygon id="Combined-Shape" fill="#FF3D00" points="9.49887085 11.4988708 10.9988708 9.99887085 14 13 19 8 14 3 9 8 10.2917641 9.29176407 8.79176407 10.7917641 6 8 14 0 22 8 14 16"></polygon>
-                                        <polygon id="Link-1" fill="#FF3D00" points="12.5026489 4.50264892 11.0026489 6.00264892 8 3 3 8 8 13 13 8 11.7097557 6.7097557 13.2097557 5.2097557 16 8 8 16 0 8 8 0"></polygon>
-                                        <polygon id="Shadow-2" fill="#D3483E" points="11.7070334 13.7070334 10.9999266 12.9999266 12.4999266 11.4999266 13.2070334 12.2070334 11.7070334 13.7070334"></polygon>
-                                        <polygon id="Shadow-1" fill="#D3483E" points="10.2929438 2.29294384 11.0000506 3.00005062 9.50005062 4.50005062 8.79294384 3.79294384"></polygon>
-                                    </g>
-                                </g>
-                            </g>
-                            <circle id="Stroke" stroke="#58B4F0" stroke-width="2" fill-rule="nonzero" cx="36" cy="36" r="36"></circle>
-                        </g>
-                    </g>
-                </g>
+    <g id="Illustrations/Verify" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Illustration" transform="translate(4.000000, 4.000000)">
+            <circle id="Gradient" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="36" cy="36" r="36"></circle>
+            <g id="Sheet" transform="translate(12.000000, 16.000000)">
+                <mask id="mask-3" fill="white">
+                    <use xlink:href="#path-2"></use>
+                </mask>
+                <use id="Combined-Shape" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-2"></use>
+                <path d="M7,42 L41,42 C41.5522847,42 42,42.4477153 42,43 C42,43.5522847 41.5522847,44 41,44 L7,44 C6.44771525,44 6,43.5522847 6,43 C6,42.4477153 6.44771525,42 7,42 Z M7,36 L41,36 C41.5522847,36 42,36.4477153 42,37 C42,37.5522847 41.5522847,38 41,38 L7,38 C6.44771525,38 6,37.5522847 6,37 C6,36.4477153 6.44771525,36 7,36 Z" id="Lines" fill="#CFCFCF" fill-rule="nonzero" mask="url(#mask-3)"></path>
             </g>
+            <circle id="Stroke" stroke="#58B4F0" stroke-width="2" fill-rule="nonzero" cx="36" cy="36" r="36"></circle>
         </g>
+        <path d="M40.495723,34.4550041 L40.4906111,34.4599096 L37.9018017,31.9756107 L37.9069137,31.9707051 L35.8533042,30 L27,38.4958957 L35.8618581,47 L37.9179184,45.026943 L31.1096697,38.4935438 L37.4044251,32.4529082 L39.9932344,34.9372072 L36.2848377,38.4958957 L45.1466958,47 L54,38.5041043 L45.1381419,30 L42.9826062,32.0685165 L49.6913796,38.5064562 L43.466828,44.4797222 L40.977494,42.0908827 L44.7151623,38.5041043 L40.495723,34.4550041 Z M40.5067004,47.5019434 L35.8831986,52 L22,38.4934814 L35.8697978,25 L40.4932996,29.4980566 L45.1168014,25 L59,38.5065186 L45.1302022,52 L40.5067004,47.5019434 Z" id="Combined-Shape" fill="#EC4F27"></path>
     </g>
 </svg>

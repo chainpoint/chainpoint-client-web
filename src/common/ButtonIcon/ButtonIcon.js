@@ -5,14 +5,16 @@ import SvgInline from 'react-inlinesvg'
 import arrowDown from 'svg/arrow-down.svg'
 import help from 'svg/help.svg'
 import close from 'svg/cross.svg'
+import check from 'svg/ready.svg'
 import ns from 'utils/ns'
 
 import './ButtonIcon.less'
 
 const ICONS = {
-  help: help,
-  arrowDown: arrowDown,
-  close: close
+  help,
+  arrowDown,
+  check,
+  close
 }
 
 class ButtonIcon extends Component {

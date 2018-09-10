@@ -10,7 +10,8 @@
   height: 100%;
   padding-top: 18px;
   border-radius: 8px;
-  border: 1px dashed @colorBlue;
+  font-family: @fontFamilyAlternate;
+  z-index: 99999;
 
   &-icon {
     circle {
@@ -40,14 +41,14 @@
   &-title {
     margin-top: 17px;
 
-    font-size: 22px;
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 600;
     font-style: normal;
     font-stretch: normal;
     line-height: 1.82;
-    letter-spacing: -1.2px;
+    letter-spacing: -0.3px;
     text-align: center;
-    color: @colorText;
+    color: @colorBostonBlue;
 
     opacity: 0;
     transform: translateY(10px);
@@ -57,12 +58,12 @@
   &-text {
     margin-top: 3px;
 
-    font-size: 18px;
+    font-size: @fontTiny;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
-    line-height: 1.33;
-    letter-spacing: -0.85px;
+    line-height: 1;
+    letter-spacing: -0.13px;
     text-align: center;
     color: #8f98ad;
 

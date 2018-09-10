@@ -14,13 +14,14 @@ const ProofTextList = ({ proof }) => {
   const isCalReady = proof.proofStatus.cal.isReady
   const isBtcReady = proof.proofStatus.btc.isReady
   let idText =
-    isCalReady && proof.proofs.length
+    isCalReady && proof.proofs && proof.proofs.length
       ? proof.proofs[0].hashIdNode
       : 'Waiting for chp node to return hash id'
+
   return (
     <div>
       <div className={ns('proofText-row proofText-id')}>
-        <div className={ns('proofText-name')}>Id:</div>
+        <div className={ns('proofText-name')}>ID:</div>
         <div className={ns('proofText-value')}>{idText}</div>
       </div>
 

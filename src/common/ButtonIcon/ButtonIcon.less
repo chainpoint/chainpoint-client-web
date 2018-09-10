@@ -7,13 +7,23 @@
   display: inline-block;
 
   background: transparent;
-  border: 2px solid #eaecf2;
+  border: none;
   border-radius: 50%;
 
   transition: background 0.4s ease, border-color 0.4s ease;
   outline: none;
 
   cursor: pointer;
+
+  &@{c}--arrowDown {
+    background: @colorDownload;
+    rect {
+      fill: #fff;
+    }
+    path {
+      stroke: #fff;
+    }
+  }
 
   svg {
     transition: fill 0.4s ease;
@@ -28,14 +38,12 @@
     }
 
     &@{c}--arrowDown {
-      svg {
-        rect {
-          fill: #1653c9;
-        }
-
-        path {
-          stroke: #1653c9;
-        }
+      background: #fff;
+      rect {
+        fill: @colorDownload;
+      }
+      path {
+        stroke: @colorDownload;
       }
     }
   }
@@ -87,8 +95,8 @@
   }
 
   &--arrowDown {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
 
     svg {
       display: block;

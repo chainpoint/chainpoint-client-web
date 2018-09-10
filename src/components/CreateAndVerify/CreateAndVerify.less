@@ -11,8 +11,13 @@
   border-radius: 8px;
   height: 320px;
   color: @colorDarkGray;
-  border: 1px solid @colorBorder;
+  border: 1px dashed @colorBlue;
   overflow: hidden;
+
+  &--advanced,
+  &--stateCreated {
+    border: 1px solid @colorExtraLightGray;
+  }
 
   a {
     color: @colorLinkBlue;
@@ -25,6 +30,7 @@
     margin: 0;
     font-family: @fontFamilyHeading;
     color: @colorAstral;
+    letter-spacing: -0.5px;
   }
 
   h5 {
@@ -45,6 +51,7 @@
   .instructions {
     width: 100%;
     display: flex;
+    margin-top: @sizeMedium;
     @media @mobile {
       flex-direction: column;
     }
@@ -65,15 +72,17 @@
     img {
       height: 80px;
     }
+    a {
+      text-decoration: underline;
+    }
   }
 
   .notice {
     display: flex;
-    font-size: @fontExtraSmall;
-    margin-top: auto;
+    font-size: @fontMicro;
     width: 100%;
     justify-content: flex-end;
-    margin-top: @sizeExtraLarge;
+    margin-top: auto;
     .notice-text {
       width: 100%;
       flex: 1;
@@ -86,6 +95,7 @@
       z-index: 1;
       a {
         color: @colorLinkBlue;
+        text-decoration: underline;
       }
     }
   }
@@ -102,10 +112,13 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    font-size: 13px;
+    font-family: @fontFamilyRegular;
     h3 {
       font-size: @fontMedium;
       color: @colorText;
       font-family: @fontFamilyHeading;
+      letter-spacing: -0.5px;
     }
   }
 
@@ -117,7 +130,8 @@
       width: 100%;
       height: @sizeExtraLarge;
       font-size: 14px;
-      background: @colorExtraLightGray;
+      background: @colorAthensGray;
+      color: @colorDarkerGray;
       padding: 0 @sizeSmall;
     }
   }

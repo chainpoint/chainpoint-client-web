@@ -13,7 +13,7 @@
   &-header {
     width: 100%;
     height: 100%;
-    padding: 0 @sizeSmall;
+    padding: 0 @sizeLarge 0 @sizeSmall;
     display: flex;
     align-items: center;
   }
@@ -43,7 +43,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    padding: 0 @sizeSmall;
+    padding: 0 @sizeLarge 0 @sizeSmall;
     padding-bottom: 0;
     padding-top: 0;
     display: flex;
@@ -87,7 +87,7 @@
 
     &:hover,
     &:focus {
-      background-color: #f8f9fb;
+      background-color: @colorAlto;
 
       &:before {
         opacity: 1;
@@ -148,7 +148,7 @@
     font-size: 16px;
     line-height: 1.25;
     text-align: left;
-    color: @colorDarkGray;
+    color: @colorDarkerGray;
     overflow: hidden;
     text-overflow: ellipsis;
     display: flex;
@@ -233,9 +233,9 @@
     width: 173px;
     margin-top: -3px;
 
-    font-size: 14px;
+    font-size: 12px;
     line-height: 2.29;
-    color: @colorTextSecondary;
+    color: @colorLightGray;
     white-space: nowrap;
 
     @media @mobile, @laptop {
@@ -252,19 +252,14 @@
   &-itemStatus,
   &-headerStatus {
     width: 145px;
-    margin-top: -3px;
 
-    font-size: 14px;
-    line-height: 2.29;
+    font-size: 12px;
     text-align: right;
-    color: @colorText;
+    color: @colorLightGray;
     white-space: nowrap;
 
-    .button {
-      margin-right: -16px;
-      margin-top: 1px;
-    }
-
+    display: flex;
+    justify-content: flex-end;
     @media @mobile, @laptop {
       order: 3;
       width: 50px;
