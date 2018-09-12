@@ -3,10 +3,10 @@ import classNames from 'classnames'
 import SvgInline from 'react-inlinesvg'
 import ns from 'utils/ns'
 
-import Button from 'common/Button/Button'
-import ButtonIcon from 'common/ButtonIcon/ButtonIcon'
-import tickWhite from 'svg/tick-white.svg'
-import notVerified from 'svg/not-verified.svg'
+// import Button from 'common/Button/Button'
+// import ButtonIcon from 'common/ButtonIcon/ButtonIcon'
+// import tickWhite from 'svg/tick-white.svg'
+// import notVerified from 'svg/not-verified.svg'
 import { ProofAppContext } from 'ProofApp'
 
 import './VerifyStatus.less'
@@ -36,9 +36,9 @@ class VerifyStatus extends Component {
       verifySuccess,
       analysing,
       inputting,
-      filename,
-      onAddAnotherVerify,
-      isMobile
+      // filename,
+      onAddAnotherVerify
+      // isMobile
     } = this.props
 
     const className = classNames('verifyStatus', {

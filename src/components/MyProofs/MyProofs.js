@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import fecha from 'fecha'
-import SvgInline from 'react-inlinesvg'
+// import SvgInline from 'react-inlinesvg'
 import ns from 'utils/ns'
 
 import Spinner from 'components/Spinner/Spinner'
-import Button from 'common/Button/Button'
+// import Button from 'common/Button/Button'
 import ButtonIcon from 'common/ButtonIcon/ButtonIcon'
 
-import ready from 'svg/ready.svg'
+// import ready from 'svg/ready.svg'
 import { ProofAppContext } from 'ProofApp'
 
 import './MyProofs.less'
@@ -63,7 +63,7 @@ class MyProofs extends Component {
   }
 
   render() {
-    const { proofs, isMobile, isLaptop, onDownloadProof } = this.props
+    const { proofs, onDownloadProof } = this.props
 
     return (
       <div

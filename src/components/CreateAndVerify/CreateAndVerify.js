@@ -28,6 +28,11 @@ class CreateAndVerify extends Component {
     dropzoneActive: false,
     file: '',
     text: '',
+    currentProof: {
+      hash: null,
+      hashId: null,
+      filename: null
+    },
     inputState: true,
     analysisState: false,
     creationState: false,
@@ -38,7 +43,7 @@ class CreateAndVerify extends Component {
     mode: 0 // 0 == drag and drop, 1 == text input
   }
   createProof = file => {
-    const { proofs, onAddProof } = this.props
+    const { onAddProof } = this.props
 
     this.setState({
       file,
@@ -58,26 +63,38 @@ class CreateAndVerify extends Component {
     reader.onload = () => {
       const fileAsBinaryString = reader.result
       file.data = fileAsBinaryString
-      const hash = sha256(file.data)
+      // if file.data is already sha256,
+      const hash = validateHash(file.data) ? file.data : sha256(file.data)
+
       const data = {
         hash,
         filename: file.name
       }
 
-      submitHash(hash).then(handles => {
-        this.setState({ creationState: true })
-        this.props.onChangeCreateStatus(true)
-
-        data.handles = handles
-        onAddProof(data)
-
-        // Timeout to allow ProofAnalysis component do exit animation
-        setTimeout(() => {
+      submitHash(hash)
+        .then(handles => {
           this.setState({
-            analysisState: false
+            creationState: true,
+            currentProof: {
+              hashId: handles && handles.length ? handles[0].hashIdNode : null,
+              hash: hash,
+              filename: data.filename
+            }
           })
-        }, 600)
-      })
+          this.props.onChangeCreateStatus(true)
+
+          data.handles = handles
+
+          onAddProof(data)
+
+          // Timeout to allow ProofAnalysis component do exit animation
+          setTimeout(() => {
+            this.setState({
+              analysisState: false
+            })
+          }, 600)
+        })
+        .catch(err => console.log(err))
     }
 
     reader.onabort = () => console.log('file reading was aborted')
@@ -114,6 +131,8 @@ class CreateAndVerify extends Component {
         const ldJSON = convertToLDJSON(fileAsArrayBuffer)
         proof = [ldJSON]
       }
+
+      console.log(JSON.parse(proof))
 
       setTimeout(() => {
         try {
@@ -160,7 +179,7 @@ class CreateAndVerify extends Component {
       })
 
       this.props.onChangeVerifyAnalysisStatus(false)
-    }, 0)
+    }, 1200)
   }
   onDragEnter = () => {
     this.setState({
@@ -195,7 +214,7 @@ class CreateAndVerify extends Component {
   }
   onChangeText = e => {
     this.setState({
-      text: e.target.value
+      text: e.target.value.trim()
     })
   }
   onMouseEnter = () => {
@@ -233,7 +252,14 @@ class CreateAndVerify extends Component {
       file: '',
       analysisState: false,
       mode: 0,
-      creationState: false
+      creationState: false,
+      isCreation: false,
+      isVerification: false,
+      currentProof: {
+        hash: null,
+        hashId: null,
+        filename: null
+      }
     })
 
     // Timeout to allow ProofCreation component to do exit animation
@@ -252,6 +278,7 @@ class CreateAndVerify extends Component {
       inputState,
       isCreation,
       isVerification,
+      currentProof,
       verifySuccess,
       text,
       mode
@@ -330,7 +357,7 @@ class CreateAndVerify extends Component {
               <Help visible={helpVisible} />
             )}
           </div>
-          <div className={ns('instructions')}>
+          <div className={ns('instructions')} onClick={this.onBrowseFiles}>
             <div className={ns('instruction createProof')}>
               <h3>CREATE PROOF</h3>
               <div className={ns('icon')}>
@@ -374,15 +401,18 @@ class CreateAndVerify extends Component {
               dropzoneActive={dropzoneActive}
             />
           </div>
-          <div className={ns('createAndVerify-creation')}>
-            <ProofCreation
-              isMobile={false}
-              visible={creationState && isCreation}
-              analysing={analysisState}
-              inputting={inputState}
-              onAddAnotherFile={this.reset.bind(this)}
-            />
-          </div>
+          {currentProof && (
+            <div className={ns('createAndVerify-creation')}>
+              <ProofCreation
+                isMobile={false}
+                visible={creationState && isCreation}
+                analysing={analysisState}
+                inputting={inputState}
+                onAddAnotherFile={this.reset.bind(this)}
+                proof={currentProof}
+              />
+            </div>
+          )}
           {file &&
             isVerification && (
               <div className={ns('createAndVerify-verifyStatus')}>

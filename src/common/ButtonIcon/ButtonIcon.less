@@ -76,6 +76,7 @@
   &--help {
     width: 24px;
     height: 24px;
+    border: 1px solid @colorLightGray;
 
     cursor: default;
 
@@ -90,7 +91,10 @@
       height: 12px;
       margin: auto;
 
-      fill: #19a2ff;
+      fill: @colorLightGray;
+      &:hover {
+        fill: @colorDarkGray;
+      }
     }
   }
 

@@ -13,7 +13,9 @@ import { PROOF_PROXY_BASE_URL } from '../constants'
  */
 const storeProofHandles = handles => {
   const data = handles.map(({ hashIdNode, uri }) => [hashIdNode, uri])
-  axois.post(PROOF_PROXY_BASE_URL.SUBMIT, data).catch(() => {})
+  axois.post(PROOF_PROXY_BASE_URL.SUBMIT, data).catch(() => {
+    console.log('failed storing proof handles')
+  })
 }
 
 /**
@@ -23,7 +25,11 @@ const storeProofHandles = handles => {
  */
 const storeProofs = proofs => {
   const data = proofs.map(({ hashIdNode, proof }) => [hashIdNode, proof])
-  axois.post(PROOF_PROXY_BASE_URL.SUBMIT, data).catch(() => {})
+  if (data) {
+    axois.post(PROOF_PROXY_BASE_URL.SUBMIT, data).catch(() => {
+      console.log('failed storing proof')
+    })
+  }
 }
 
 /**
@@ -36,6 +42,8 @@ const getProofs = handles => {
     (acc, { hashIdNode }) => [...acc, hashIdNode],
     []
   )
+
+  console.log('getting proofs', handles)
 
   const apiUrl = `${PROOF_PROXY_BASE_URL.GET}`
   const opts = {
@@ -75,7 +83,9 @@ const getProofs = handles => {
         }
       })
     })
-    .catch(() => {})
+    .catch(() => {
+      console.log('failed fetching proof')
+    })
 }
 
 export { storeProofHandles, storeProofs, getProofs }

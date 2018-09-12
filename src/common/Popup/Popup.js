@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import SvgInline from 'react-inlinesvg'
+// import SvgInline from 'react-inlinesvg'
 
-import Header from 'common/Header/Header'
+// import Header from 'common/Header/Header'
 import { POPUP_ROOT_ID } from 'common/popupUtils'
-import cross from 'svg/cross.svg'
+// import cross from 'svg/cross.svg'
 import ns from 'utils/ns'
 
 import './Popup.less'

@@ -8,13 +8,13 @@ This library provides react components for creating and verifying [Chainpoint](h
 
 There are two ways to embed the UI components into the site.
 
-__NPM__
+**NPM**
 
 ```bash
 npm i git+ssh://git@github.com/Tierion/proof-web-client.git -S
 ```
 
-__YARN__
+**YARN**
 
 ```bash
 yarn add git+ssh://git@github.com/Tierion/proof-web-client.git
@@ -23,14 +23,15 @@ yarn add git+ssh://git@github.com/Tierion/proof-web-client.git
 ### HTML tag
 
 Proof-web-client provides two files for use in html pages:
-* *node_modules/proof-web-client/dist/bundle.js*
-* *node_modules/proof-web-client/dist/bundle.css*
+
+- _node_modules/proof-web-client/dist/bundle.js_
+- _node_modules/proof-web-client/dist/bundle.css_
 
 Steps:
 
-* Create *script* and *link* tag for bundled css and js files.
+- Create _script_ and _link_ tag for bundled css and js files.
 
-* Add a container with id __proof-app-client__.
+- Add a container with id **proof-app-client**.
 
 Proof-web-client will render application directly in this container.
 
@@ -82,43 +83,45 @@ Proof-web-client will render application directly in this container.
 
 ### Attrs
 
-* data-onAppearCreate
-* data-onAppearVerify
-* data-onChangeProofCount
-* data-onChangeCreateStatus
-* data-onChangeVerifyFailStatus
-* data-onChangeVerifySuccessStatus
-* data-onChangeVerifyAnalysisStatus
+- data-onAppearCreate
+- data-onAppearVerify
+- data-onChangeProofCount
+- data-onChangeCreateStatus
+- data-onChangeVerifyFailStatus
+- data-onChangeVerifySuccessStatus
+- data-onChangeVerifyAnalysisStatus
 
 ### React Components
 
 Proof-web-client provides set of react components for use in react application:
 
-* *node_modules/proof-web-client/dist/react*
+- _node_modules/proof-web-client/dist/react_
 
 ```js
-import ProofClient from 'proof-web-client/dist/react/index.js';
-import 'proof-web-client/dist/react/index.css';
+import ProofClient from 'proof-web-client/dist/react/index.js'
+import 'proof-web-client/dist/react/index.css'
 
-export default (props) => (
-    <ProofClient
-        onAppearCreate={() => {}}
-        onAppearVerify={() => {}}
-        onChangeProofCount={() => {}}
-        onChangeCreateStatus={() => {}}
-        onChangeVerifyAnalysisStatus={() => {}}
-        onChangeVerifySuccessStatus={() => {}}
-        onChangeVerifyFailStatus={() => {}}
-    />
-);
+export default props => (
+  <ProofClient
+    onAppearCreate={() => {}}
+    onAppearVerify={() => {}}
+    onChangeProofCount={() => {}}
+    onChangeCreateStatus={() => {}}
+    onChangeVerifyAnalysisStatus={() => {}}
+    onChangeVerifySuccessStatus={() => {}}
+    onChangeVerifyFailStatus={() => {}}
+  />
+)
 ```
 
 #### Props:
 
-* onAppearCreate
-* onAppearVerify
-* onChangeProofCount
-* onChangeCreateStatus
-* onChangeVerifyFailStatus
-* onChangeVerifySuccessStatus
-* onChangeVerifyAnalysisStatus
+- onAppearCreate
+- onAppearVerify
+- onChangeProofCount
+- onChangeCreateStatus
+- onChangeVerifyFailStatus
+- onChangeVerifySuccessStatus
+- onChangeVerifyAnalysisStatus
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/chainpoint/chainpoint-client-web/tree/refactor/combine-create-verify)

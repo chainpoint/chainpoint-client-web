@@ -25,22 +25,22 @@ class ProofList extends Component {
   }
 
   render() {
-    const { proofs, isMobile, onDownloadProof } = this.props
+    const { proofs, onDownloadProof } = this.props
 
-    let height = 0
-    if (this.innerNode && proofs.length !== 0) {
-      const rowHeight = isMobile ? 80 : 72
-      const showPopupHeight = isMobile ? 56 : 72
-      const headerHeight = 40
-      const innerStyle = window.getComputedStyle(this.innerNode)
+    // let height = 0
+    // if (this.innerNode && proofs.length !== 0) {
+    //   const rowHeight = isMobile ? 80 : 72
+    //   const showPopupHeight = isMobile ? 56 : 72
+    //   const headerHeight = 40
+    //   // const innerStyle = window.getComputedStyle(this.innerNode)
 
-      height =
-        Math.min(proofs.length, PROOFS_TO_SHOW) * rowHeight + headerHeight
+    //   // height =
+    //   //   Math.min(proofs.length, PROOFS_TO_SHOW) * rowHeight + headerHeight
 
-      if (proofs.length > 3) {
-        height += showPopupHeight
-      }
-    }
+    //   // if (proofs.length > 3) {
+    //   //   // height += showPopupHeight
+    //   // }
+    // }
 
     return (
       <div className={ns('proofList')}>
@@ -112,7 +112,10 @@ class ProofList extends Component {
           </ul>
 
           {proofs.length > PROOFS_TO_SHOW && (
-            <div className={ns('proofList-showPopup')}>
+            <div
+              className={ns('proofList-showPopup')}
+              onClick={this.onShowProofPopup}
+            >
               <Button
                 title={`View All Proofs`}
                 type="link"

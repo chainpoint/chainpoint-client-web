@@ -74,7 +74,7 @@ const verifyProofs = proofs => chainPoint.verifyProofs(proofs)
  */
 const submitHash = hash =>
   chainPoint.submitHashes([hash]).then(handles => {
-    ProofProxyAPI.storeProofHandles(handles)
+    // ProofProxyAPI.storeProofHandles(handles)
     return handles
   })
 
@@ -102,17 +102,20 @@ const checkProofs = ({
   onProofsReceived
 }) => {
   chainPoint
+
     .getProofs(handles)
     // Save proofs into ProofProxy
     .then(proofs => {
-      console.log(handles)
-      ProofProxyAPI.storeProofs(proofs)
+      // if proof is gone, don't attempt to restore it
+      if (proofs[0].proof) {
+        // ProofProxyAPI.storeProofs(proofs)
+      }
       return proofs
     })
     // if chainPoint client doesn't work as expected
     // fallback to ProofProxy
     .catch(() => {
-      ProofProxyAPI.getProofs(handles)
+      // ProofProxyAPI.getProofs(handles)
     })
     .then(proofs => {
       onProofsReceived(hash, proofs)

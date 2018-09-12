@@ -16,7 +16,8 @@ class ProofCreation extends Component {
       analysing,
       inputting,
       isMobile,
-      onAddAnotherFile
+      onAddAnotherFile,
+      proof
     } = this.props
 
     const className = classNames('proofCreation', {
@@ -28,11 +29,15 @@ class ProofCreation extends Component {
     return (
       <div className={ns(className)}>
         <div className={ns('proofCreation-spinner')}>
-          <img src={loader} />
+          <img src={loader} alt="spinner" />
           Analyzing
         </div>
         <div className={ns('proofCreation-hint')}>
-          <img src={verifyIcon} className={ns('proofCreation-icon')} />
+          <img
+            src={verifyIcon}
+            className={ns('proofCreation-icon')}
+            alt="proof icon"
+          />
           <div className={ns('proofCreation-details')}>
             <h3>Your Chainpoint proof is being created</h3>
             <p>
@@ -46,15 +51,15 @@ class ProofCreation extends Component {
         <div className={ns('proofCreation-stats')}>
           <div className={ns('proofCreation-id')}>
             <span className={ns('proofCreation-stat')}>ID:</span>
-            5cf0a860-0f52-11e7-947d-7fde4e7ca024
+            {proof.hashId}
           </div>
           <div className={ns('proofCreation-file')}>
             <span className={ns('proofCreation-stat')}>File:</span>
-            big-long-file-name-here.jpg
+            {proof.filename}
           </div>
           <div className={ns('proofCreation-hash')}>
             <span className={ns('proofCreation-stat')}>Hash:</span>
-            5c57db50d4ef8b1f4c63b952d884c461711228fc2c27e4f866c583efecdc1826
+            {proof.hash}
           </div>
         </div>
 

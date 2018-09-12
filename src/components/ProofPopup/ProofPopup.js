@@ -4,7 +4,7 @@ import ns from 'utils/ns'
 import SvgInline from 'react-inlinesvg'
 
 import Popup from 'common/Popup/Popup'
-import ButtonIcon from 'common/ButtonIcon/ButtonIcon'
+// import ButtonIcon from 'common/ButtonIcon/ButtonIcon'
 import MyProofs from 'components/MyProofs/MyProofs'
 import ProofInfo from 'components/ProofInfo/ProofInfo'
 import Header from 'common/Header/Header'
@@ -32,9 +32,9 @@ class ProofPopup extends Component {
         return proof.id === popupProofId
       })[0]
 
-      const isCalReady = proof.proofStatus.cal.isReady
-      const isBtcReady = proof.proofStatus.btc.isReady
-      const isProofReady = isCalReady && isBtcReady
+      // const isCalReady = proof.proofStatus.cal.isReady
+      // const isBtcReady = proof.proofStatus.btc.isReady
+      // const isProofReady = isCalReady && isBtcReady
     }
 
     const className = classNames('proofPopup', {
