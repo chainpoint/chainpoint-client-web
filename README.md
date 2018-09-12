@@ -123,5 +123,3 @@ export default props => (
 - onChangeVerifyFailStatus
 - onChangeVerifySuccessStatus
 - onChangeVerifyAnalysisStatus
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/chainpoint/chainpoint-client-web/tree/refactor/combine-create-verify)

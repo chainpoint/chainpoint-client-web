@@ -1,9 +1,0 @@
-{
-  "name": "Chainpoint Web Client",
-  "description": "Create and Verify all the things!",
-  "website": "https://chainpoint.org/",
-  "repository": "https://github.com/chainpoint/chainpoint-client-web/tree/refactor/combine-create-verify",
-  "logo": "https://chainpoint.org/static/whitepaper@2x.757afa7a.png",
-  "success_url": "/",
-  "generator": "https://www.expeditedssl.com/heroku-button-maker"
-}
