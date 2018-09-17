@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import SvgInline from 'react-inlinesvg'
-import { getFormattedJSON, convertToLDJSON } from '../../utils/API'
+import {
+  getFormattedJSON,
+  convertToLDJSON,
+  evaluateProof
+} from '../../utils/API'
 import ns from 'utils/ns'
 
 import Button from 'common/Button/Button'
@@ -217,7 +221,13 @@ class ProofInfo extends Component {
                   {isBtcReady ? (
                     <span>
                       &nbsp;|{' '}
-                      <a target="_blank" href={anchors.btc.uris[0]}>
+                      <a
+                        target="_blank"
+                        rel="noopener"
+                        href={`https://api.blockcypher.com/v1/btc/main/blocks/${
+                          anchors.btc.anchor_id
+                        }`}
+                      >
                         block {anchors.btc.anchor_id}
                       </a>
                     </span>

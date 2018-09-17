@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: @sizeExtraLarge @sizeMedium @sizeSmall @sizeMedium;
+  padding: @sizeExtraLarge @sizeMedium;
   border-radius: 8px;
   height: 320px;
   color: @colorDarkGray;
@@ -77,6 +77,12 @@
     }
   }
 
+  @media @mobile {
+    .verifyProof {
+      margin-top: @sizeLarge;
+    }
+  }
+
   .notice {
     display: flex;
     font-size: @fontMicro;
@@ -97,6 +103,9 @@
       a {
         color: @colorLinkBlue;
         text-decoration: underline;
+      }
+      @media @mobile {
+        display: none;
       }
     }
   }
@@ -127,7 +136,7 @@
     width: 80%;
     input[type='text'] {
       border: none;
-      border-radius: 5px;
+      border-radius: @borderRadius;
       width: 100%;
       height: @sizeExtraLarge;
       font-size: 14px;

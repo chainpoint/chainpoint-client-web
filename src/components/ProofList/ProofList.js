@@ -19,13 +19,12 @@ class ProofList extends Component {
   }
 
   onShowProofItemPopup = e => {
-    let id = parseInt(e.currentTarget.getAttribute('data-id'), 10)
-
+    let id = e.currentTarget.getAttribute('data-id')
     this.props.onShowProofPopup(id)
   }
 
   render() {
-    const { proofs, onDownloadProof } = this.props
+    const { proofs, isMobile, onDownloadProof } = this.props
 
     // let height = 0
     // if (this.innerNode && proofs.length !== 0) {
@@ -52,7 +51,9 @@ class ProofList extends Component {
             <li className={ns('proofList-items-header')}>
               <div className={ns('proofList-header')}>
                 <div className={ns('proofList-headerTitle')}>ID</div>
-                <div className={ns('proofList-headerDate')}>Submitted</div>
+                {!isMobile && (
+                  <div className={ns('proofList-headerDate')}>Submitted</div>
+                )}
                 <div className={ns('proofList-headerStatus')}>Status</div>
               </div>
             </li>
@@ -84,9 +85,13 @@ class ProofList extends Component {
                         {`${isHash ? 'hash:' : 'file:'} ${proof.filename}`}
                       </div>
                     </div>
-                    <div className={ns('proofList-itemDate')}>
-                      {fecha.format(proof.date, DATE_FORMAT)}
-                    </div>
+
+                    {!isMobile && (
+                      <div className={ns('proofList-itemDate')}>
+                        {fecha.format(proof.date, DATE_FORMAT)}
+                      </div>
+                    )}
+
                     <div className={ns('proofList-itemStatus')}>
                       {isBtcReady ? (
                         <ButtonIcon

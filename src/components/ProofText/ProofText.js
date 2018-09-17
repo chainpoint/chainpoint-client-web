@@ -79,28 +79,27 @@ class ProofTextDropdown extends Component {
           <div className={ns('proofText-value')}>{proof.filename}</div>
         </div>
 
-        <AnimateHeight duration={500} height={this.state.height}>
-          <div className={ns('proofText-dropdown')}>
-            <div className={ns('proofText-row')}>
-              <div className={ns('proofText-name')}>ID</div>
-              <div className={ns('proofText-value')}>{proof.id}</div>
-            </div>
+        <div className={ns('proofText-dropdown')}>
+          <div className={ns('proofText-row')}>
+            <div className={ns('proofText-name')}>ID</div>
+            <div className={ns('proofText-value')}>{proof.id}</div>
+          </div>
 
-            <div className={ns('proofText-row')}>
-              <div className={ns('proofText-name')}>HASH</div>
-              <div className={ns('proofText-value')}>{proof.hash}</div>
-            </div>
+          <div className={ns('proofText-row')}>
+            <div className={ns('proofText-name')}>HASH</div>
+            <div className={ns('proofText-value')}>{proof.hash}</div>
+          </div>
 
-            <div className={ns('proofText-row')}>
-              <div className={ns('proofText-name')}>Date</div>
-              <div className={ns('proofText-value')}>
-                {fecha.format(proof.date, DATE_FORMAT)}
-              </div>
+          <div className={ns('proofText-row')}>
+            <div className={ns('proofText-name')}>Date</div>
+            <div className={ns('proofText-value')}>
+              {fecha.format(proof.date, DATE_FORMAT)}
             </div>
           </div>
-        </AnimateHeight>
+        </div>
+        {/* <AnimateHeight duration={500} height={this.state.height} /> */}
 
-        <div className={ns('proofText-button')}>
+        {/* <div className={ns('proofText-button')}>
           {this.state.height === 0 ? (
             <Button
               type="flat"
@@ -120,7 +119,7 @@ class ProofTextDropdown extends Component {
               onClick={this.toggle}
             />
           )}
-        </div>
+        </div> */}
       </div>
     )
   }

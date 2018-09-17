@@ -4,7 +4,12 @@ import classnames from 'classnames'
 import { sha3_256 as sha256 } from 'js-sha3'
 
 import ns from 'utils/ns'
-import { convertToLDJSON, submitHash, verifyProofs } from 'utils/API'
+import {
+  convertToLDJSON,
+  submitHash,
+  verifyProofs,
+  evaluateProof
+} from 'utils/API'
 import { validateSha256 as validateHash } from 'utils/validation'
 
 import Help from '../Help/Help'
@@ -40,6 +45,7 @@ class CreateAndVerify extends Component {
     verifySuccess: false,
     isVerification: false,
     isCreation: false,
+    failedAnalysis: false,
     mode: 0 // 0 == drag and drop, 1 == text input
   }
   createProof = file => {
@@ -71,30 +77,34 @@ class CreateAndVerify extends Component {
         filename: file.name
       }
 
-      submitHash(hash)
-        .then(handles => {
-          this.setState({
-            creationState: true,
-            currentProof: {
-              hashId: handles && handles.length ? handles[0].hashIdNode : null,
-              hash: hash,
-              filename: data.filename
-            }
-          })
-          this.props.onChangeCreateStatus(true)
-
-          data.handles = handles
-
-          onAddProof(data)
-
-          // Timeout to allow ProofAnalysis component do exit animation
-          setTimeout(() => {
+      submitHash({ hash, onSubmitFailed: this.onSubmitFailed }).then(
+        handles => {
+          if (handles) {
             this.setState({
-              analysisState: false
+              creationState: true,
+              currentProof: {
+                hashId:
+                  handles && handles.length ? handles[0].hashIdNode : null,
+                hash: hash,
+                filename: data.filename
+              }
             })
-          }, 600)
-        })
-        .catch(err => console.log(err))
+
+            data.handles = handles
+
+            this.props.onChangeCreateStatus(true)
+
+            onAddProof(data)
+
+            setTimeout(() => {
+              this.setState({
+                analysisState: false
+              })
+            }, 600)
+          }
+          // Timeout to allow ProofAnalysis component do exit animation
+        }
+      )
     }
 
     reader.onabort = () => console.log('file reading was aborted')
@@ -132,8 +142,6 @@ class CreateAndVerify extends Component {
         proof = [ldJSON]
       }
 
-      console.log(JSON.parse(proof))
-
       setTimeout(() => {
         try {
           verifyProofs(proof)
@@ -153,6 +161,14 @@ class CreateAndVerify extends Component {
     } else {
       reader.readAsArrayBuffer(file)
     }
+  }
+  onSubmitFailed = () => {
+    this.setState({
+      creationState: false,
+      verifySuccess: false,
+      analysisState: true,
+      failedAnalysis: true
+    })
   }
   onVerifyFail = () => {
     this.setState({
@@ -273,6 +289,7 @@ class CreateAndVerify extends Component {
       analysisState,
       creationState,
       dropzoneActive,
+      failedAnalysis,
       file,
       helpVisible,
       inputState,
@@ -399,6 +416,7 @@ class CreateAndVerify extends Component {
               visible={analysisState || creationState}
               creating={creationState}
               dropzoneActive={dropzoneActive}
+              failed={failedAnalysis}
             />
           </div>
           {currentProof && (

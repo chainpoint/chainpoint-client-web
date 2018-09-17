@@ -91,7 +91,8 @@ class ProofApp extends Component {
     }
 
     const proofs = this.state.proofs
-    const id = proofs ? proofs.length + 1 : 0
+    const id = handles[0].hashIdNode
+
     const proof = {
       ...this.getProofInitialState(),
       id,
@@ -307,7 +308,8 @@ class ProofApp extends Component {
       onChangeCreateStatus,
       onChangeVerifyAnalysisStatus,
       onChangeVerifySuccessStatus,
-      onChangeVerifyFailStatus
+      onChangeVerifyFailStatus,
+      uris
     } = this.props
 
     return (
@@ -365,7 +367,8 @@ class ProofApp extends Component {
 ProofApp.defaultProps = {
   onAppearCreate: () => {},
   onChangeCreateStatus: () => {},
-  onChangeProofCount: () => {}
+  onChangeProofCount: () => {},
+  uris: []
 }
 
 const mapSizesToProps = ({ width }) => ({

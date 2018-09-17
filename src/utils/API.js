@@ -72,11 +72,14 @@ const verifyProofs = proofs => chainPoint.verifyProofs(proofs)
  * @param hash
  * @return {Array<{uri: String, hash: String, hashIdNode: String}>}
  */
-const submitHash = hash =>
-  chainPoint.submitHashes([hash]).then(handles => {
-    // ProofProxyAPI.storeProofHandles(handles)
-    return handles
-  })
+const submitHash = ({ hash, onSubmitFailed }) =>
+  chainPoint
+    .submitHashes([hash])
+    .then(handles => {
+      // ProofProxyAPI.storeProofHandles(handles)
+      return handles
+    })
+    .catch(onSubmitFailed)
 
 /**
  * Periodically checking
@@ -101,8 +104,8 @@ const checkProofs = ({
   updateProof,
   onProofsReceived
 }) => {
+  // if (!handles) return
   chainPoint
-
     .getProofs(handles)
     // Save proofs into ProofProxy
     .then(proofs => {
@@ -115,6 +118,7 @@ const checkProofs = ({
     // if chainPoint client doesn't work as expected
     // fallback to ProofProxy
     .catch(() => {
+      console.log('ERR')
       // ProofProxyAPI.getProofs(handles)
     })
     .then(proofs => {
@@ -151,10 +155,15 @@ const checkProofs = ({
     .catch(() => {})
 }
 
+const evaluateProof = ({ proofData }) => {
+  return chainPoint.evaluateProofs([proofData])
+}
+
 export {
   convertsToBinary,
   getFormattedJSON,
   convertToLDJSON,
+  evaluateProof,
   verifyProofs,
   checkProofs,
   submitHash
