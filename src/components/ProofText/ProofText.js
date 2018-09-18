@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import fecha from 'fecha'
-import AnimateHeight from 'react-animate-height'
+// import AnimateHeight from 'react-animate-height'
 import ns from 'utils/ns'
 
-import Button from 'common/Button/Button'
+// import Button from 'common/Button/Button'
 import { ProofAppContext } from 'ProofApp'
 
 import './ProofText.less'

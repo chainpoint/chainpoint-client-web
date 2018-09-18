@@ -4,12 +4,7 @@ import classnames from 'classnames'
 import { sha3_256 as sha256 } from 'js-sha3'
 
 import ns from 'utils/ns'
-import {
-  convertToLDJSON,
-  submitHash,
-  verifyProofs,
-  evaluateProof
-} from 'utils/API'
+import { convertToLDJSON, submitHash, verifyProofs } from 'utils/API'
 import { validateSha256 as validateHash } from 'utils/validation'
 
 import Help from '../Help/Help'
@@ -40,12 +35,12 @@ class CreateAndVerify extends Component {
     },
     inputState: true,
     analysisState: false,
+    failedAnalysis: false,
     creationState: false,
     helpVisible: false,
     verifySuccess: false,
     isVerification: false,
     isCreation: false,
-    failedAnalysis: false,
     mode: 0 // 0 == drag and drop, 1 == text input
   }
   createProof = file => {
@@ -267,6 +262,7 @@ class CreateAndVerify extends Component {
       text: '',
       file: '',
       analysisState: false,
+      failedAnalysis: false,
       mode: 0,
       creationState: false,
       isCreation: false,
@@ -277,11 +273,19 @@ class CreateAndVerify extends Component {
         filename: null
       }
     })
+  }
 
-    // Timeout to allow ProofCreation component to do exit animation
-    // setTimeout(() => {
-    //   this.setState({ creationState: false })
-    // }, 1680)
+  retry() {
+    this.setState({
+      failedAnalysis: false
+    })
+
+    const { file } = this.state
+    if (file.name.indexOf('.chp') > -1) {
+      this.verifyProof(file)
+    } else {
+      this.createProof(file)
+    }
   }
   noOp = () => {}
   render() {
@@ -417,6 +421,7 @@ class CreateAndVerify extends Component {
               creating={creationState}
               dropzoneActive={dropzoneActive}
               failed={failedAnalysis}
+              onRetry={this.retry.bind(this)}
             />
           </div>
           {currentProof && (

@@ -1,17 +1,12 @@
 import React, { Component } from 'react'
 import SvgInline from 'react-inlinesvg'
-import {
-  getFormattedJSON,
-  convertToLDJSON,
-  evaluateProof
-} from '../../utils/API'
+import { getFormattedJSON, convertToLDJSON } from '../../utils/API'
 import ns from 'utils/ns'
 
 import Button from 'common/Button/Button'
 import ProofText from 'components/ProofText/ProofText'
 import Spinner from 'components/Spinner/Spinner'
 import ready from 'svg/ready.svg'
-import arrowBackBig from 'svg/arr-back-big.svg'
 import { ProofAppContext } from 'ProofApp'
 
 import './ProofInfo.less'
@@ -270,7 +265,7 @@ class ProofInfo extends Component {
             {hasEnoughInfo && (
               <div className={ns('proofInfo-codeControls')}>
                 <Button
-                  type="solid"
+                  type="primary"
                   title="Copy code"
                   successTitle="Code copied"
                   prefixIconSuccess="tick"
@@ -278,19 +273,12 @@ class ProofInfo extends Component {
                   onClick={this.onCopy}
                 />
                 <Button
-                  type="solid"
+                  type="download"
                   title="Download"
                   onClick={e => onDownloadProof(e, proof)}
                 />
               </div>
             )}
-
-            <button
-              className={ns('proofInfo-backButtonIcon')}
-              onClick={this.onShowProofPopup}
-            >
-              <SvgInline src={arrowBackBig} />
-            </button>
           </div>
         )}
       </div>

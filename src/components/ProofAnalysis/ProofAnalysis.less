@@ -3,106 +3,116 @@
 @c: .proofAnalysis;
 
 @{c} {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 8px;
+  height: 100%;
+  border-radius: 8px;
+
+  @media @mobile {
+    padding-bottom: 14px;
+  }
+
+  &:not(@{c}--dropzoneActive) {
+    background: #fff;
+  }
+
+  &-icon {
+    position: relative;
+    width: 96px;
+    height: 96px;
+
+    transition: opacity 0.83s @easeOutExpo 0.167s;
+
+    @{c}@{c}--dropzoneActive & {
+      transition-delay: 0.667s;
+    }
+
+    img {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      font-size: 0;
+      width: 100%;
+      animation: ProofAnalysis-animation 2.5s infinite linear;
+      @{c}@{c}--failed & {
+        animation: none;
+      }
+    }
+  }
+
+  &-text {
+    margin-top: 17px;
+    font-size: @fontSmall;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.82;
+    letter-spacing: -1.2px;
+    text-align: center;
+    color: @colorText;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 8px;
-    height: 100%;
-    border-radius: 8px;
+
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.83s @easeOutExpo, transform 0.83s @easeOutExpo;
 
     @media @mobile {
-        padding-bottom: 14px;
+      margin-top: 28px;
+
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.33;
+      letter-spacing: -1px;
     }
 
-    &:not(@{c}--dropzoneActive) {
-        background: #fff;
+    @{c}@{c}--dropzoneActive & {
+      transition-delay: 0.5s, 0.5s;
     }
 
-    &-icon {
-        position: relative;
-        width: 96px;
-        height: 96px;
+    @{c}-retry {
+      font-size: @fontTiny;
+      text-decoration: underline;
+    }
+  }
 
-        transition: opacity 0.83s @easeOutExpo 0.167s;
-
-        @{c}@{c}--dropzoneActive & {
-            transition-delay: 0.667s;
-        }
-
-        img {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            font-size: 0;
-
-            animation: ProofAnalysis-animation 2.5s infinite linear;
-        }
+  &--visible {
+    @{c}-icon {
+      opacity: 1;
     }
 
-    &-text {
-        margin-top: 17px;
-        font-size: 22px;
-        font-weight: 500;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: 1.82;
-        letter-spacing: -1.2px;
-        text-align: center;
-        color: @colorText;
+    @{c}-text {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-        opacity: 0;
-        transform: translateY(10px);
-        transition: opacity 0.83s @easeOutExpo, transform 0.83s @easeOutExpo;
-
-        @media @mobile {
-            margin-top: 28px;
-
-            font-size: 18px;
-            font-weight: 500;
-            line-height: 1.33;
-            letter-spacing: -1px;
-        }    
-
-        @{c}@{c}--dropzoneActive & {
-            transition-delay: 0.5s, 0.5s;
-        }
+  &--creating {
+    @{c}-icon {
+      opacity: 0;
+      transform: scaleX(0) scaleY(0);
+      transition: opacity 0.5s @easeInExpo, transform 0.5s @easeInExpo;
     }
 
-    &--visible {
-        @{c}-icon {
-            opacity: 1;
-        }
-
-        @{c}-text {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    @{c}-text {
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.5s @easeInExpo, transform 0.5s @easeInExpo;
     }
-
-    &--creating {
-        @{c}-icon {
-            opacity: 0;
-            transform: scaleX(0) scaleY(0);
-            transition: opacity 0.5s @easeInExpo, transform 0.5s @easeInExpo;
-        }
-
-        @{c}-text {
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: opacity 0.5s @easeInExpo, transform 0.5s @easeInExpo;
-        }
-    }
+  }
 }
 
 @keyframes ProofAnalysis-animation {
-    0% {
-        transform: rotateZ(0deg);
-    }
+  0% {
+    transform: rotateZ(0deg);
+  }
 
-    100% {
-        transform: rotateZ(360deg);
-    }
+  100% {
+    transform: rotateZ(360deg);
+  }
 }

@@ -52,6 +52,7 @@
     width: 100%;
     display: flex;
     margin-top: @sizeMedium;
+    cursor: pointer;
     @media @mobile {
       flex-direction: column;
     }
@@ -90,6 +91,9 @@
     justify-content: flex-end;
     margin-top: auto;
     color: @colorDarkerGray;
+    position: absolute;
+    bottom: @sizeSmall;
+    padding-right: @sizeSmall;
     .notice-text {
       width: 100%;
       flex: 1;
@@ -97,6 +101,9 @@
       position: absolute;
       left: 0;
       opacity: 0.5;
+    }
+    @media @mobile {
+      bottom: @sizeMedium;
     }
     .advanced-text {
       z-index: 1;

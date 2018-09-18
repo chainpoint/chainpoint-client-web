@@ -12,8 +12,14 @@
   background: #fff;
   padding: 0 80px;
   border-radius: 8px;
+  @media @mobile {
+    padding: 0 @sizeLarge;
+  }
   &-icon {
     width: 80px;
+    @media @mobile {
+      margin: 0 0 @sizeMedium;
+    }
   }
   &-hint {
     display: flex;
@@ -29,11 +35,20 @@
         font-size: @fontTiny;
       }
     }
+
+    @media @mobile {
+      align-items: center;
+      flex-direction: column;
+      @{c}-details {
+        margin-left: 0;
+        text-align: center;
+      }
+    }
   }
   &-stats {
     width: 100%;
     font-size: 14px;
-    margin-bottom: @sizeSmall;
+    margin-bottom: @sizeLarge;
     line-height: 2;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -90,7 +90,7 @@ class ProofApp extends Component {
       return
     }
 
-    const proofs = this.state.proofs
+    // const proofs = this.state.proofs
     const id = handles[0].hashIdNode
 
     const proof = {
@@ -308,8 +308,8 @@ class ProofApp extends Component {
       onChangeCreateStatus,
       onChangeVerifyAnalysisStatus,
       onChangeVerifySuccessStatus,
-      onChangeVerifyFailStatus,
-      uris
+      onChangeVerifyFailStatus
+      // uris
     } = this.props
 
     return (
