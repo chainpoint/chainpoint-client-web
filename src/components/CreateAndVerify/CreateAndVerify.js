@@ -31,7 +31,8 @@ class CreateAndVerify extends Component {
     currentProof: {
       hash: null,
       hashId: null,
-      filename: null
+      filename: null,
+      anchorId: null
     },
     inputState: true,
     analysisState: false,
@@ -75,14 +76,16 @@ class CreateAndVerify extends Component {
       submitHash({ hash, onSubmitFailed: this.onSubmitFailed }).then(
         handles => {
           if (handles) {
+            const currentProof = {
+              hashId: handles && handles.length ? handles[0].hashIdNode : null,
+              hash: hash,
+              filename: data.filename,
+              anchorId: handles[0].anchorId
+            }
+
             this.setState({
               creationState: true,
-              currentProof: {
-                hashId:
-                  handles && handles.length ? handles[0].hashIdNode : null,
-                hash: hash,
-                filename: data.filename
-              }
+              currentProof
             })
 
             data.handles = handles
@@ -174,12 +177,25 @@ class CreateAndVerify extends Component {
     this.props.onChangeVerifyFailStatus(true)
     this.onVerifyAnalysisEnd()
   }
-  onVerifySuccess = () => {
+  onVerifySuccess = data => {
+    const { hashIdNode, anchorId, hash } = data[
+      data.findIndex(d => d.type === 'btc')
+    ]
+
+    const currentProof = {
+      filename: null,
+      hashId: hashIdNode,
+      anchorId: anchorId,
+      hash
+    }
+
     this.setState({
       creationState: true,
       verifySuccess: true,
-      analysisState: false
+      analysisState: false,
+      currentProof
     })
+
     this.props.onChangeVerifySuccessStatus(true)
     this.onVerifyAnalysisEnd()
   }
@@ -203,8 +219,16 @@ class CreateAndVerify extends Component {
     })
   }
   onDrop = files => {
+    // check if verification is active
+    const { isVerification, verifySuccess } = this.state
     const file = files[0]
     file.data = null
+
+    if (isVerification && verifySuccess) {
+      console.log('verifying original data')
+    } else {
+    }
+
     if (file.name.indexOf('.chp') > -1) {
       this.verifyProof(file)
     } else {
@@ -270,7 +294,8 @@ class CreateAndVerify extends Component {
       currentProof: {
         hash: null,
         hashId: null,
-        filename: null
+        filename: null,
+        anchorId: null
       }
     })
   }
@@ -446,6 +471,8 @@ class CreateAndVerify extends Component {
                   filename={file.name}
                   verifySuccess={verifySuccess}
                   onAddAnotherVerify={this.reset.bind(this)}
+                  onBrowseFiles={this.onBrowseFiles}
+                  currentProof={currentProof}
                 />
               </div>
             )}

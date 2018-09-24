@@ -14,22 +14,6 @@ import chpIcon from '../../svg/verify.svg'
 import createIcon from '../../svg/create.svg'
 import close from '../../svg/close.svg'
 class VerifyStatus extends Component {
-  getSuccessMessage() {
-    return (
-      <React.Fragment>
-        This Chainpoint proof is anchored to the Bitcoin blockchain in{' '}
-        <b>block 535700.</b>
-      </React.Fragment>
-    )
-  }
-  getErrorMessage() {
-    return (
-      <React.Fragment>
-        <b>Error message:</b> could not find a merkle root with enough power for
-        the flux capacitor.
-      </React.Fragment>
-    )
-  }
   render() {
     const {
       visible,
@@ -37,7 +21,9 @@ class VerifyStatus extends Component {
       analysing,
       inputting,
       // filename,
-      onAddAnotherVerify
+      onAddAnotherVerify,
+      onBrowseFiles,
+      currentProof
       // isMobile
     } = this.props
 
@@ -70,13 +56,21 @@ class VerifyStatus extends Component {
             </h3>
             {verifySuccess ? (
               <div>
-                <span>ID:</span> 5cf0a860-0f52-11e7-947d-7fde4e7ca024
+                <span>ID:</span> {currentProof.hashId}
               </div>
             ) : null}
             <p>
-              {verifySuccess
-                ? this.getSuccessMessage()
-                : this.getErrorMessage()}
+              {verifySuccess ? (
+                <React.Fragment>
+                  This Chainpoint proof is anchored to the Bitcoin blockchain in{' '}
+                  <b>block {currentProof.anchorId}.</b>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <b>Error message:</b> could not find a merkle root with enough
+                  power for the flux capacitor.
+                </React.Fragment>
+              )}
             </p>
           </div>
         </header>
@@ -94,7 +88,8 @@ class VerifyStatus extends Component {
               </h4>
               <p>Verify your proof against a copy of the original data.</p>
               <p>
-                Drag &amp; drop or <a>browse</a> your files.{' '}
+                Drag &amp; drop or <a onClick={onBrowseFiles}>browse</a> your
+                files.{' '}
               </p>
               <p>
                 Your file will not be uploaded, just analyzed in the browser.
