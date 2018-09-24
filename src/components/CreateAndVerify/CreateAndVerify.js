@@ -42,6 +42,7 @@ class CreateAndVerify extends Component {
     verifySuccess: false,
     isVerification: false,
     isCreation: false,
+    originalData: null,
     mode: 0 // 0 == drag and drop, 1 == text input
   }
   createProof = file => {
@@ -65,7 +66,7 @@ class CreateAndVerify extends Component {
     reader.onload = () => {
       const fileAsBinaryString = reader.result
       file.data = fileAsBinaryString
-      // if file.data is already sha256,
+
       const hash = validateHash(file.data) ? file.data : sha256(file.data)
 
       const data = {
@@ -103,6 +104,25 @@ class CreateAndVerify extends Component {
           // Timeout to allow ProofAnalysis component do exit animation
         }
       )
+    }
+
+    reader.onabort = () => console.log('file reading was aborted')
+    reader.onerror = () => console.log('file reading has failed')
+
+    reader.readAsBinaryString(file)
+  }
+  verifyData = (file, proofHash) => {
+    const reader = new FileReader()
+
+    reader.onload = () => {
+      const fileAsBinaryString = reader.result
+      file.data = fileAsBinaryString
+
+      const fileHash = validateHash(file.data) ? file.data : sha256(file.data)
+      this.setState({
+        originalData: fileHash === proofHash,
+        file
+      })
     }
 
     reader.onabort = () => console.log('file reading was aborted')
@@ -220,19 +240,18 @@ class CreateAndVerify extends Component {
   }
   onDrop = files => {
     // check if verification is active
-    const { isVerification, verifySuccess } = this.state
+    const { isVerification, verifySuccess, currentProof } = this.state
     const file = files[0]
     file.data = null
 
     if (isVerification && verifySuccess) {
-      console.log('verifying original data')
+      this.verifyData(file, currentProof.hash)
     } else {
-    }
-
-    if (file.name.indexOf('.chp') > -1) {
-      this.verifyProof(file)
-    } else {
-      this.createProof(file)
+      if (file.name.indexOf('.chp') > -1) {
+        this.verifyProof(file)
+      } else {
+        this.createProof(file)
+      }
     }
   }
   onBrowseFiles = () => {
@@ -296,7 +315,8 @@ class CreateAndVerify extends Component {
         hashId: null,
         filename: null,
         anchorId: null
-      }
+      },
+      originalData: null
     })
   }
 
@@ -324,6 +344,7 @@ class CreateAndVerify extends Component {
       inputState,
       isCreation,
       isVerification,
+      originalData,
       currentProof,
       verifySuccess,
       text,
@@ -461,21 +482,21 @@ class CreateAndVerify extends Component {
               />
             </div>
           )}
-          {file &&
-            isVerification && (
-              <div className={ns('createAndVerify-verifyStatus')}>
-                <VerifyStatus
-                  visible={creationState && isVerification}
-                  analysing={analysisState}
-                  inputting={false}
-                  filename={file.name}
-                  verifySuccess={verifySuccess}
-                  onAddAnotherVerify={this.reset.bind(this)}
-                  onBrowseFiles={this.onBrowseFiles}
-                  currentProof={currentProof}
-                />
-              </div>
-            )}
+          {isVerification && (
+            <div className={ns('createAndVerify-verifyStatus')}>
+              <VerifyStatus
+                visible={creationState && isVerification}
+                analysing={analysisState}
+                inputting={false}
+                file={file}
+                verifySuccess={verifySuccess}
+                onAddAnotherVerify={this.reset.bind(this)}
+                onBrowseFiles={this.onBrowseFiles}
+                currentProof={currentProof}
+                originalData={originalData}
+              />
+            </div>
+          )}
         </Dropzone>
         <div>
           {proofs.length !== 0 && (

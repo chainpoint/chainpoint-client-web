@@ -46,6 +46,10 @@
     margin-bottom: @sizeMicro;
   }
 
+  @{c}-details a {
+    text-decoration: underline;
+  }
+
   &-details {
     font-size: @fontSmall;
   }
@@ -87,10 +91,51 @@
     flex: 1;
     align-items: center;
     padding: 40px 0 40px 64px;
+
     @{c}-icon {
       width: 80px;
       height: 80px;
+
+      svg {
+        width: 100%;
+        height: auto;
+        padding: @sizeTiny;
+      }
     }
+
+    &@{c}-original--success {
+      @{c}-icon svg {
+        padding: 0;
+        path {
+          fill: @colorSuccess;
+        }
+      }
+
+      h4 {
+        color: @colorSuccess;
+      }
+
+      @{c}-filename {
+        color: @colorSuccess;
+        margin-bottom: 4px;
+      }
+    }
+
+    &@{c}-original--fail {
+      @{c}-icon svg {
+        background: @colorFail;
+        padding: @sizeSmall;
+        border-radius: 50%;
+      }
+      h4 {
+        color: @colorFail;
+      }
+      @{c}-filename {
+        color: @colorFail;
+        margin-bottom: 4px;
+      }
+    }
+
     @{c}-details {
       color: @colorLightGray;
       h4 {

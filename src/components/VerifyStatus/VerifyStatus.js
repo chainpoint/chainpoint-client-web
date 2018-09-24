@@ -13,6 +13,7 @@ import './VerifyStatus.less'
 import chpIcon from '../../svg/verify.svg'
 import createIcon from '../../svg/create.svg'
 import close from '../../svg/close.svg'
+import check from '../../svg/ready.svg'
 class VerifyStatus extends Component {
   render() {
     const {
@@ -20,7 +21,8 @@ class VerifyStatus extends Component {
       verifySuccess,
       analysing,
       inputting,
-      // filename,
+      file,
+      originalData,
       onAddAnotherVerify,
       onBrowseFiles,
       currentProof
@@ -33,6 +35,15 @@ class VerifyStatus extends Component {
       'verifyStatus--inputting': inputting,
       'verifyStatus--success': verifySuccess,
       'verifyStatus--fail': !verifySuccess
+    })
+
+    // 3 states for footer, add file (default), success, fail
+    const iconSrc =
+      originalData === null ? createIcon : originalData ? check : close
+
+    const footerClassName = classNames('verifyStatus-footer', {
+      'verifyStatus-original--fail': originalData === false,
+      'verifyStatus-original--success': originalData === true
     })
 
     return (
@@ -75,25 +86,53 @@ class VerifyStatus extends Component {
           </div>
         </header>
         {verifySuccess ? (
-          <footer className={ns('verifyStatus-footer')}>
-            <img
-              src={createIcon}
+          <footer className={ns(footerClassName)}>
+            <SvgInline
+              src={iconSrc}
               alt="chainpoint icon"
               className={ns('verifyStatus-icon')}
             />
             <div className={ns('verifyStatus-details')}>
-              <h4>
-                <span>Original Data Verification </span>
-                (Optional)
-              </h4>
-              <p>Verify your proof against a copy of the original data.</p>
-              <p>
-                Drag &amp; drop or <a onClick={onBrowseFiles}>browse</a> your
-                files.{' '}
-              </p>
-              <p>
-                Your file will not be uploaded, just analyzed in the browser.
-              </p>
+              {originalData === null ? (
+                <React.Fragment>
+                  <h4>
+                    <span>Original Data Verification </span>
+                    (Optional)
+                  </h4>
+                  <p>Verify your proof against a copy of the original data.</p>
+                  <p>
+                    Drag &amp; drop or <a onClick={onBrowseFiles}>browse</a>{' '}
+                    your files.{' '}
+                  </p>
+                  <p>
+                    Your file will not be uploaded, just analyzed in the
+                    browser.
+                  </p>
+                </React.Fragment>
+              ) : originalData ? (
+                <React.Fragment>
+                  <h4>SUCCESS!</h4>
+                  <p className={ns('verifyStatus-filename')}>
+                    File: {file.name}
+                  </p>
+                  <p>
+                    This file matches the original data used to create this
+                    Chainpoint proof.
+                  </p>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <h4>DOES NOT MATCH!</h4>
+                  <p className={ns('verifyStatus-filename')}>
+                    File: {file.name}
+                  </p>
+                  <p>
+                    This file does not match the original data used to create
+                    this Chainpoint proof.{' '}
+                    <a onClick={onBrowseFiles}>Try another file.</a>
+                  </p>
+                </React.Fragment>
+              )}
             </div>
           </footer>
         ) : null}
