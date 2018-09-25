@@ -128,7 +128,8 @@ class VerifyStatus extends Component {
                   </p>
                   <p>
                     This file does not match the original data used to create
-                    this Chainpoint proof.{' '}
+                    this Chainpoint proof.
+                    <br />
                     <a onClick={onBrowseFiles}>Try another file.</a>
                   </p>
                 </React.Fragment>

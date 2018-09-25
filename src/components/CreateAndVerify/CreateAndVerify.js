@@ -240,6 +240,10 @@ class CreateAndVerify extends Component {
   }
   onDrop = files => {
     // check if verification is active
+    this.setState({
+      dropzoneActive: false
+    })
+
     const { isVerification, verifySuccess, currentProof } = this.state
     const file = files[0]
     file.data = null

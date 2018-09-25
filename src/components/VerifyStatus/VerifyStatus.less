@@ -15,6 +15,10 @@
     height: 80px;
     width: 80px;
     margin-right: 48px;
+    @media @mobile {
+      margin-right: 0;
+      margin-bottom: @sizeSmall;
+    }
   }
 
   &-close {
@@ -84,6 +88,12 @@
     border-top-right-radius: 8px;
     background: @colorPanache;
     flex: 1;
+    @media @mobile {
+      flex-direction: column;
+      padding: @sizeLarge;
+      justify-content: center;
+      text-align: center;
+    }
   }
 
   &-footer {
@@ -91,6 +101,13 @@
     flex: 1;
     align-items: center;
     padding: 40px 0 40px 64px;
+
+    @media @mobile {
+      padding: @sizeLarge;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+    }
 
     @{c}-icon {
       width: 80px;
