@@ -3,131 +3,131 @@
 @c: .textarea;
 
 @{c} {
+  height: 100%;
+
+  @media @mobile {
+    height: auto;
+  }
+
+  &-input {
+    display: block;
+    width: 100%;
     height: 100%;
+    padding: 0;
+    padding-bottom: 23px;
+
+    font-family: inherit;
+    font-size: 22px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.82;
+    letter-spacing: -1.22px;
+    text-align: left;
+    color: #323840;
+
+    border: none;
+    outline: none;
+    resize: none;
+    background: none;
+
+    @{c}--text-large & {
+    }
+
+    @{c}--text-medium & {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.5;
+      letter-spacing: -0.9px;
+    }
+
+    @{c}--text-small & {
+      font-size: 14px;
+      font-weight: normal;
+      line-height: 1.72;
+      letter-spacing: normal;
+    }
+
+    &::placeholder {
+      color: @blue-grey-100;
+      transition: color 0.3s;
+    }
+
+    &:focus + @{c}-border {
+      width: 100%;
+    }
+
+    @media @laptop {
+      &::placeholder {
+        padding-top: 5px;
+        padding-right: ~'calc(100% - 200px)';
+        line-height: 1.4;
+      }
+    }
 
     @media @mobile {
-        height: auto;
+      padding-bottom: 13px !important;
+
+      font-size: 18px !important;
+      font-weight: 500 !important;
+      line-height: 1.34 !important;
+      letter-spacing: -1px !important;
+      text-align: left;
+
+      &::placeholder {
+        text-align: center;
+      }
     }
+  }
 
-    &-input {
-        display: block;
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        padding-bottom: 23px;
+  &:after {
+    display: none;
 
-        font-family: inherit;
-        font-size: 22px;
-        font-weight: 500;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: 1.82;
-        letter-spacing: -1.22px;
-        text-align: left;
-        color: #323840;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
 
-        border: none;
-        outline: none;
-        resize: none;
-        background: none;
+    background: #d3d8e4;
 
-        @{c}--text-large & {
-        }
+    z-index: 1;
 
-        @{c}--text-medium & {
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 1.5;
-            letter-spacing: -0.9px;
-        }
-
-        @{c}--text-small & {
-            font-size: 14px;
-            font-weight: normal;
-            line-height: 1.72;
-            letter-spacing: normal;
-        }
-
-        &::placeholder {
-            color: @colorPlaceholder;
-            transition: color 0.3s;
-        }
-
-        &:focus + @{c}-border {
-            width: 100%;
-        }
-
-        @media @laptop {
-            &::placeholder {
-                padding-top:5px;
-                padding-right: ~"calc(100% - 200px)";
-                line-height: 1.4;
-            }
-        }
-
-        @media @mobile {
-            padding-bottom: 13px !important;
-
-            font-size: 18px !important;
-            font-weight: 500 !important;
-            line-height: 1.34 !important;
-            letter-spacing: -1px !important;
-            text-align: left;
-
-            &::placeholder {
-                text-align: center;
-            }
-        }
+    @media @mobile {
+      display: block;
     }
+  }
 
-    &:after {
-        display: none;
+  &-border {
+    display: none;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
 
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
+    background: #19a2ff;
 
-        background: #d3d8e4;
+    transition: width 0.3s ease;
 
-        z-index: 1;
+    z-index: 2;
 
-        @media @mobile {
-            display: block;
-        }
+    @media @mobile {
+      display: block;
     }
+  }
 
-    &-border {
-        display: none;
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 0;
-        height: 2px;
-
-        background: #19a2ff;
-
-        transition: width 0.3s ease;
-
-        z-index: 2;
-
-        @media @mobile {
-            display: block;
-        }
+  &--placeholderCentered {
+    @{c}-input {
+      &::placeholder {
+        text-align: center;
+      }
     }
+  }
 
-    &--placeholderCentered {
-        @{c}-input {
-            &::placeholder {
-                text-align: center;
-            }
-        }
-    }
-
-    &--grow {
-        width: 100%;
-    }
+  &--grow {
+    width: 100%;
+  }
 }

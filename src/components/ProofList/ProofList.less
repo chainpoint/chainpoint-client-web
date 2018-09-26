@@ -9,7 +9,7 @@
 
   transition: height 0.5s ease;
   overflow: hidden;
-  border: 1px solid @colorExtraLightGray;
+  border: 1px solid @grey-300;
 
   @media @mobile {
     padding-top: 0;
@@ -38,7 +38,7 @@
   &-items-header {
     position: relative;
     height: 40px;
-    background: @colorExtraLightGray;
+    background: @grey-300;
   }
 
   &-item {
@@ -91,11 +91,11 @@
 
     &:hover,
     &:focus {
-      background-color: @colorAlto;
+      background-color: @grey-50;
     }
 
     &:active {
-      background-color: @colorAlto;
+      background-color: @grey-50;
     }
 
     @media @mobile {
@@ -118,7 +118,7 @@
     line-height: 1.5;
     letter-spacing: normal;
     text-align: left;
-    color: @colorDarkerGray;
+    color: @grey-800;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -136,7 +136,7 @@
 
     @{c}-itemName {
       font-size: @fontMicro;
-      color: @colorDarkGray;
+      color: @grey-600;
     }
 
     @media @mobile {
@@ -160,7 +160,7 @@
     line-height: 2.29;
     letter-spacing: normal;
     text-align: left;
-    color: @colorDarkGray;
+    color: @grey-600;
     white-space: nowrap;
 
     @media @mobile {
@@ -183,7 +183,7 @@
     line-height: 2.29;
     letter-spacing: normal;
     text-align: center;
-    color: @colorDarkGray;
+    color: @grey-600;
     white-space: nowrap;
 
     width: 146px;
@@ -210,7 +210,7 @@
   &-headerTitle,
   &-headerDate,
   &-headerStatus {
-    color: @colorDarkGray;
+    color: @grey-600;
     font-size: 13px;
     font-family: @fontFamilyHeading;
     font-weight: bold;
@@ -254,7 +254,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-top: 1px solid @colorExtraLightGray;
+    border-top: 1px solid @grey-300;
     cursor: pointer;
 
     @media @mobile {

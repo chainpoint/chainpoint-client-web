@@ -30,14 +30,18 @@
       background: none;
       border: none;
       g {
-        stroke: @colorSuccess;
+        stroke: @green-600;
       }
     }
   }
 
   @{c}-details,
   @{c}-details h3 {
-    color: @colorSuccess;
+    color: @green-600;
+  }
+
+  @{c}-details p {
+    color: @grey-600;
   }
 
   @{c}-details {
@@ -60,17 +64,17 @@
 
   &--fail {
     @{c}-icon {
-      background: @colorFail;
+      background: @red-600;
       padding: @sizeSmall;
       border-radius: 50%;
     }
     @{c}-details,
     @{c}-details h3 {
-      color: @colorFail;
+      color: @red-600;
     }
     @{c}-close {
       g {
-        stroke: @colorFail;
+        stroke: @red-600;
       }
     }
     @{c}-header {
@@ -86,7 +90,7 @@
     padding: 40px 0 40px 64px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    background: @colorPanache;
+    background: @teal-50;
     flex: 1;
     @media @mobile {
       flex-direction: column;
@@ -124,43 +128,43 @@
       @{c}-icon svg {
         padding: 0;
         path {
-          fill: @colorSuccess;
+          fill: @green-600;
         }
       }
 
       h4 {
-        color: @colorSuccess;
+        color: @green-600;
       }
 
       @{c}-filename {
-        color: @colorSuccess;
+        color: @green-600;
         margin-bottom: 4px;
       }
     }
 
     &@{c}-original--fail {
       @{c}-icon svg {
-        background: @colorFail;
+        background: @red-600;
         padding: @sizeSmall;
         border-radius: 50%;
       }
       h4 {
-        color: @colorFail;
+        color: @red-600;
       }
       @{c}-filename {
-        color: @colorFail;
+        color: @red-600;
         margin-bottom: 4px;
       }
     }
 
     @{c}-details {
-      color: @colorLightGray;
+      color: @grey-500;
       h4 {
         font-size: @fontSmall;
         margin-top: 0;
         margin-bottom: 9px;
         span {
-          color: @colorText;
+          color: @grey-800;
         }
       }
       p {
