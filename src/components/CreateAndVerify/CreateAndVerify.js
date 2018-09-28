@@ -401,7 +401,7 @@ class CreateAndVerify extends Component {
 
           {mode !== 0 ? (
             <div className={ns('createAndVerify-input')}>
-              <h3>CREATE PROOF</h3>
+              <h3 className={ns('createAndVerify-heading')}>CREATE PROOF</h3>
               <div className={ns('createAndVerify-inputInner')}>
                 <input
                   type="text"
@@ -430,7 +430,7 @@ class CreateAndVerify extends Component {
           </div>
           <div className={ns('instructions')} onClick={this.onBrowseFiles}>
             <div className={ns('instruction createProof')}>
-              <h3>CREATE PROOF</h3>
+              <h3 className={ns('createAndVerify-heading')}>CREATE PROOF</h3>
               <div className={ns('icon')}>
                 <img src={createIcon} alt="create proof icon" />
               </div>
@@ -442,7 +442,7 @@ class CreateAndVerify extends Component {
               </div>
             </div>
             <div className={ns('instruction verifyProof')}>
-              <h3>VERIFY PROOF</h3>
+              <h3 className={ns('createAndVerify-heading')}>VERIFY PROOF</h3>
               <div className={ns('icon')}>
                 <img src={verifyIcon} alt="verify proof icon" />
               </div>
