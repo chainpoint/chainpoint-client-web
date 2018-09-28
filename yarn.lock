@@ -1463,9 +1463,9 @@ chainpoint-binary@^4.0.0, chainpoint-binary@^4.0.1:
     msgpack-lite "^0.1.26"
     pako "^1.0.5"
 
-"chainpoint-client@https://github.com/chainpoint/chainpoint-client-js#feature/node-proxy":
-  version "0.2.1"
-  resolved "https://github.com/chainpoint/chainpoint-client-js#5e7b8894d02ce3007c331251c651162a7d1b1b48"
+chainpoint-client@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/chainpoint-client/-/chainpoint-client-0.2.2.tgz#da235848334085db6105e7345dbab25694f44756"
   dependencies:
     bluebird "^3.5.1"
     chainpoint-binary "^4.0.1"
