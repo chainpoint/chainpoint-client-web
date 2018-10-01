@@ -77,7 +77,7 @@
     "build": "npm run build:injectedDist && npm run build:react:dist",
     "build:injectedDist": "node scripts/build.js",
     "build:react:dist": "node scripts/build-react.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "echo \"No tests specified\""
   },
   "jest": {
     "collectCoverageFrom": [
