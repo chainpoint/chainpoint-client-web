@@ -3,223 +3,268 @@
 @c: .proofList;
 
 @{c} {
-    min-height: 72px;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+  border-radius: @borderRadius;
+  background-color: #fff;
+  display: flex;
 
-    background-color: #f8f9fb;
+  transition: height 0.5s ease;
+  overflow: hidden;
+  border: 1px solid @grey-300;
 
-    transition: height 0.5s ease;
+  @media @mobile {
+    padding-top: 0;
+    padding-bottom: 0;
     overflow: hidden;
+  }
+
+  &-inner {
+    width: 100%;
+  }
+
+  &-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &-header {
+    width: 100%;
+    height: 100%;
+    padding: 0 @sizeSmall;
+    display: flex;
+    align-items: center;
+  }
+
+  &-items-header {
+    position: relative;
+    height: 40px;
+    background: @grey-300;
+  }
+
+  &-item {
+    position: relative;
+    height: 72px;
 
     @media @mobile {
-        padding-top: 0;
-        padding-bottom: 0;
-        overflow: hidden;
+      height: 80px;
     }
 
-    &-inner {
-        padding-top: 12px;
-        padding-bottom: 12px;
+    &:after {
+      content: '';
+      display: none;
+      position: absolute;
+      bottom: 0;
+      left: 24px;
+      right: 0;
+      height: 1px;
+      background-color: #eaecf2;
+
+      @media @mobile {
+        display: block;
+      }
     }
 
-    &-list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    &-item {
-        position: relative;
-        height: 48px;
-
-        @media @mobile {
-            height: 80px;
-        }
-
-        &:after {
-            content: '';
-            display: none;
-            position: absolute;
-            bottom: 0;
-            left: 24px;
-            right: 0;
-            height: 1px;
-            background-color: #eaecf2;
-
-            @media @mobile {
-                display: block;
-            }
-        }
-
-        &:only-child {
-            &:after {
-                display: none;
-            }
-        }
-    }
-
-    &-itemButton {
-        width: 100%;
-        height: 100%;
-        padding-left: 64px;
-        padding-right: 64px;
-        padding-bottom: 0;
-        padding-top: 0;
-        display: flex;
-        align-items: center;
-
-        font-family: inherit;
-
-        border: none;
-        background: none;
-        background-color: #f8f9fb;
-
-        transition: background-color 0.3s ease;
-
-        cursor: pointer;
-        outline: none;
-
-        &:hover,
-        &:focus {
-            background: #f1f3f7;
-        }
-
-        &:active {
-            background: #eaedf3;
-        }
-
-        @media @mobile {
-            padding-top: 9px;
-            padding-left: 24px;
-            padding-right: 24px;
-            flex-direction: column;
-            flex-wrap: wrap;
-            align-items: stretch;
-        }
-    }
-
-    &-itemTitle {
-        padding-right: 10px;
-        margin-top: -5px;
-        flex: 1;
-
-        font-size: 16px;
-        line-height: 2;
-        letter-spacing: normal;
-        text-align: left;
-        color: @colorText;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        padding-right: 20px;
-
-        @media @mobile {
-            flex: initial;
-            width: ~'calc(100% - 50px)';
-            margin-top: 0;
-            padding-right: 0;
-            padding-right: 10px;
-
-            font-size: 14px;
-            line-height: 2.29;
-        }
-    }
-
-    &-itemDate {
-        width: 160px;
-        margin-top: -3px;
-
-        font-size: 14px;
-        line-height: 2.29;
-        letter-spacing: normal;
-        text-align: left;
-        color: @colorTextSecondary;
-        white-space: nowrap;
-
-        @media @mobile {
-            width: ~'calc(100% - 50px)';
-            margin-top: -7px;
-
-            font-size: 12px;
-            line-height: 2.67;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            padding-right: 10px;
-        }
-    }
-
-    &-itemStatus {
-        margin-top: -3px;
-
-        font-size: 14px;
-        line-height: 2.29;
-        letter-spacing: normal;
-        text-align: right;
-        color: @colorText;
-        white-space: nowrap;
-
-        width: 146px;
-
-        .button {
-            margin-top: 1px;
-            margin-right: -16px;
-        }
-
-        @media @mobile {
-            width: 50px;
-            height: 40px;
-            padding-top: 13px;
-
-            font-size: 12px;
-            line-height: 2.67;
-
-            .buttonIcon {
-                margin-top: 3px;
-            }
-        }
-    }
-
-    &-statusSpinner {
-        position: relative;
-        margin-left: 32px;
+    &:only-child {
+      &:after {
         display: none;
+      }
+    }
+  }
 
-        @media @mobile {
-            display: block;
-        }
+  &-itemButton {
+    width: 100%;
+    height: 100%;
+    padding: 0 @sizeSmall;
+    display: flex;
+    align-items: center;
+
+    font-family: inherit;
+
+    border: none;
+    background: none;
+    background-color: #fff;
+
+    transition: background-color 0.3s ease;
+
+    cursor: pointer;
+    outline: none;
+
+    &:hover,
+    &:focus {
+      background-color: @grey-50;
     }
 
-    &-statusText {
-        @media @mobile {
-            display: none;
-        }
+    &:active {
+      background-color: @grey-50;
     }
 
-    &-statusTime {
-        font-weight: 500;
-        white-space: nowrap;
+    @media @mobile {
+      padding-top: 9px;
+      padding-left: 24px;
+      padding-right: 24px;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-items: stretch;
+    }
+  }
 
-        @media @mobile {
-            margin-top: -2px;
-            display: block;
+  &-itemTitle,
+  &-headerTitle {
+    padding-right: 10px;
+    margin-top: -5px;
+    flex: 1;
 
-            font-size: 12px;
-            font-weight: 500;
-            line-height: 2.67;
-        }
+    font-size: @fontSmall;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: left;
+    color: @grey-800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 20px;
+
+    @{c}-itemId,
+    @{c}-itemName {
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    &-showPopup {
-        padding-left: 64px;
-        margin-left: -16px;
-        margin-bottom: -1px;
-
-        @media @mobile {
-            padding-left: 24px;
-            margin-top: 5px;
-            margin-left: -17px;
-            margin-bottom: 2px;
-        }
+    @{c}-itemId {
+      font-size: @fontExtraSmall;
     }
+
+    @{c}-itemName {
+      font-size: @fontMicro;
+      color: @blue-700;
+    }
+
+    @media @mobile {
+      flex: initial;
+      width: ~'calc(100% - 50px)';
+      margin-top: 0;
+      padding-right: 0;
+      padding-right: 10px;
+
+      font-size: 14px;
+      line-height: 2.29;
+    }
+  }
+
+  &-itemDate,
+  &-headerDate {
+    width: 160px;
+    margin-top: -3px;
+
+    font-size: @fontTiny;
+    line-height: 2.29;
+    letter-spacing: normal;
+    text-align: left;
+    color: @grey-600;
+    white-space: nowrap;
+
+    @media @mobile {
+      width: ~'calc(100% - 50px)';
+      margin-top: -7px;
+
+      font-size: 12px;
+      line-height: 2.67;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-right: 10px;
+    }
+  }
+
+  &-itemStatus,
+  &-headerStatus {
+    margin-top: -3px;
+
+    font-size: 14px;
+    line-height: 2.29;
+    letter-spacing: normal;
+    text-align: center;
+    color: @grey-600;
+    white-space: nowrap;
+
+    width: 146px;
+
+    .button {
+      margin-top: 1px;
+      margin-right: -16px;
+    }
+
+    @media @mobile {
+      width: 50px;
+      height: 40px;
+      padding-top: 13px;
+
+      font-size: 12px;
+      line-height: 2.67;
+
+      .buttonIcon {
+        margin-top: 3px;
+      }
+    }
+  }
+
+  &-headerTitle,
+  &-headerDate,
+  &-headerStatus {
+    color: @grey-600;
+    font-size: 13px;
+    font-family: @fontFamilyHeading;
+    font-weight: bold;
+    @media @mobile {
+      padding-top: 0;
+    }
+  }
+
+  &-statusSpinner {
+    position: relative;
+    margin-left: 32px;
+    display: none;
+
+    @media @mobile {
+      display: block;
+    }
+  }
+
+  &-statusText {
+    @media @mobile {
+      display: none;
+    }
+  }
+
+  &-statusTime {
+    font-weight: 500;
+    white-space: nowrap;
+
+    @media @mobile {
+      margin-top: -2px;
+      display: block;
+
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 2.67;
+    }
+  }
+
+  &-showPopup {
+    height: 72px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid @grey-300;
+    cursor: pointer;
+
+    @media @mobile {
+      padding-left: 24px;
+      margin-top: 5px;
+      margin-left: -17px;
+      margin-bottom: 2px;
+    }
+    span {
+      margin-left: @sizeExtraSmall;
+    }
+  }
 }

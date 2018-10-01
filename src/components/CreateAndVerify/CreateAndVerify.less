@@ -1,0 +1,252 @@
+@import (reference) '~const.less';
+
+@c: .createAndVerify;
+
+@{c} {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: @sizeExtraLarge @sizeMedium;
+  border-radius: 8px;
+  height: 320px;
+  color: @grey-600;
+  border: 1px dashed @blue-700;
+  overflow: hidden;
+  background: #fff;
+
+  &--advanced,
+  &--stateCreated {
+    border: 1px solid @grey-300;
+  }
+
+  a {
+    color: @blue-300;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  h3@{c}-heading {
+    margin: 0;
+    font-family: @fontFamilyHeading;
+    color: @light-blue-800;
+    letter-spacing: -0.5px;
+    font-size: @fontSmall;
+  }
+
+  h5 {
+    margin-bottom: 4px;
+    margin-top: @sizeSmall;
+    font-size: @fontExtraSmall;
+    font-family: @fontFamilyHeading;
+    span {
+      color: @deep-orange-700;
+    }
+  }
+
+  p {
+    margin-top: 0;
+    font-size: @fontTiny;
+  }
+
+  .instructions {
+    width: 100%;
+    display: flex;
+    margin-top: @sizeMedium;
+    cursor: pointer;
+    @media @mobile {
+      flex-direction: column;
+    }
+  }
+
+  .instruction {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    .icon {
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: @sizeExtraSmall;
+    }
+    img {
+      height: 80px;
+    }
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  @media @mobile {
+    .verifyProof {
+      margin-top: @sizeLarge;
+    }
+  }
+
+  .notice {
+    display: flex;
+    font-size: @fontMicro;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: auto;
+    color: @grey-800;
+    position: absolute;
+    bottom: @sizeSmall;
+    padding-right: @sizeSmall;
+    .notice-text {
+      width: 100%;
+      flex: 1;
+      text-align: center;
+      position: absolute;
+      left: 0;
+      opacity: 0.5;
+    }
+    @media @mobile {
+      bottom: @sizeMedium;
+    }
+    .advanced-text {
+      z-index: 1;
+      a {
+        color: @blue-300;
+        text-decoration: underline;
+      }
+      @media @mobile {
+        display: none;
+      }
+    }
+  }
+
+  &-input {
+    padding: @sizeLarge;
+    position: absolute;
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-family: @fontFamilyRegular;
+    h3 {
+      font-size: @fontMedium;
+      color: @grey-800;
+      font-family: @fontFamilyHeading;
+      letter-spacing: -0.5px;
+    }
+  }
+
+  &-inputInner {
+    width: 80%;
+    input[type='text'] {
+      border: none;
+      border-radius: @borderRadius;
+      width: 100%;
+      height: @sizeExtraLarge;
+      font-size: 14px;
+      background: @blue-grey-50;
+      color: @grey-800;
+      padding: 0 @sizeSmall;
+    }
+  }
+
+  &-dropMessage {
+    visibility: hidden;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+    @{c}--dropzoneActive & {
+      visibility: visible;
+    }
+  }
+
+  &-analysis {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 8;
+
+    visibility: hidden;
+
+    @{c}--stateAnalysis & {
+      visibility: visible;
+    }
+  }
+
+  &-creation {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 10;
+
+    visibility: hidden;
+
+    @{c}--stateCreation & {
+      visibility: visible;
+    }
+  }
+
+  &-verifyStatus {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 10;
+
+    visibility: hidden;
+
+    @{c}--stateCreated & {
+      visibility: visible;
+    }
+  }
+
+  &-help-icon,
+  &-close-icon {
+    text-align: right;
+    position: absolute;
+    z-index: 10;
+    top: @sizeSmall;
+    right: @sizeSmall;
+  }
+
+  &-help {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    z-index: 9;
+    visibility: hidden;
+
+    @{c}--helpVisible & {
+      visibility: visible;
+    }
+  }
+
+  &-sectionList {
+    margin-top: @sizeMedium;
+  }
+}
+
+@{c} {
+  @media @mobile {
+    height: auto;
+  }
+}

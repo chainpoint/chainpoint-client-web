@@ -2,27 +2,33 @@
 
 @c: .header;
 
-@{c} {
-    font-size: 30px;
+header@{c} {
+  font-size: @fontSmall;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: #fff;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 @sizeSmall;
+  height: auto;
+  background: @grey-800 !important;
+
+  @media @laptop {
+    font-size: @fontSmall;
+  }
+
+  @media @mobile {
+    font-size: @fontSmall;
     font-weight: bold;
     font-style: normal;
     font-stretch: normal;
-    line-height: 1.4;
-    letter-spacing: -1.6px;
-    text-transform: uppercase;
-    color: @colorText;
-
-    @media @laptop {
-        font-size: 24px;
-    }
-
-    @media @mobile {
-        font-size: 18px;
-        font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: 2.33;
-        letter-spacing: -1px;
-        text-align: left;
-    }
+    line-height: 2.33;
+    letter-spacing: -1px;
+    text-align: left;
+    justify-content: flex-start;
+  }
 }

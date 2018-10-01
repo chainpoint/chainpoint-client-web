@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>Oval</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="red" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="Components/Spinner/Failed" transform="translate(-14.000000, -14.000000)" fill-rule="nonzero" stroke="" stroke-width="4">
+            <path d="M90.6686027,24.0842242 C88.071379,22.3455154 85.2950029,20.853571 82.3730171,19.641934 C76.7136625,17.2952135 70.5080879,16 64,16 C37.490332,16 16,37.490332 16,64 C16,90.509668 37.490332,112 64,112 C90.509668,112 112,90.509668 112,64 C112,50.745166 106.627417,38.745166 97.9411255,30.0588745" id="Oval"></path>
+        </g>
+    </g>
+</svg>

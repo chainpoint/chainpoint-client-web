@@ -1,80 +1,91 @@
-import axois from 'axios';
-import isEmpty from 'lodash/isEmpty';
-import find from 'lodash/find';
-import get from 'lodash/get';
+import axois from 'axios'
+import isEmpty from 'lodash/isEmpty'
+import find from 'lodash/find'
+import get from 'lodash/get'
 
-import {convertToLDJSON} from './API';
-import {PROOF_PROXY_BASE_URL} from '../constants';
+import { convertToLDJSON } from './API'
+import { PROOF_PROXY_BASE_URL } from '../constants'
 
 /**
  * Stores proofHandles
  * @param {Object} handles
  * @returns {void}
  */
-const storeProofHandles = (handles) => {
-	const data = handles.map(({hashIdNode, uri}) => [hashIdNode, uri]);
-	axois.post(PROOF_PROXY_BASE_URL.SUBMIT, data)
-		.catch(() => {});
-};
+const storeProofHandles = handles => {
+  const data = handles.map(({ hashIdNode, uri }) => [hashIdNode, uri])
+  axois.post(PROOF_PROXY_BASE_URL.SUBMIT, data).catch(() => {
+    console.log('failed storing proof handles')
+  })
+}
 
 /**
  * Stores Proofs
  * @param {Object} proofs
  * @returns {void}
  */
-const storeProofs = (proofs) => {
-	const data = proofs.map(({hashIdNode, proof}) => [hashIdNode, proof]);
-	axois.post(PROOF_PROXY_BASE_URL.SUBMIT, data)
-		.catch(() => {});
-};
+const storeProofs = proofs => {
+  const data = proofs.map(({ hashIdNode, proof }) => [hashIdNode, proof])
+  if (data) {
+    axois.post(PROOF_PROXY_BASE_URL.SUBMIT, data).catch(() => {
+      console.log('failed storing proof')
+    })
+  }
+}
 
 /**
  * Retrieve a Proofs by UUIDs
  * @param {Object} handles
  * @returns {Promise<Object>}
  */
-const getProofs = (handles) => {
-	const uuids = handles.reduce((acc, {hashIdNode}) => [...acc, hashIdNode], []);
+const getProofs = handles => {
+  const uuids = handles.reduce(
+    (acc, { hashIdNode }) => [...acc, hashIdNode],
+    []
+  )
 
-	const apiUrl = `${PROOF_PROXY_BASE_URL.GET}`;
-	const opts = {
-		headers: {
-			hashids: uuids
-		}
-	};
+  console.log('getting proofs', handles)
 
-	return axois.get(apiUrl, opts)
-		.then(({data}) => {
-			if (isEmpty(data)) {
-				return;
-			}
+  const apiUrl = `${PROOF_PROXY_BASE_URL.GET}`
+  const opts = {
+    headers: {
+      hashids: uuids
+    }
+  }
 
-			return data.map(({proof, hash_id}) => {
-				let anchorsComplete = [];
-				const ldJSON = convertToLDJSON(proof);
-				const branches = get(ldJSON, 'branches');
+  return axois
+    .get(apiUrl, opts)
+    .then(({ data }) => {
+      if (isEmpty(data)) {
+        return
+      }
 
-				const calBranch = find(branches, {label: 'cal_anchor_branch'});
-				if (!isEmpty(calBranch)) {
-					anchorsComplete.push('cal');
+      return data.map(({ proof, hash_id }) => {
+        let anchorsComplete = []
+        const ldJSON = convertToLDJSON(proof)
+        const branches = get(ldJSON, 'branches')
 
-					const btcBranch = find(calBranch.branches, {label: 'btc_anchor_branch'});
-					if (!isEmpty(btcBranch)) {
-						anchorsComplete.push('btc');
-					}
-				}
+        const calBranch = find(branches, { label: 'cal_anchor_branch' })
+        if (!isEmpty(calBranch)) {
+          anchorsComplete.push('cal')
 
-				return {
-					proof,
-					anchorsComplete,
-					hashIdNode: hash_id,
-				};
-			});
-		});
-};
+          const btcBranch = find(calBranch.branches, {
+            label: 'btc_anchor_branch'
+          })
+          if (!isEmpty(btcBranch)) {
+            anchorsComplete.push('btc')
+          }
+        }
 
-export {
-	storeProofHandles,
-	storeProofs,
-	getProofs
-};
+        return {
+          proof,
+          anchorsComplete,
+          hashIdNode: hash_id
+        }
+      })
+    })
+    .catch(() => {
+      console.log('failed fetching proof')
+    })
+}
+
+export { storeProofHandles, storeProofs, getProofs }

@@ -3,349 +3,349 @@
 @c: .createProof;
 
 @{c} {
-    position: relative;
+  position: relative;
+
+  @media @mobile {
+    min-height: 416px;
+  }
+
+  &-contentWithHelp {
+    transition: filter 1s @easeOutExpo, opacity 1s @easeOutExpo;
+
+    @{c}--dropzoneActive & {
+      filter: blur(10px) !important;
+      opacity: 0.3;
+    }
+
+    @{c}--stateAnalysis & {
+      opacity: 0;
+      transition: filter 0.83s @easeOutExpo, opacity 0.83s @easeOutExpo;
+    }
+
+    @{c}--dropzoneActive@{c}--stateAnalysis & {
+      transition-delay: 0.5s, 0.5s;
+    }
+  }
+
+  &-content {
+    transition: filter 1s @easeOutExpo, opacity 1s @easeOutExpo;
 
     @media @mobile {
-        min-height: 416px;
+      padding-top: 19px;
     }
 
-    &-contentWithHelp {
-        transition: filter 1s @easeOutExpo, opacity 1s @easeOutExpo;
+    @{c}--helpVisible & {
+      filter: blur(10px) !important;
+      opacity: 0.3;
 
-        @{c}--dropzoneActive & {
-            filter: blur(10px) !important;
-            opacity: 0.3;
-        }
-
-        @{c}--stateAnalysis & {
-            opacity: 0;
-            transition: filter 0.83s @easeOutExpo, opacity 0.83s @easeOutExpo;
-        }
-
-        @{c}--dropzoneActive@{c}--stateAnalysis & {
-            transition-delay: 0.5s, 0.5s;
-        }
-    }
-
-    &-content {
-        transition: filter 1s @easeOutExpo, opacity 1s @easeOutExpo;
-
-        @media @mobile {
-            padding-top: 19px;
-        }
-
-        @{c}--helpVisible & {
-            filter: blur(10px) !important;
-            opacity: 0.3;
-
-            @media @mobile {
-                filter: none !important;
-                opacity: 1;
-            }
-        }
-
-        &:hover {
-            .textarea-input::placeholder {
-                color: #b6bed2;
-            }
-
-            .textarea-input:focus::placeholder {
-                color: @colorPlaceholder;
-            }
-        }
-    }
-
-    &-sectionUpload {
-        position: relative;
-        min-height: 317px;
-        display: flex;
-        flex-direction: column;
-        padding-top: 48px;
-        padding-left: 64px;
-        padding-right: 10px;
-
-        @{c}--hasProofs & {
-            height: 245px;
-            min-height: 245px;
-        }
-
-        @media @mobile {
-            padding: 0;
-            padding-left: 24px;
-            padding-right: 24px;
-            // margin-bottom: 64px;
-            height: 365px !important;
-
-            @{c}--hasProofs & {
-                height: 317px !important;
-            }
-        }
-    }
-
-    &-header {
-        @media @mobile {
-            margin-left: 16px;
-        }
-    }
-
-    &-icon {
-        position: absolute;
-        bottom: -27px;
-        right: -10px;
-
-        transition: opacity 0.5s @easeOutQuart;
-
-        @{c}--hasContent &,
-        @{c}--hasProofs & {
-            opacity: 0;
-        }
-
-        @media @mobile {
-            display: block;
-            position: static;
-            order: 1;
-            margin-top: 8px;
-            margin-left: 3px;
-
-            span {
-                display: block;
-                font-size: 0;
-            }
-
-            svg {
-                margin: 0 auto;
-                display: block;
-            }
-
-            @{c}--hasProofs &,
-            @{c}--hasContent & {
-                display: none;
-            }
-        }
-    }
-
-    &-input {
-        flex: 1;
-        height: 0;
-
-        @media @mobile {
-            margin-top: 9px;
-            position: relative;
-            padding-left: 16px;
-            padding-right: 16px;
-
-            display: flex;
-            align-items: flex-end;
-
-            flex: initial;
-            flex-shrink: 0;
-
-            order: 2;
-
-            z-index: 2;
-
-            @{c}--hasContent & {
-                margin-top: 0;
-                margin-bottom: 0;
-                padding-bottom: 12px;
-
-                min-height: 240px;
-                max-height: 272px;
-            }
-
-            @{c}--hasProofs & {
-                margin-top: 0;
-                margin-bottom: 0;
-                padding-bottom: 12px;
-
-                min-height: 160px;
-                max-height: 192px;
-            }
-        }
-
-        .textarea {
-            @media @mobile {
-                padding-top: 0 !important;
-            }
-        }
-
-        .textarea-input {
-            padding-right: 54px;
-
-            @media @mobile {
-                padding-right: 0;
-            }
-        }
-
-        .textarea--text-large {
-            padding-top: 11px;
-        }
-
-        .textarea--text-medium {
-            padding-top: 22px;
-        }
-
-        .textarea--text-small {
-            padding-top: 23px;
-        }
-
-        &:after {
-            content: 'or';
-            position: absolute;
-            bottom: -31px;
-            left: 0;
-            right: 0;
-            display: none;
-
-            font-weight: 500;
-            line-height: 1.71;
-            letter-spacing: -0.8px;
-            font-size: 14px;
-            text-align: center;
-            color: #d3d8e4;
-
-            @media @mobile {
-                display: block;
-
-                @{c}--hasContent & {
-                    display: none;
-                }
-            }
-        }
-    }
-
-    &-inputInner {
-        align-items: flex-end;
-        display: flex;
-        width: 100%;
-    }
-
-    &-inputFile {
-        position: absolute;
-        bottom: 44px;
-        left: 48px;
-
-        visibility: visible;
+      @media @mobile {
+        filter: none !important;
         opacity: 1;
-        transition: visibility 0s @easeOutQuart 0s, opacity 0.5s @easeOutQuart;
+      }
+    }
 
-        @media @mobile {
-            position: static;
-            order: 3;
-            margin-top: 48px;
-        }
+    &:hover {
+      .textarea-input::placeholder {
+        color: #b6bed2;
+      }
+
+      .textarea-input:focus::placeholder {
+        color: @blue-grey-100;
+      }
+    }
+  }
+
+  &-sectionUpload {
+    position: relative;
+    min-height: 317px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 48px;
+    padding-left: 64px;
+    padding-right: 10px;
+
+    @{c}--hasProofs & {
+      height: 245px;
+      min-height: 245px;
+    }
+
+    @media @mobile {
+      padding: 0;
+      padding-left: 24px;
+      padding-right: 24px;
+      // margin-bottom: 64px;
+      height: 365px !important;
+
+      @{c}--hasProofs & {
+        height: 317px !important;
+      }
+    }
+  }
+
+  &-header {
+    @media @mobile {
+      margin-left: 16px;
+    }
+  }
+
+  &-icon {
+    position: absolute;
+    bottom: -27px;
+    right: -10px;
+
+    transition: opacity 0.5s @easeOutQuart;
+
+    @{c}--hasContent &,
+    @{c}--hasProofs & {
+      opacity: 0;
+    }
+
+    @media @mobile {
+      display: block;
+      position: static;
+      order: 1;
+      margin-top: 8px;
+      margin-left: 3px;
+
+      span {
+        display: block;
+        font-size: 0;
+      }
+
+      svg {
+        margin: 0 auto;
+        display: block;
+      }
+
+      @{c}--hasProofs &,
+      @{c}--hasContent & {
+        display: none;
+      }
+    }
+  }
+
+  &-input {
+    flex: 1;
+    height: 0;
+
+    @media @mobile {
+      margin-top: 9px;
+      position: relative;
+      padding-left: 16px;
+      padding-right: 16px;
+
+      display: flex;
+      align-items: flex-end;
+
+      flex: initial;
+      flex-shrink: 0;
+
+      order: 2;
+
+      z-index: 2;
+
+      @{c}--hasContent & {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-bottom: 12px;
+
+        min-height: 240px;
+        max-height: 272px;
+      }
+
+      @{c}--hasProofs & {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-bottom: 12px;
+
+        min-height: 160px;
+        max-height: 192px;
+      }
+    }
+
+    .textarea {
+      @media @mobile {
+        padding-top: 0 !important;
+      }
+    }
+
+    .textarea-input {
+      padding-right: 54px;
+
+      @media @mobile {
+        padding-right: 0;
+      }
+    }
+
+    .textarea--text-large {
+      padding-top: 11px;
+    }
+
+    .textarea--text-medium {
+      padding-top: 22px;
+    }
+
+    .textarea--text-small {
+      padding-top: 23px;
+    }
+
+    &:after {
+      content: 'or';
+      position: absolute;
+      bottom: -31px;
+      left: 0;
+      right: 0;
+      display: none;
+
+      font-weight: 500;
+      line-height: 1.71;
+      letter-spacing: -0.8px;
+      font-size: 14px;
+      text-align: center;
+      color: #d3d8e4;
+
+      @media @mobile {
+        display: block;
 
         @{c}--hasContent & {
-            position: absolute;
-            bottom: 0px;
-            left: 24px;
-            right: 24px;
-
-            opacity: 0;
-            visibility: hidden;
-            transition: visibility 0s @easeOutQuart 0.5s, opacity 0.5s @easeOutQuart;
-            pointer-events: none;
+          display: none;
         }
+      }
+    }
+  }
 
-        @{c}--hasProofs & {
-            bottom: 20px;
-        }
+  &-inputInner {
+    align-items: flex-end;
+    display: flex;
+    width: 100%;
+  }
+
+  &-inputFile {
+    position: absolute;
+    bottom: 44px;
+    left: 48px;
+
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s @easeOutQuart 0s, opacity 0.5s @easeOutQuart;
+
+    @media @mobile {
+      position: static;
+      order: 3;
+      margin-top: 48px;
     }
 
-    &-createButton {
-        position: absolute;
-        top: 48px;
-        right: 64px;
+    @{c}--hasContent & {
+      position: absolute;
+      bottom: 0px;
+      left: 24px;
+      right: 24px;
 
-        opacity: 0;
-
-        transition: opacity 0.5s @easeOutQuart;
-
-        @{c}--hasContent & {
-            opacity: 1;
-        }
-
-        @media @mobile {
-            top: auto;
-            bottom: 0;
-            left: 24px;
-            right: 24px;
-
-            @{c}--hasProofs & {
-                bottom: 20px;
-            }
-        }
+      opacity: 0;
+      visibility: hidden;
+      transition: visibility 0s @easeOutQuart 0.5s, opacity 0.5s @easeOutQuart;
+      pointer-events: none;
     }
 
-    &-helpIcon {
-        position: absolute;
-        top: 6px;
-        right: 6px;
-        padding: 10px;
-        z-index: 7;
+    @{c}--hasProofs & {
+      bottom: 20px;
+    }
+  }
+
+  &-createButton {
+    position: absolute;
+    top: 48px;
+    right: 64px;
+
+    opacity: 0;
+
+    transition: opacity 0.5s @easeOutQuart;
+
+    @{c}--hasContent & {
+      opacity: 1;
     }
 
-    &-help {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
+    @media @mobile {
+      top: auto;
+      bottom: 0;
+      left: 24px;
+      right: 24px;
 
-        visibility: hidden;
+      @{c}--hasProofs & {
+        bottom: 20px;
+      }
+    }
+  }
 
-        @{c}--helpVisible & {
-            visibility: visible;
-        }
+  &-helpIcon {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    padding: 10px;
+    z-index: 7;
+  }
 
-        z-index: 6;
+  &-help {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    visibility: hidden;
+
+    @{c}--helpVisible & {
+      visibility: visible;
     }
 
-    &-dropMessage {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
+    z-index: 6;
+  }
 
-        visibility: hidden;
+  &-dropMessage {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
-        z-index: 9;
+    visibility: hidden;
 
-        @{c}--dropzoneActive & {
-            visibility: visible;
-        }
+    z-index: 9;
+
+    @{c}--dropzoneActive & {
+      visibility: visible;
     }
+  }
 
-    &-analysis {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
+  &-analysis {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
-        z-index: 8;
+    z-index: 8;
 
-        visibility: hidden;
+    visibility: hidden;
 
-        @{c}--stateAnalysis & {
-            visibility: visible;
-        }
+    @{c}--stateAnalysis & {
+      visibility: visible;
     }
+  }
 
-    &-creation {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
+  &-creation {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
-        z-index: 10;
+    z-index: 10;
 
-        visibility: hidden;
+    visibility: hidden;
 
-        @{c}--stateCreation & {
-            visibility: visible;
-        }
+    @{c}--stateCreation & {
+      visibility: visible;
     }
+  }
 }

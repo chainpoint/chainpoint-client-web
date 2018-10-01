@@ -1,3 +1,3 @@
 module.exports = {
-	CSS_PREFIX: 'PAC--'
-};
+  CSS_PREFIX: 'CCW--'
+}

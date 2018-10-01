@@ -3,103 +3,109 @@
 @c: .help;
 
 @{c} {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding-top: 30px;
-    padding-right: 120px;
-    padding-left: 56px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 30px;
+  padding-right: 120px;
+  padding-left: 56px;
 
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s @easeOutExpo 0.83s, opacity 0.83s @easeOutExpo;
-    border-radius: 8px;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s @easeOutExpo 0.83s, opacity 0.83s @easeOutExpo;
+  border-radius: 8px;
+
+  @media @mobile {
+    padding-left: 24px;
+    padding-right: 34px;
+    padding-top: 3px;
+  }
+
+  &--visible {
+    opacity: 1;
+    visibility: visible;
+    transition: visibility 0s @easeOutExpo 0s, opacity 0.83s @easeOutExpo;
+  }
+
+  &-list {
+    margin-bottom: 0;
+    list-style-type: none;
+    list-style-position: outside;
 
     @media @mobile {
-        padding-left: 24px;
-        padding-right: 34px;
-        padding-top: 3px;
+      padding-left: 32px;
+    }
+  }
+
+  @{c}-heading {
+    margin-bottom: 0;
+    font-size: 14px;
+    color: @blue-700;
+    font-family: @fontFamilyHeading;
+    &:last-of-type {
+      margin-top: 32px;
+    }
+  }
+
+  &-item {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.34;
+    letter-spacing: -0.83px;
+    text-align: left;
+    color: #323840;
+
+    counter-increment: listcounter;
+
+    transition: transform 0.83s @easeOutExpo;
+
+    @media @mobile {
+      font-size: 14px;
+      font-weight: normal;
+      line-height: 1.43;
+      letter-spacing: -0.7px;
     }
 
-    &--visible {
-        opacity: 1;
-        visibility: visible;
-        transition: visibility 0s @easeOutExpo 0s, opacity 0.83s @easeOutExpo;
+    &:before {
+      content: counter(listcounter) '.';
+      float: left;
+      margin-left: -31px;
+      color: #8f98ad;
     }
 
-    &-list {
-        margin-bottom: 0;
-        list-style-type: none;
-        list-style-position: outside;
+    @{c}-item + & {
+      margin-top: 4px;
 
-        @media @mobile {
-            padding-left: 32px;
-        }
+      @media @laptop {
+        margin-top: 14px;
+      }
+
+      @media @mobile {
+        margin-top: 20px;
+      }
     }
 
-    &-item {
-        font-size: 18px;
-        font-weight: normal;
-        line-height: 1.34;
-        letter-spacing: -0.83px;
-        text-align: left;
-        color: #323840;
-
-        counter-increment: listcounter;
-
-        transition: transform 0.83s @easeOutExpo;
-
-        @media @laptop {
-            font-size: 16px;
-        }
-
-        @media @mobile {
-            font-size: 14px;
-            font-weight: normal;
-            line-height: 1.43;
-            letter-spacing: -0.7px;
-        }
-
-        &:before {
-            content: counter(listcounter) '.';
-            float: left;
-            margin-left: -31px;
-            color: #8f98ad;
-        }
-
-        @{c}-item + & {
-            margin-top: 16px;
-
-            @media @laptop {
-                margin-top: 14px;
-            }
-
-            @media @mobile {
-                margin-top: 20px;
-            }
-        }
-
-        &:nth-child(1) {
-            transform: translateY(10px);
-        }
-
-        &:nth-child(2) {
-            transform: translateY(10px);
-            transition-delay: 0.025s;
-        }
-
-        &:nth-child(3) {
-            transform: translateY(10px);
-            transition-delay: 0.05s;
-        }
-
-        &:nth-child(4) {
-            transform: translateY(10px);
-            transition-delay: 0.075s;
-        }
-
-        @{c}--visible & {
-            transform: translateY(0);
-        }
+    &:nth-child(1) {
+      transform: translateY(10px);
     }
+
+    &:nth-child(2) {
+      transform: translateY(10px);
+      transition-delay: 0.025s;
+    }
+
+    &:nth-child(3) {
+      transform: translateY(10px);
+      transition-delay: 0.05s;
+    }
+
+    &:nth-child(4) {
+      transform: translateY(10px);
+      transition-delay: 0.075s;
+    }
+
+    @{c}--visible & {
+      transform: translateY(0);
+    }
+  }
 }

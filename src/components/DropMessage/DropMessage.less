@@ -3,116 +3,122 @@
 @c: .dropMessage;
 
 @{c} {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    padding-top: 18px;
-    border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding-top: 18px;
+  border-radius: 8px;
+  font-family: @fontFamilyAlternate;
+  z-index: 99999;
 
-    &-icon {
-        circle {
-            border-radius: 50%;
-            transform-origin: 50% 50%;
-            transform: scaleX(0) scaleY(0);
-            transition: transform 0.67s @easeOutExpo;
-        }
-
-        .arrow {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: transform 0.83s @easeOutExpo 0.1s, opacity 0.83s @easeOutExpo 0.1s;
-        }
-
-        span {
-            display: block;
-            font-size: 0;
-        }
-
-        svg {
-            border-radius: 50%;
-        }
+  &-icon {
+    circle {
+      border-radius: 50%;
+      transform-origin: 50% 50%;
+      transform: scaleX(0) scaleY(0);
+      transition: transform 0.67s @easeOutExpo;
     }
 
-    &-title {
-        margin-top: 17px;
-
-        font-size: 22px;
-        font-weight: 500;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: 1.82;
-        letter-spacing: -1.2px;
-        text-align: center;
-        color: @colorText;
-
-        opacity: 0;
-        transform: translateY(10px);
-        transition: transform 0.83s @easeOutExpo, opacity 0.83s @easeOutExpo;
+    .arrow {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: transform 0.83s @easeOutExpo 0.1s,
+        opacity 0.83s @easeOutExpo 0.1s;
     }
 
-    &-text {
-        margin-top: 3px;
-
-        font-size: 18px;
-        font-weight: normal;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: 1.33;
-        letter-spacing: -0.85px;
-        text-align: center;
-        color: #8f98ad;
-
-        opacity: 0;
-        transform: translateY(10px);
-        transition: transform 0.83s @easeOutExpo 0.05s, opacity 0.83s @easeOutExpo 0.05s;
+    span {
+      display: block;
+      font-size: 0;
     }
 
-    &--visible {
-        @{c}-title {
-            transform: translateY(0);
-            opacity: 1;
-        }
+    svg {
+      border-radius: 50%;
+    }
+  }
 
-        @{c}-text {
-            transform: translateY(0);
-            opacity: 1;
-        }
+  &-title {
+    margin-top: 17px;
 
-        circle {
-            transform: scaleX(1) scaleY(1);
-        }
+    font-size: 18px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.82;
+    letter-spacing: -0.3px;
+    text-align: center;
+    color: @light-blue-700;
 
-        .arrow {
-            transform: translateY(0);
-            opacity: 1;
-        }
+    opacity: 0;
+    transform: translateY(10px);
+    transition: transform 0.83s @easeOutExpo, opacity 0.83s @easeOutExpo;
+  }
+
+  &-text {
+    margin-top: 3px;
+
+    font-size: @fontTiny;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: -0.13px;
+    text-align: center;
+    color: #8f98ad;
+
+    opacity: 0;
+    transform: translateY(10px);
+    transition: transform 0.83s @easeOutExpo 0.05s,
+      opacity 0.83s @easeOutExpo 0.05s;
+  }
+
+  &--visible {
+    @{c}-title {
+      transform: translateY(0);
+      opacity: 1;
     }
 
-    &--analysing {
-        @{c}-title {
-            transform: translateY(-10px);
-            opacity: 0;
-            transition: transform 0.5s @easeInExpo, opacity 0.5s @easeInExpo;
-        }
-
-        @{c}-text {
-            transform: translateY(-10px);
-            opacity: 0;
-            transition: transform 0.5s @easeInExpo 0.05s, opacity 0.5s @easeInExpo 0.05s;
-        }
-
-        circle {
-            stroke-width: 0;
-            r: 46px;
-            transition: stroke-width 0.83s @easeOutExpo 0.5s, r 0.83s @easeOutExpo 0.5s;
-        }
-
-        .arrow {
-            transform: translateY(-10px);
-            opacity: 0;
-            transition: transform 0.5s @easeInExpo 0.1s, opacity 0.5s @easeInExpo 0.1s;
-        }
+    @{c}-text {
+      transform: translateY(0);
+      opacity: 1;
     }
+
+    circle {
+      transform: scaleX(1) scaleY(1);
+    }
+
+    .arrow {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  &--analysing {
+    @{c}-title {
+      transform: translateY(-10px);
+      opacity: 0;
+      transition: transform 0.5s @easeInExpo, opacity 0.5s @easeInExpo;
+    }
+
+    @{c}-text {
+      transform: translateY(-10px);
+      opacity: 0;
+      transition: transform 0.5s @easeInExpo 0.05s,
+        opacity 0.5s @easeInExpo 0.05s;
+    }
+
+    circle {
+      stroke-width: 0;
+      r: 46px;
+      transition: stroke-width 0.83s @easeOutExpo 0.5s,
+        r 0.83s @easeOutExpo 0.5s;
+    }
+
+    .arrow {
+      transform: translateY(-10px);
+      opacity: 0;
+      transition: transform 0.5s @easeInExpo 0.1s, opacity 0.5s @easeInExpo 0.1s;
+    }
+  }
 }

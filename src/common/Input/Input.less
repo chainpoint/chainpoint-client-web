@@ -3,104 +3,104 @@
 @c: .input;
 
 @{c} {
-    position: relative;
+  position: relative;
 
-    &-input {
-        display: block;
-        width: 100%;
-        padding: 0;
-        margin-left: -1px;
+  &-input {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin-left: -1px;
 
-        font-family: inherit;
-        font-size: 22px;
-        font-weight: 500;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: 2.2;
-        letter-spacing: -1.22px;
-        text-align: left;
-        color: #323840;
+    font-family: inherit;
+    font-size: 22px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 2.2;
+    letter-spacing: -1.22px;
+    text-align: left;
+    color: #323840;
 
-        border: none;
-        outline: none;
-        background: none;
+    border: none;
+    outline: none;
+    background: none;
 
-        &::placeholder {
-            color: @colorPlaceholder;
-            transition: color 0.3s;
-        }
-
-        &:focus + @{c}-border {
-            width: 100%;
-        }
-
-        @media @mobile {
-            height: 50px;
-
-            font-size: 18px;
-            font-weight: 500;
-            line-height: 1.33;
-            letter-spacing: -1px;
-        }
+    &::placeholder {
+      color: @blue-grey-100;
+      transition: color 0.3s;
     }
 
-    &:after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-
-        background: #d3d8e4;
-
-        z-index: 1;
+    &:focus + @{c}-border {
+      width: 100%;
     }
 
-    &-border {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 0;
-        height: 2px;
+    @media @mobile {
+      height: 50px;
 
-        background: #19a2ff;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.33;
+      letter-spacing: -1px;
+    }
+  }
 
-        transition: width 0.3s ease;
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
 
-        z-index: 2;
+    background: #d3d8e4;
+
+    z-index: 1;
+  }
+
+  &-border {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+
+    background: #19a2ff;
+
+    transition: width 0.3s ease;
+
+    z-index: 2;
+  }
+
+  &-error {
+    position: absolute;
+    bottom: -35px;
+    left: 0;
+
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 2.29;
+    letter-spacing: normal;
+    text-align: left;
+    color: @red-300;
+  }
+
+  &--isInvalid {
+    @{c}-border {
+      background: @red-300;
+      width: 100%;
     }
 
-    &-error {
-        position: absolute;
-        bottom: -35px;
-        left: 0;
-
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 2.29;
-        letter-spacing: normal;
-        text-align: left;
-        color: @colorInvalid;
+    @{c}-error {
+      display: block;
     }
+  }
 
-    &--isInvalid {
-        @{c}-border {
-            background: @colorInvalid;
-            width: 100%;
-        }
-
-        @{c}-error {
-            display: block;
-        }
+  &--placeholderCentered {
+    @{c}-input {
+      &::placeholder {
+        text-align: center;
+      }
     }
-
-    &--placeholderCentered {
-        @{c}-input {
-            &::placeholder {
-                text-align: center;
-            }
-        }
-    }
+  }
 }

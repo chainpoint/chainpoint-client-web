@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>Illustrations/Verify</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#619ED4" offset="0%"></stop>
+            <stop stop-color="#81D4FA" offset="100%"></stop>
+        </linearGradient>
+        <path d="M3.10862447e-15,46.8332781 L3.10862447e-15,4 C3.10862447e-15,1.790861 1.790861,0 4,0 L44,0 C46.209139,0 48,1.790861 48,4 L48,46.8332781 C41.6309221,52.5337572 33.2202532,56 24,56 C14.7797468,56 6.36907791,52.5337572 0,46.8332781 Z" id="path-2"></path>
+    </defs>
+    <g id="Illustrations/Verify" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Illustration" transform="translate(4.000000, 4.000000)">
+            <circle id="Gradient" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="36" cy="36" r="36"></circle>
+            <g id="Sheet" transform="translate(12.000000, 16.000000)">
+                <mask id="mask-3" fill="white">
+                    <use xlink:href="#path-2"></use>
+                </mask>
+                <use id="Combined-Shape" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-2"></use>
+                <path d="M7,42 L41,42 C41.5522847,42 42,42.4477153 42,43 C42,43.5522847 41.5522847,44 41,44 L7,44 C6.44771525,44 6,43.5522847 6,43 C6,42.4477153 6.44771525,42 7,42 Z M7,36 L41,36 C41.5522847,36 42,36.4477153 42,37 C42,37.5522847 41.5522847,38 41,38 L7,38 C6.44771525,38 6,37.5522847 6,37 C6,36.4477153 6.44771525,36 7,36 Z" id="Lines" fill="#CFCFCF" fill-rule="nonzero" mask="url(#mask-3)"></path>
+            </g>
+            <circle id="Stroke" stroke="#58B4F0" stroke-width="2" fill-rule="nonzero" cx="36" cy="36" r="36"></circle>
+        </g>
+        <path d="M40.495723,34.4550041 L40.4906111,34.4599096 L37.9018017,31.9756107 L37.9069137,31.9707051 L35.8533042,30 L27,38.4958957 L35.8618581,47 L37.9179184,45.026943 L31.1096697,38.4935438 L37.4044251,32.4529082 L39.9932344,34.9372072 L36.2848377,38.4958957 L45.1466958,47 L54,38.5041043 L45.1381419,30 L42.9826062,32.0685165 L49.6913796,38.5064562 L43.466828,44.4797222 L40.977494,42.0908827 L44.7151623,38.5041043 L40.495723,34.4550041 Z M40.5067004,47.5019434 L35.8831986,52 L22,38.4934814 L35.8697978,25 L40.4932996,29.4980566 L45.1168014,25 L59,38.5065186 L45.1302022,52 L40.5067004,47.5019434 Z" id="Combined-Shape" fill="#EC4F27"></path>
+    </g>
+</svg>
