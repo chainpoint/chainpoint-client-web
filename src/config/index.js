@@ -3,7 +3,7 @@
  * application will renders.
  * @type {string}
  */
-export const APP_NAME = 'proof-app-client';
+export const APP_NAME = 'proof-app-client'
 
 /**
  * Available [data-*] attributes for root container.
@@ -11,13 +11,13 @@ export const APP_NAME = 'proof-app-client';
  * @type {string[]}
  */
 export const AVAILABLE_DATA_ATTRS = [
-    'onAppearCreate',
-    'onAppearVerify',
-    'onChangeProofCount',
-    'onChangeCreateStatus',
-    'onChangeVerifyFailStatus',
-    'onChangeVerifySuccessStatus',
-    'onChangeVerifyAnalysisStatus'
-];
+  'onAppearCreate',
+  'onAppearVerify',
+  'onChangeProofCount',
+  'onChangeCreateStatus',
+  'onChangeVerifyFailStatus',
+  'onChangeVerifySuccessStatus',
+  'onChangeVerifyAnalysisStatus'
+]
 
-export const CSS_PREFIX = 'PAC';
+export const CSS_PREFIX = 'CCW'
