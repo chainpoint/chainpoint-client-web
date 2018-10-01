@@ -1,6 +1,6 @@
 {
-  "name": "proof-web-client",
-  "version": "1.0.0",
+  "name": "chainpoint-client-web",
+  "version": "0.0.1",
   "main": "./src/ProofApp.js",
   "private": true,
   "dependencies": {
