@@ -2,7 +2,12 @@
   "name": "chainpoint-client-web",
   "version": "0.0.0",
   "main": "./src/ProofApp.js",
-  "private": true,
+  "author": "Tierion",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chainpoint/chainpoint-client-web.git"
+  },
+  "description": "Embeddable Components for Creating and Verifying Proofs on the Chainpoint Network",
   "dependencies": {
     "autoprefixer": "7.1.6",
     "axios": "^0.18.0",
