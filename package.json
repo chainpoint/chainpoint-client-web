@@ -2,7 +2,8 @@
   "name": "chainpoint-client-web",
   "version": "0.0.1",
   "main": "./src/ProofApp.js",
-  "author": "Tierion",
+  "author": "Cody Henshaw <cody@tierion.com>",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/chainpoint/chainpoint-client-web.git"
