@@ -32,7 +32,8 @@ class CreateAndVerify extends Component {
       hash: null,
       hashId: null,
       filename: null,
-      anchorId: null
+      anchorId: null,
+      type: null
     },
     inputState: true,
     analysisState: false,
@@ -81,7 +82,8 @@ class CreateAndVerify extends Component {
               hashId: handles && handles.length ? handles[0].hashIdNode : null,
               hash: hash,
               filename: data.filename,
-              anchorId: handles[0].anchorId
+              anchorId: handles[0].anchorId,
+              type: 'cal'
             }
 
             this.setState({
@@ -101,7 +103,6 @@ class CreateAndVerify extends Component {
               })
             }, 600)
           }
-          // Timeout to allow ProofAnalysis component do exit animation
         }
       )
     }
@@ -143,7 +144,6 @@ class CreateAndVerify extends Component {
 
     this.props.onChangeVerifyAnalysisStatus(true)
 
-    // Timeout to allow DropMessage component do exit animation
     setTimeout(() => {
       this.setState({
         dropzoneActive: false
@@ -188,7 +188,7 @@ class CreateAndVerify extends Component {
       failedAnalysis: true
     })
   }
-  onVerifyFail = () => {
+  onVerifyFail = data => {
     this.setState({
       creationState: true,
       verifySuccess: false,
@@ -198,15 +198,21 @@ class CreateAndVerify extends Component {
     this.onVerifyAnalysisEnd()
   }
   onVerifySuccess = data => {
-    const { hashIdNode, anchorId, hash } = data[
-      data.findIndex(d => d.type === 'btc')
-    ]
+    const hasBtcProof = data.findIndex(d => d.type === 'btc') > -1
+    const dataIndex = hasBtcProof
+      ? data.findIndex(d => d.type === 'btc')
+      : data.findIndex(d => d.type === 'cal')
+
+    const type = hasBtcProof ? 'btc' : 'cal'
+
+    const { hashIdNode, anchorId, hash } = data[dataIndex]
 
     const currentProof = {
       filename: null,
       hashId: hashIdNode,
       anchorId: anchorId,
-      hash
+      hash,
+      type
     }
 
     this.setState({
@@ -318,7 +324,8 @@ class CreateAndVerify extends Component {
         hash: null,
         hashId: null,
         filename: null,
-        anchorId: null
+        anchorId: null,
+        type: null
       },
       originalData: null
     })

@@ -73,8 +73,11 @@ class VerifyStatus extends Component {
             <p>
               {verifySuccess ? (
                 <React.Fragment>
-                  This Chainpoint proof is anchored to the Bitcoin blockchain in{' '}
-                  <b>block {currentProof.anchorId}.</b>
+                  This Chainpoint proof is anchored to the{' '}
+                  {currentProof.type === 'btc'
+                    ? 'Bitcoin blockchain '
+                    : 'Chainpoint calendar '}
+                  in <b>block {currentProof.anchorId}.</b>
                 </React.Fragment>
               ) : (
                 <React.Fragment>
