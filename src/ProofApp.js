@@ -269,7 +269,7 @@ class ProofApp extends Component {
       return
     }
 
-    this.downloadJSONFormat(proofData, filename)
+    this.downloadBinaryFormat(proofData, filename)
   }
 
   /**
