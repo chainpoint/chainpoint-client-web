@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Example</title>
+  <link rel="stylesheet" href="../dist/bundle.css" />
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 32px 0 0 0; padding: 0;
+      background: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo">
+    <div id="chainpoint-client-web" data-onAppearCreate="onAppearCreate" data-onAppearVerify="onAppearVerify"
+      data-onChangeProofCount="onChangeProofCount" data-onChangeCreateStatus="onChangeCreateStatus"
+      data-onChangeVerifyFailStatus="onChangeVerifyFailStatus" data-onChangeVerifySuccessStatus="onChangeVerifySuccessStatus"
+      data-onChangeVerifyAnalysisStatus="onChangeVerifyAnalysisStatus"></div>
+  </div>
+
+  <script type="text/javascript">
+    function onAppearCreate() {
+      console.log('onAppearCreate');
+    }
+    function onAppearVerify() {
+      console.log('onAppearVerify');
+    }
+    function onChangeProofCount() {
+      console.log('onChangeProofCount');
+    }
+    function onChangeCreateStatus() {
+      console.log('onChangeCreateStatus');
+    }
+    function onChangeVerifyFailStatus() {
+      console.log('onChangeVerifyFailStatus');
+    }
+    function onChangeVerifySuccessStatus() {
+      console.log('onChangeVerifySuccessStatus');
+    }
+    function onChangeVerifyAnalysisStatus() {
+      console.log('onChangeVerifyAnalysisStatus');
+    }
+  </script>
+  <script type="text/javascript" src="../dist/bundle.js"></script>
+</body>
+
+</html>
