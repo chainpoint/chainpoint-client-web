@@ -2,7 +2,7 @@ import chainPoint from 'chainpoint-client/dist/bundle.web'
 import chainBinary from 'chainpoint-binary'
 import JSONFormatter from 'json-fmt'
 
-// import * as ProofProxyAPI from './ProofProxyAPI'
+import * as ProofProxyAPI from './ProofProxyAPI'
 import { sleep } from './sleep'
 
 const fmt = new JSONFormatter(JSONFormatter.PRETTY)
@@ -111,7 +111,7 @@ const checkProofs = ({
     .then(proofs => {
       // if proof is gone, don't attempt to restore it
       if (proofs[0].proof) {
-        // ProofProxyAPI.storeProofs(proofs)
+        ProofProxyAPI.storeProofs(proofs)
       }
       return proofs
     })
@@ -119,7 +119,7 @@ const checkProofs = ({
     // fallback to ProofProxy
     .catch(() => {
       console.log('ERR')
-      // ProofProxyAPI.getProofs(handles)
+      ProofProxyAPI.getProofs(handles)
     })
     .then(proofs => {
       onProofsReceived(hash, proofs)
