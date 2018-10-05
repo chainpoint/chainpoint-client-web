@@ -11,6 +11,8 @@ import { PROOF_PROXY_BASE_URL } from '../constants'
  * @param {Object} handles
  * @returns {void}
  */
+
+// tip: parse UUID and extract the timestamp to see if older than 24 hours
 const storeProofHandles = handles => {
   const data = handles.map(({ hashIdNode, uri }) => [hashIdNode, uri])
   axois.post(PROOF_PROXY_BASE_URL.SUBMIT, data).catch(() => {
@@ -26,7 +28,7 @@ const storeProofHandles = handles => {
 const storeProofs = proofs => {
   const data = proofs.map(({ hashIdNode, proof }) => [hashIdNode, proof])
   if (data) {
-    axois.post(PROOF_PROXY_BASE_URL.SUBMIT, data).catch(() => {
+    axois.post(PROOF_PROXY_BASE_URL.SUBMIT, data).catch(err => {
       console.log('failed storing proof')
     })
   }

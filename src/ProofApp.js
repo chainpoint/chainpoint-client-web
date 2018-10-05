@@ -3,14 +3,12 @@ import cloneDeep from 'lodash/cloneDeep'
 import get from 'lodash/get'
 import set from 'lodash/set'
 import { createPopup, POPUP_ROOT_ID } from 'common/popupUtils'
-// import VisibilitySensor from 'react-visibility-sensor'
+import VisibilitySensor from 'react-visibility-sensor'
 import withSizes from 'react-sizes'
 import fileDownload from 'js-file-download'
 import ns from 'utils/ns'
 
 import ProofPopup from 'components/ProofPopup/ProofPopup'
-// import CreateProof from 'components/CreateProof/CreateProof'
-// import VerifyProof from 'components/VerifyProof/VerifyProof'
 import CreateAndVerify from 'components/CreateAndVerify/CreateAndVerify'
 import { WIDTH_MOBILE, WIDTH_LAPTOP } from 'common/const'
 import { STORAGE_KEY, BLOCKCHAIN } from './constants'
@@ -298,47 +296,46 @@ class ProofApp extends Component {
     fileDownload(convertedData, filename)
   }
 
+  /**
+   *
+   */
+  onAppear() {
+    this.props.onAppearCreate()
+    this.props.onAppearVerify()
+  }
+
   render() {
     const { popupVisible, proofs, popupProofId } = this.state
     const {
       isMobile,
       isLaptop,
-      // onAppearCreate,
-      // onAppearVerify,
       onChangeCreateStatus,
       onChangeVerifyAnalysisStatus,
       onChangeVerifySuccessStatus,
       onChangeVerifyFailStatus
-      // uris
     } = this.props
 
     return (
       <ProofAppContext.Provider value={{ isMobile, isLaptop }}>
         <div className={ns('proofApp')}>
           <div className={ns('proofApp-create-and-verify')}>
-            <CreateAndVerify
-              proofs={proofs}
-              onAddProof={this.onAddProof}
-              onShowProofPopup={this.onShowPopup}
-              onDownloadProof={this.onDownloadProof}
-              onChangeCreateStatus={onChangeCreateStatus}
-              onChangeVerifyAnalysisStatus={onChangeVerifyAnalysisStatus}
-              onChangeVerifySuccessStatus={onChangeVerifySuccessStatus}
-              onChangeVerifyFailStatus={onChangeVerifyFailStatus}
-            />
-          </div>
-          {/* <div className={ns("proofApp-create")}>
-            <VisibilitySensor onChange={onAppearCreate} offset={{ bottom: 50 }} partialVisibility="bottom">
-              <CreateProof
+            <VisibilitySensor
+              onChange={this.onAppear()}
+              offset={{ bottom: 50 }}
+              partialVisibility="bottom"
+            >
+              <CreateAndVerify
                 proofs={proofs}
                 onAddProof={this.onAddProof}
                 onShowProofPopup={this.onShowPopup}
                 onDownloadProof={this.onDownloadProof}
                 onChangeCreateStatus={onChangeCreateStatus}
+                onChangeVerifyAnalysisStatus={onChangeVerifyAnalysisStatus}
+                onChangeVerifySuccessStatus={onChangeVerifySuccessStatus}
+                onChangeVerifyFailStatus={onChangeVerifyFailStatus}
               />
             </VisibilitySensor>
-          </div> */}
-
+          </div>
           {popupVisible && (
             <ProofPopup
               proofs={proofs}
@@ -348,16 +345,6 @@ class ProofApp extends Component {
               onDownloadProof={this.onDownloadProof}
             />
           )}
-
-          {/* <div className={ns("proofApp-verify")}>
-            <VisibilitySensor onChange={onAppearVerify} minTopValue={125} partialVisibility={true}>
-              <VerifyProof
-                onChangeVerifyAnalysisStatus={onChangeVerifyAnalysisStatus}
-                onChangeVerifySuccessStatus={onChangeVerifySuccessStatus}
-                onChangeVerifyFailStatus={onChangeVerifyFailStatus}
-              />
-            </VisibilitySensor>
-          </div> */}
         </div>
       </ProofAppContext.Provider>
     )
