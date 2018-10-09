@@ -1,6 +1,6 @@
 {
   "name": "chainpoint-client-web",
-  "version": "0.0.4-4",
+  "version": "0.0.4-5",
   "main": "./src/ProofApp.js",
   "author": "Cody Henshaw <cody@tierion.com>",
   "license": "Apache-2.0",
