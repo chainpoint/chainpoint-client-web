@@ -23,8 +23,14 @@ class ProofList extends Component {
     this.props.onShowProofPopup(id)
   }
 
-  componentDidMount () => {
-    alert()
+  componentDidMount = () => {
+    this.updateInterval = setInterval(() => {
+      this.forceUpdate()
+    }, 60 * 1000)
+  }
+
+  componentWillUnmount = () => {
+    clearInterval(this.updateInterval)
   }
 
   render() {
