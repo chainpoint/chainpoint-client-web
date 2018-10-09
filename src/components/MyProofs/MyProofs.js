@@ -26,6 +26,16 @@ class MyProofs extends Component {
     }
   }
 
+  componentDidMount = () => {
+    this.updateInterval = setInterval(() => {
+      this.forceUpdate()
+    }, 60 * 1000)
+  }
+
+  componentWillUnmount = () => {
+    clearInterval(this.updateInterval)
+  }
+
   onScroll = e => {
     const scroll = this.scrollNode.scrollTop
     const height = this.scrollNode.getBoundingClientRect().height

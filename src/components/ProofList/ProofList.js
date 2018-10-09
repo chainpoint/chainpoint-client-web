@@ -87,22 +87,28 @@ class ProofList extends Component {
                       </div>
                     )}
 
-                    <div className={ns('proofList-itemStatus')}>
+                    <div
+                      className={ns(
+                        `proofList-itemStatus ${
+                          isBtcReady ? 'proofList-itemStatus-done' : ''
+                        }`
+                      )}
+                    >
                       {isBtcReady ? (
                         <ButtonIcon
                           icon="arrowDown"
                           onClick={e => onDownloadProof(e, proof)}
                         />
                       ) : (
-                        <span>
-                          <div className={ns('proofList-statusSpinner')}>
-                            <Spinner />
-                          </div>
+                        <div className={ns('proofList-status')}>
                           <span className={ns('proofList-statusText')} />{' '}
                           <span className={ns('proofList-statusTime')}>
                             ~ {parseInt(Math.abs(eta), 10)} min
                           </span>
-                        </span>
+                          <div className={ns('proofList-statusSpinner')}>
+                            <Spinner />
+                          </div>
+                        </div>
                       )}
                     </div>
                   </div>
