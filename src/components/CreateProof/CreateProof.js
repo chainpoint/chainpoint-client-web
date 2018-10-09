@@ -3,6 +3,7 @@ import SvgInline from 'react-inlinesvg'
 import classNames from 'classnames'
 import Dropzone from 'react-dropzone'
 import { sha3_256 as sha256 } from 'js-sha3'
+import { sha256 } from 'js-sha256'
 import { submitHash } from '../../utils/API'
 import ns from 'utils/ns'
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
 import classnames from 'classnames'
-import { sha3_256 as sha256 } from 'js-sha3'
+import { sha256 } from 'js-sha256'
 
 import ns from 'utils/ns'
 import { convertToLDJSON, submitHash, verifyProofs } from 'utils/API'
@@ -110,14 +110,14 @@ class CreateAndVerify extends Component {
     reader.onabort = () => console.log('file reading was aborted')
     reader.onerror = () => console.log('file reading has failed')
 
-    reader.readAsBinaryString(file)
+    reader.readAsArrayBuffer(file)
   }
   verifyData = (file, proofHash) => {
     const reader = new FileReader()
 
     reader.onload = () => {
-      const fileAsBinaryString = reader.result
-      file.data = fileAsBinaryString
+      const fileAsArrayBuffer = reader.result
+      file.data = fileAsArrayBuffer
 
       const fileHash = validateHash(file.data) ? file.data : sha256(file.data)
       this.setState({
@@ -129,7 +129,7 @@ class CreateAndVerify extends Component {
     reader.onabort = () => console.log('file reading was aborted')
     reader.onerror = () => console.log('file reading has failed')
 
-    reader.readAsBinaryString(file)
+    reader.readAsArrayBuffer(file)
   }
   verifyProof = file => {
     this.setState({
@@ -264,7 +264,8 @@ class CreateAndVerify extends Component {
       }
     }
   }
-  onBrowseFiles = () => {
+  onBrowseFiles = e => {
+    e.preventDefault()
     this.dropzoneRef.open()
   }
   onCreateText = () => {
