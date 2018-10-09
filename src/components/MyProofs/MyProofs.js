@@ -136,7 +136,7 @@ class MyProofs extends Component {
                         </div>
                         <span className={ns('proofList-statusText')} />{' '}
                         <span className={ns('proofList-statusTime')}>
-                          ~{parseInt(Math.abs(eta), 10)} min
+                          ~ {parseInt(Math.abs(eta), 10)} min
                         </span>
                       </span>
                     )}

@@ -104,7 +104,10 @@ class VerifyStatus extends Component {
                   </h4>
                   <p>Verify your proof against a copy of the original data.</p>
                   <p>
-                    Drag &amp; drop or <a onClick={onBrowseFiles}>browse</a>{' '}
+                    Drag &amp; drop or{' '}
+                    <a className={ns('link')} onClick={onBrowseFiles}>
+                      browse
+                    </a>{' '}
                     your files.{' '}
                   </p>
                   <p>
