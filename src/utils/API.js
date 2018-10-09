@@ -76,7 +76,7 @@ const submitHash = ({ hash, onSubmitFailed }) =>
   chainPoint
     .submitHashes([hash])
     .then(handles => {
-      // ProofProxyAPI.storeProofHandles(handles)
+      ProofProxyAPI.storeProofHandles(handles)
       return handles
     })
     .catch(onSubmitFailed)
@@ -104,7 +104,6 @@ const checkProofs = ({
   updateProof,
   onProofsReceived
 }) => {
-  // if (!handles) return
   chainPoint
     .getProofs(handles)
     // Save proofs into ProofProxy
@@ -118,7 +117,6 @@ const checkProofs = ({
     // if chainPoint client doesn't work as expected
     // fallback to ProofProxy
     .catch(() => {
-      console.log('ERR')
       ProofProxyAPI.getProofs(handles)
     })
     .then(proofs => {
