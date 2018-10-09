@@ -266,6 +266,7 @@ class CreateAndVerify extends Component {
   }
   onBrowseFiles = e => {
     e.preventDefault()
+    // e.stopPropagation()
     this.dropzoneRef.open()
   }
   onCreateText = () => {
@@ -445,11 +446,7 @@ class CreateAndVerify extends Component {
               <div>
                 <h5>Drag & Drop</h5>
                 <p>
-                  or{' '}
-                  <a className={ns('link')} onClick={this.onBrowseFiles}>
-                    browse
-                  </a>{' '}
-                  your files
+                  or <a className={ns('link')}>browse</a> your files
                 </p>
               </div>
             </div>
