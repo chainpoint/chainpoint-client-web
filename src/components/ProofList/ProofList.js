@@ -23,23 +23,18 @@ class ProofList extends Component {
     this.props.onShowProofPopup(id)
   }
 
+  componentDidMount = () => {
+    this.updateInterval = setInterval(() => {
+      this.forceUpdate()
+    }, 60 * 1000)
+  }
+
+  componentWillUnmount = () => {
+    clearInterval(this.updateInterval)
+  }
+
   render() {
     const { proofs, isMobile, onDownloadProof } = this.props
-
-    // let height = 0
-    // if (this.innerNode && proofs.length !== 0) {
-    //   const rowHeight = isMobile ? 80 : 72
-    //   const showPopupHeight = isMobile ? 56 : 72
-    //   const headerHeight = 40
-    //   // const innerStyle = window.getComputedStyle(this.innerNode)
-
-    //   // height =
-    //   //   Math.min(proofs.length, PROOFS_TO_SHOW) * rowHeight + headerHeight
-
-    //   // if (proofs.length > 3) {
-    //   //   // height += showPopupHeight
-    //   // }
-    // }
 
     return (
       <div className={ns('proofList')}>
@@ -92,22 +87,28 @@ class ProofList extends Component {
                       </div>
                     )}
 
-                    <div className={ns('proofList-itemStatus')}>
+                    <div
+                      className={ns(
+                        `proofList-itemStatus ${
+                          isBtcReady ? 'proofList-itemStatus-done' : ''
+                        }`
+                      )}
+                    >
                       {isBtcReady ? (
                         <ButtonIcon
                           icon="arrowDown"
                           onClick={e => onDownloadProof(e, proof)}
                         />
                       ) : (
-                        <span>
+                        <div className={ns('proofList-status')}>
+                          <span className={ns('proofList-statusText')} />{' '}
+                          <span className={ns('proofList-statusTime')}>
+                            ~ {parseInt(Math.abs(eta), 10)} min
+                          </span>
                           <div className={ns('proofList-statusSpinner')}>
                             <Spinner />
                           </div>
-                          <span className={ns('proofList-statusText')} />{' '}
-                          <span className={ns('proofList-statusTime')}>
-                            ~{parseInt(Math.abs(eta), 10)} min
-                          </span>
-                        </span>
+                        </div>
                       )}
                     </div>
                   </div>

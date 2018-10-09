@@ -175,6 +175,19 @@
     }
   }
 
+  &-itemStatus {
+    @media @mobile {
+      padding-top: 4px;
+    }
+  }
+
+  &-itemStatus@{c}-itemStatus-done {
+    padding-top: 13px;
+    @media @mobile {
+      margin-left: 4px;
+    }
+  }
+
   &-itemStatus,
   &-headerStatus {
     margin-top: -3px;
@@ -196,7 +209,6 @@
     @media @mobile {
       width: 50px;
       height: 40px;
-      padding-top: 13px;
 
       font-size: 12px;
       line-height: 2.67;
@@ -219,10 +231,22 @@
     }
   }
 
+  &-status {
+    margin-left: 32px;
+    display: flex;
+    align-items: center;
+    @media @mobile {
+      margin-left: 0;
+      flex-direction: column;
+    }
+  }
+
   &-statusSpinner {
     position: relative;
-    margin-left: 32px;
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
 
     @media @mobile {
       display: block;

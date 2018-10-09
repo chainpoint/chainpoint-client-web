@@ -444,7 +444,11 @@ class CreateAndVerify extends Component {
               <div>
                 <h5>Drag & Drop</h5>
                 <p>
-                  or <a onClick={this.onBrowseFiles}>browse</a> your files
+                  or{' '}
+                  <a className={ns('link')} onClick={this.onBrowseFiles}>
+                    browse
+                  </a>{' '}
+                  your files
                 </p>
               </div>
             </div>
