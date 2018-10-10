@@ -109,9 +109,9 @@ const checkProofs = ({
     // Save proofs into ProofProxy
     .then(proofs => {
       // if proof is gone, don't attempt to restore it
-      if (proofs[0].proof) {
-        ProofProxyAPI.storeProofs(proofs)
-      }
+      // if (proofs[0].proof) {
+      // ProofProxyAPI.storeProofs(proofs)
+      // }
       return proofs
     })
     // if chainPoint client doesn't work as expected
