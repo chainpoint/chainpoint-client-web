@@ -12,8 +12,7 @@ const DATE_FORMAT = 'MM/DD/YYYY HH:mma'
 
 const ProofTextList = ({ proof }) => {
   const isCalReady = proof.proofStatus.cal.isReady
-  const isBtcReady = proof.proofStatus.btc.isReady
-  let idText =
+  const idText =
     isCalReady && proof.proofs && proof.proofs.length
       ? proof.proofs[0].hashIdNode
       : 'Waiting for chp node to return hash id'

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import ns from 'utils/ns'
-import { getFormattedJSON, convertToLDJSON } from '../../utils/API'
 import * as chainpointParse from 'chainpoint-parse'
 
 import ProofText from 'components/ProofText/ProofText'
@@ -8,21 +7,6 @@ import ProofText from 'components/ProofText/ProofText'
 import './ProofDetails.less'
 
 class ProofDetails extends Component {
-  getFormattedProof(proof) {
-    const { proofData } = proof
-
-    if (!proofData) {
-      return
-    }
-
-    const ldJSON = convertToLDJSON(proofData)
-    if (!ldJSON) {
-      return
-    }
-
-    return getFormattedJSON(ldJSON)
-  }
-
   getProofDetails(proof) {
     const { branches = [] } = chainpointParse.parse(proof.proofData)
     let details = {}
@@ -48,9 +32,6 @@ class ProofDetails extends Component {
 
   render() {
     const { isBtcReady, isCalReady, proof } = this.props
-    const proofLDJson = this.getFormattedProof(proof)
-    // const anchors =
-    //   isCalReady || isBtcReady ? this.getProofDetails(proofLDJson) : {}
 
     const proofDetails =
       isCalReady || isBtcReady ? this.getProofDetails(proof) : {}
