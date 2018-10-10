@@ -1,0 +1,25 @@
+@import (reference) '~const.less';
+
+@c: .proofCode;
+
+@{c} {
+  &-codeBody {
+    font-family: @fontFamilyCode;
+    background: @grey-100;
+    padding: @sizeExtraLarge @sizeLarge;
+    font-size: @fontTiny;
+    line-height: @fontSmall;
+    border-radius: @borderRadius;
+    color: #2c3240;
+    white-space: pre-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+  }
+
+  &-copyButton {
+    position: absolute;
+    top: @sizeSmall;
+    right: @sizeSmall;
+  }
+}

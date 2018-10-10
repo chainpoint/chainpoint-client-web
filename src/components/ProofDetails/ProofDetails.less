@@ -1,0 +1,64 @@
+@import (reference) '~const.less';
+
+@c: .proofDetails;
+
+@{c} {
+  &-details {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    background: @grey-100;
+    margin-bottom: @sizeLarge;
+    border-radius: @borderRadius / 2;
+    padding: @sizeSmall;
+    color: @grey-400;
+    line-height: 1.4;
+    h3 {
+      font-size: @fontSmall;
+      font-weight: 400;
+      margin: 0 0 @sizeSmall;
+    }
+    h5 {
+      margin: 0;
+    }
+    @{c}-hash {
+      font-size: @fontExtraSmall;
+      margin-bottom: @sizeSmall;
+    }
+    @{c}-block {
+      font-size: @fontExtraSmall;
+      a {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+    @media @mobile {
+      h5,
+      @{c}-block,
+      @{c}-hash {
+        font-size: @fontTiny;
+        word-wrap: break-word;
+      }
+    }
+  }
+
+  &-details-cal@{c}-details-complete {
+    background: @purple-50;
+    color: @deep-purple-600;
+    @{c}-hash,
+    @{c}-block,
+    a {
+      color: @deep-purple-400;
+    }
+  }
+
+  &-details-btc@{c}-details-complete {
+    background: @blue-50;
+    color: @indigo-500;
+    @{c}-hash,
+    @{c}-block,
+    a {
+      color: @indigo-400;
+    }
+  }
+}

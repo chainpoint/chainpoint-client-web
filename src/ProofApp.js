@@ -67,8 +67,8 @@ class ProofApp extends Component {
 
     this.state = {
       proofs,
-      popupVisible: false,
-      popupProofId: null
+      popupVisible: true,
+      popupProofId: '6e947510-cc16-11e8-8362-019a06bc3d62'
     }
     this.initPollingProcess(proofs)
   }

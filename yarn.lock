@@ -1691,7 +1691,7 @@ chainpoint-client@^0.2.2:
     uuid-validate "^0.0.2"
     validator "^9.1.2"
 
-chainpoint-parse@^3.0.1:
+chainpoint-parse@^3.0.1, chainpoint-parse@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/chainpoint-parse/-/chainpoint-parse-3.1.2.tgz#498d8a2ea702ca74430371fff155026fa8d509dd"
   integrity sha512-61pp26H5G5cdn2bpcweSwI99UlSVM6LropWvGZtcLsyPYvdTd0uE51XLFZB0O4i7rmA62KeFV52RVnvNhElUOA==

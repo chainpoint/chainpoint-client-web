@@ -41,17 +41,6 @@ const ProofTextList = ({ proof }) => {
           {fecha.format(proof.date, DATE_FORMAT)}
         </div>
       </div>
-
-      <div className={ns('proofText-row')}>
-        <div className={ns('proofText-name')}>Status:</div>
-        <div className={ns('proofText-value')}>
-          {isCalReady
-            ? isBtcReady
-              ? 'Done'
-              : 'Creating bitcoin proof'
-            : 'Creating calendar proof'}
-        </div>
-      </div>
     </div>
   )
 }
