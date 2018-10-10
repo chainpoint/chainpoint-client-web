@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import SvgInline from 'react-inlinesvg'
-import { getFormattedJSON, convertToLDJSON } from '../../utils/API'
 import ns from 'utils/ns'
 
 import Button from 'common/Button/Button'
-import ProofText from 'components/ProofText/ProofText'
 import Spinner from 'components/Spinner/Spinner'
+import ProofDetails from 'components/ProofDetails/ProofDetails'
+import ProofCode from 'components/ProofCode/ProofCode'
 import ready from 'svg/ready.svg'
 import { ProofAppContext } from 'ProofApp'
 
@@ -16,7 +16,8 @@ class ProofInfo extends Component {
     topOpacity: 1,
     bottomOpacity: 1,
     height: 0,
-    successCopyVisible: false
+    successCopyVisible: false,
+    detailsView: true
   }
 
   onChange = e => {
@@ -77,95 +78,17 @@ class ProofInfo extends Component {
     this.props.onShowProofPopup()
   }
 
-  /**
-   * Copies proof ld-json to clipboard
-   * @returns {boolean}
-   */
-  copy() {
-    const { proof } = this.props
-
-    if (!proof.proofData) {
-      return false
-    }
-
-    const ldJSON = convertToLDJSON(proof.proofData)
-    if (!ldJSON) {
-      return false
-    }
-
-    const fakeInput = document.createElement('input')
-
-    // hides the input
-    fakeInput.id = 'fakeCopy'
-    fakeInput.style.position = 'absolute'
-    fakeInput.style.bottom = '-1000px'
-    fakeInput.style.left = '-1000px'
-    fakeInput.value = JSON.stringify(ldJSON)
-
-    document.body.appendChild(fakeInput)
-
-    fakeInput.select()
-    document.execCommand('copy')
-
-    document.body.removeChild(fakeInput)
-    return true
-  }
-
-  /**
-   * Returns formatted ld-json of proof
-   * @param {Object} proof
-   * @returns {string|void}
-   */
-  getFormattedProof(proof) {
-    const { proofData } = proof
-
-    if (!proofData) {
-      return
-    }
-
-    const ldJSON = convertToLDJSON(proofData)
-    if (!ldJSON) {
-      return
-    }
-
-    return getFormattedJSON(ldJSON)
-  }
-
-  getAnchorsFromFormattedProof(ldJson) {
-    const proofJson = JSON.parse(ldJson)
-    let anchors = {}
-
-    if (proofJson && proofJson.branches) {
-      const calBranch = proofJson.branches.find(
-        branch => branch.label === 'cal_anchor_branch'
-      )
-      const calAnchorOp = calBranch && calBranch.ops.find(op => op.anchors)
-
-      anchors.cal =
-        (calAnchorOp && calAnchorOp.anchors && calAnchorOp.anchors[0]) || null
-
-      const btcBranch =
-        calBranch &&
-        calBranch.branches &&
-        calBranch.branches.find(branch => branch.label === 'btc_anchor_branch')
-
-      const btcAnchorOp = btcBranch && btcBranch.ops.find(op => op.anchors)
-      anchors.btc =
-        (btcAnchorOp && btcAnchorOp.anchors && btcAnchorOp.anchors[0]) || null
-    }
-    return anchors
+  toggleView = () => {
+    this.setState({
+      detailsView: !this.state.detailsView
+    })
   }
 
   render() {
-    const { proof, isMobile, onDownloadProof } = this.props
+    const { proof, onDownloadProof } = this.props
+    const { detailsView } = this.state
     const isCalReady = proof.proofStatus.cal.isReady
     const isBtcReady = proof.proofStatus.btc.isReady
-    const hasEnoughInfo = isCalReady || isBtcReady
-
-    const proofLDJson = this.getFormattedProof(proof)
-    const anchors = hasEnoughInfo
-      ? this.getAnchorsFromFormattedProof(proofLDJson)
-      : {}
 
     return (
       <div className={ns('proofInfo')}>
@@ -185,102 +108,47 @@ class ProofInfo extends Component {
           }}
         >
           <div className={ns('proofInfo-info')}>
-            <div className={ns('proofInfo-infoText')}>
-              <ProofText
+            <div className={ns('proofInfo-header')}>
+              <div className={ns('proofInfo-buttons')}>
+                <Button
+                  type="download"
+                  title="Download proof"
+                  onClick={e => onDownloadProof(e, proof)}
+                />
+              </div>
+              <div className={ns('proofInfo-anchors')}>
+                <h3>Anchors:</h3>
+                <div className={ns('proofInfo-status-calendar')}>
+                  {isCalReady ? <SvgInline src={ready} /> : <Spinner />}
+                  <span className={ns('proofInfo-status-label')}>Calendar</span>
+                </div>
+                <div className={ns('proofInfo-status-bitcoin')}>
+                  {isBtcReady ? <SvgInline src={ready} /> : <Spinner />}
+                  <span className={ns('proofInfo-status-label')}>Bitcoin</span>
+                </div>
+              </div>
+            </div>
+
+            <div className={ns('proofInfo-toggle')}>
+              <span
+                className={ns('proofInfo-toggle-button')}
+                onClick={this.toggleView}
+              >
+                {detailsView ? 'View Code' : 'View Details'}
+              </span>
+            </div>
+
+            {detailsView ? (
+              <ProofDetails
                 proof={proof}
                 isCalReady={isCalReady}
                 isBtcReady={isBtcReady}
               />
-            </div>
-
-            <div className={ns('proofInfo-infoStatusList')}>
-              <h3>Anchors</h3>
-              <div className={ns('proofInfo-infoStatus')}>
-                {isCalReady ? <SvgInline src={ready} /> : <Spinner />}
-                <span className={ns('proofInfo-infoStatusLink')}>
-                  Calendar
-                  {isCalReady ? (
-                    <span>
-                      &nbsp;|{' '}
-                      <a target="_blank" href={anchors.cal.uris[0]}>
-                        block {anchors.cal.anchor_id}
-                      </a>
-                    </span>
-                  ) : null}
-                </span>
-              </div>
-              <div className={ns('proofInfo-infoStatus')}>
-                {isBtcReady ? <SvgInline src={ready} /> : <Spinner />}
-                <span className={ns('proofInfo-infoStatusLink')}>
-                  Bitcoin
-                  {isBtcReady ? (
-                    <span>
-                      &nbsp;|{' '}
-                      <a
-                        target="_blank"
-                        rel="noopener"
-                        href={`https://api.blockcypher.com/v1/btc/main/blocks/${
-                          anchors.btc.anchor_id
-                        }`}
-                      >
-                        block {anchors.btc.anchor_id}
-                      </a>
-                    </span>
-                  ) : null}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {hasEnoughInfo && (
-            <React.Fragment>
-              <div className={ns('proofInfo-code')}>
-                {!isMobile && (
-                  <div className={ns('proofInfo-codeControls')}>
-                    <Button
-                      type="primary"
-                      title="Copy code"
-                      successTitle="Code copied"
-                      prefixIconSuccess="tick"
-                      successVisible={this.state.successCopyVisible}
-                      onClick={this.onCopy}
-                      className={ns('proofInfo-copyButton')}
-                    />
-                    <Button
-                      type="download"
-                      title="Download proof"
-                      onClick={e => onDownloadProof(e, proof)}
-                    />
-                  </div>
-                )}
-
-                <div className={ns('proofInfo-codeBody')}>{proofLDJson}</div>
-              </div>
-            </React.Fragment>
-          )}
-        </div>
-
-        {isMobile && (
-          <div>
-            {hasEnoughInfo && (
-              <div className={ns('proofInfo-codeControls')}>
-                <Button
-                  type="primary"
-                  title="Copy code"
-                  successTitle="Code copied"
-                  prefixIconSuccess="tick"
-                  successVisible={this.state.successCopyVisible}
-                  onClick={this.onCopy}
-                />
-                <Button
-                  type="download"
-                  title="Download"
-                  onClick={e => onDownloadProof(e, proof)}
-                />
-              </div>
+            ) : (
+              <ProofCode proof={proof} />
             )}
           </div>
-        )}
+        </div>
       </div>
     )
   }

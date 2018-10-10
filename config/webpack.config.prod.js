@@ -146,7 +146,8 @@ module.exports = {
             test: /\.(js|jsx|mjs)$/,
             include: [
               paths.appSrc,
-              path.resolve(paths.appNodeModules, 'chainpoint-binary')
+              path.resolve(paths.appNodeModules, 'chainpoint-binary'),
+              path.resolve(paths.appNodeModules, 'chainpoint-parse')
             ],
             loader: require.resolve('babel-loader'),
             options: {

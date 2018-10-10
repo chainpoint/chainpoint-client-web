@@ -12,6 +12,48 @@
     padding: 0 24px;
   }
 
+  &-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    @media @mobile {
+      flex-direction: column;
+      align-items: flex-start;
+      @{c}-buttons {
+        display: none;
+      }
+    }
+  }
+
+  &-anchors {
+    display: flex;
+    align-items: center;
+    h3 {
+      margin: 0;
+      margin-right: @sizeLarge;
+      color: @grey-600;
+    }
+    span.isvg {
+      display: flex;
+    }
+
+    @{c}-status-calendar {
+      margin-right: @sizeLarge;
+      display: flex;
+      align-items: center;
+    }
+    @{c}-status-bitcoin {
+      display: flex;
+      align-items: center;
+    }
+    @{c}-status-label {
+      margin-left: @sizeTiny;
+      font-size: @fontExtraSmall;
+      color: @grey-600;
+    }
+  }
+
   &-backButton {
     position: absolute;
     top: 19px;
@@ -39,10 +81,26 @@
 
   &-info {
     display: flex;
+    flex-direction: column;
 
     margin-bottom: @sizeTiny;
     @media @mobile, @laptop {
       flex-direction: column;
+    }
+  }
+
+  &-toggle {
+    width: 100%;
+    text-align: right;
+    margin: @sizeMedium 0 @sizeSmall 0;
+    font-size: @fontExtraSmall;
+    @{c}-toggle-button {
+      text-decoration: underline;
+      cursor: pointer;
+      color: @blue-300;
+    }
+    @media @mobile {
+      text-align: left;
     }
   }
 
@@ -141,39 +199,6 @@
       font-weight: 500;
       line-height: 2.42;
     }
-  }
-
-  &-codeControls {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    @media @mobile {
-      top: auto;
-      bottom: 64px;
-      left: 16px;
-      right: 16px;
-      display: flex;
-      justify-content: space-between;
-      padding-bottom: @sizeSmall;
-    }
-  }
-
-  &-copyButton {
-    margin-right: @sizeSmall;
-  }
-
-  &-codeBody {
-    font-family: @fontFamilyCode;
-    background: @grey-100;
-    padding: @sizeExtraLarge @sizeLarge;
-    margin-top: @sizeSmall;
-    font-size: @fontTiny;
-    line-height: @fontSmall;
-    border-radius: @borderRadius;
-    color: #2c3240;
-    white-space: pre-wrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   &-backButtonIcon {

@@ -12,8 +12,7 @@ const DATE_FORMAT = 'MM/DD/YYYY HH:mma'
 
 const ProofTextList = ({ proof }) => {
   const isCalReady = proof.proofStatus.cal.isReady
-  const isBtcReady = proof.proofStatus.btc.isReady
-  let idText =
+  const idText =
     isCalReady && proof.proofs && proof.proofs.length
       ? proof.proofs[0].hashIdNode
       : 'Waiting for chp node to return hash id'
@@ -39,17 +38,6 @@ const ProofTextList = ({ proof }) => {
         <div className={ns('proofText-name')}>Submitted:</div>
         <div className={ns('proofText-value')}>
           {fecha.format(proof.date, DATE_FORMAT)}
-        </div>
-      </div>
-
-      <div className={ns('proofText-row')}>
-        <div className={ns('proofText-name')}>Status:</div>
-        <div className={ns('proofText-value')}>
-          {isCalReady
-            ? isBtcReady
-              ? 'Done'
-              : 'Creating bitcoin proof'
-            : 'Creating calendar proof'}
         </div>
       </div>
     </div>
