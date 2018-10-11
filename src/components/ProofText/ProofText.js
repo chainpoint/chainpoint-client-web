@@ -15,7 +15,7 @@ const ProofTextList = ({ proof }) => {
   const idText =
     isCalReady && proof.proofs && proof.proofs.length
       ? proof.proofs[0].hashIdNode
-      : 'Waiting for chp node to return hash id'
+      : 'Waiting for Chainpoint node'
 
   return (
     <div>

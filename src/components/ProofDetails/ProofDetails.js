@@ -36,6 +36,10 @@ class ProofDetails extends Component {
     const proofDetails =
       isCalReady || isBtcReady ? this.getProofDetails(proof) : {}
 
+    const eta = isBtcReady
+      ? 0
+      : (Date.now() - (proof.date.getTime() + 90 * 6e4)) / 6e4
+
     return (
       <div>
         <div className={ns('proofDetails-details')}>
@@ -55,7 +59,7 @@ class ProofDetails extends Component {
           <h3>Calendar Anchor</h3>
           <h5>Anchor Hash:</h5>
           <span className={ns('proofDetails-hash')}>
-            {isCalReady ? proofDetails.cal.expected_value : 'Pending'}
+            {isCalReady ? proofDetails.cal.expected_value : `Pending`}
           </span>
           <h5>Calendar Block:</h5>
           <span className={ns('proofDetails-block')}>
@@ -78,7 +82,9 @@ class ProofDetails extends Component {
           <h3>Bitcoin Anchor</h3>
           <h5>Merkle Root:</h5>
           <span className={ns('proofDetails-hash')}>
-            {isBtcReady ? proofDetails.btc.expected_value : 'Pending'}
+            {isBtcReady
+              ? proofDetails.btc.expected_value
+              : `Pending ~ ${parseInt(Math.abs(eta), 10)} minutes`}
           </span>
           <h5>Bitcoin Block:</h5>
           <span className={ns('proofDetails-block')}>
