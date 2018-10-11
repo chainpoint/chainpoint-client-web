@@ -45,8 +45,6 @@ const getProofs = handles => {
     []
   )
 
-  console.log('getting proofs', handles)
-
   const apiUrl = `${PROOF_PROXY_BASE_URL.GET}`
   const opts = {
     headers: {
