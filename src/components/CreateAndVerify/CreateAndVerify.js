@@ -66,21 +66,22 @@ class CreateAndVerify extends Component {
 
     reader.onload = () => {
       const fileAsBinaryString = reader.result
-      file.data = fileAsBinaryString
 
-      const hash = validateHash(file.data) ? file.data : sha256(file.data)
+      file.data = validateHash(file.data)
+        ? file.data
+        : sha256(fileAsBinaryString)
 
       const data = {
-        hash,
+        hash: file.data,
         filename: file.name
       }
 
-      submitHash({ hash, onSubmitFailed: this.onSubmitFailed }).then(
+      submitHash({ hash: file.data, onSubmitFailed: this.onSubmitFailed }).then(
         handles => {
           if (handles) {
             const currentProof = {
               hashId: handles && handles.length ? handles[0].hashIdNode : null,
-              hash: hash,
+              hash: file.data,
               filename: data.filename,
               anchorId: handles[0].anchorId,
               type: 'cal'
@@ -120,6 +121,7 @@ class CreateAndVerify extends Component {
       file.data = fileAsArrayBuffer
 
       const fileHash = validateHash(file.data) ? file.data : sha256(file.data)
+
       this.setState({
         originalData: fileHash === proofHash,
         file
@@ -273,7 +275,7 @@ class CreateAndVerify extends Component {
     const { text } = this.state
     const file = new Blob([text], { type: 'text/plain' })
 
-    file.data = null
+    file.data = text
     file.name = text
 
     this.createProof(file)

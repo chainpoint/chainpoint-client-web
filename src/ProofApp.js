@@ -88,7 +88,6 @@ class ProofApp extends Component {
       return
     }
 
-    // const proofs = this.state.proofs
     const id = handles[0].hashIdNode
 
     const proof = {
