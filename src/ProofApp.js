@@ -261,12 +261,15 @@ class ProofApp extends Component {
    */
   downloadProof = proof => {
     const { proofData, filename } = proof
+    const { isMobile } = this.props
 
     if (!proofData) {
       return
     }
 
-    this.downloadBinaryFormat(proofData, filename)
+    !isMobile
+      ? this.downloadBinaryFormat(proofData, filename)
+      : this.redirectToProof(proofData)
   }
 
   /**
@@ -301,6 +304,13 @@ class ProofApp extends Component {
   onAppear() {
     this.props.onAppearCreate()
     this.props.onAppearVerify()
+  }
+
+  redirectToProof(proof) {
+    const { hash_id_node } = convertToLDJSON(proof)
+    if (hash_id_node && window && window.open) {
+      window.open(`//proofs.chainpoint.org/proofs/${hash_id_node}`)
+    }
   }
 
   render() {
