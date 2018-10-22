@@ -59,10 +59,15 @@ class ProofApp extends Component {
     }
 
     let proofs = []
-    const savedProofs = localStorage.getItem(STORAGE_KEY)
-
-    if (savedProofs) {
-      proofs = this.restoreData(savedProofs)
+    try {
+      const savedProofs = localStorage.getItem(STORAGE_KEY)
+      if (savedProofs) {
+        proofs = this.restoreData(savedProofs)
+      }
+    } catch (exception) {
+      console.log(
+        "Please enable your browser's localStorage to enable proof storage and retrieval"
+      )
     }
 
     this.state = {
@@ -240,7 +245,14 @@ class ProofApp extends Component {
    */
   save() {
     const { proofs } = this.state
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(proofs))
+
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(proofs))
+    } catch (exception) {
+      console.log(
+        "Please enable your browser's localStorage to enable proof storage and retrieval"
+      )
+    }
   }
 
   /**
