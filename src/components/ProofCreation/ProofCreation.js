@@ -53,7 +53,7 @@ class ProofCreation extends Component {
             <span className={ns('proofCreation-stat')}>ID:</span>
             {proof.hashId}
           </div>
-          {proof.filename !== proof.hash && (
+          {proof.filename && (
             <div className={ns('proofCreation-file')}>
               <span className={ns('proofCreation-stat')}>File:</span>
               {proof.filename}
