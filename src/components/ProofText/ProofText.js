@@ -24,7 +24,7 @@ const ProofTextList = ({ proof }) => {
         <div className={ns('proofText-value')}>{idText}</div>
       </div>
 
-      {proof.filename !== proof.hash && (
+      {proof.filename && (
         <div className={ns('proofText-row')}>
           <div className={ns('proofText-name')}>File:</div>
           <div className={ns('proofText-value')}>{proof.filename}</div>

@@ -65,7 +65,10 @@ class ProofList extends Component {
                 ? 0
                 : (Date.now() - (proof.date.getTime() + 90 * 6e4)) / 6e4
 
-              const isHash = validateHash(proof.filename)
+              const name =
+                !proof.filename && validateHash(proof.hash)
+                  ? `hash: ${proof.hash}`
+                  : `file: ${proof.filename}`
 
               return (
                 <li className={ns('proofList-item')} key={proof.id}>
@@ -76,9 +79,7 @@ class ProofList extends Component {
                   >
                     <div className={ns('proofList-itemTitle')}>
                       <div className={ns('proofList-itemId')}>{idText}</div>
-                      <div className={ns('proofList-itemName')}>
-                        {`${isHash ? 'hash:' : 'file:'} ${proof.filename}`}
-                      </div>
+                      <div className={ns('proofList-itemName')}>{name}</div>
                     </div>
 
                     {!isMobile && (

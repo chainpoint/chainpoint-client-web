@@ -272,7 +272,7 @@ class ProofApp extends Component {
    * @returns {void}
    */
   downloadProof = proof => {
-    const { proofData, filename } = proof
+    const { proofData, filename, hash } = proof
     const { isMobile } = this.props
 
     if (!proofData) {
@@ -280,7 +280,7 @@ class ProofApp extends Component {
     }
 
     !isMobile
-      ? this.downloadBinaryFormat(proofData, filename)
+      ? this.downloadBinaryFormat(proofData, filename || hash)
       : this.redirectToProof(proofData)
   }
 
