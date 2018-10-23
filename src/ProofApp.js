@@ -340,11 +340,7 @@ class ProofApp extends Component {
       <ProofAppContext.Provider value={{ isMobile, isLaptop }}>
         <div className={ns('proofApp')}>
           <div className={ns('proofApp-create-and-verify')}>
-            <VisibilitySensor
-              onChange={this.onAppear()}
-              offset={{ bottom: 50 }}
-              partialVisibility="bottom"
-            >
+            <VisibilitySensor onChange={this.onAppear()}>
               <CreateAndVerify
                 proofs={proofs}
                 onAddProof={this.onAddProof}

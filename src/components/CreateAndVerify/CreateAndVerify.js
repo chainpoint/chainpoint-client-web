@@ -47,6 +47,7 @@ class CreateAndVerify extends Component {
     mode: 0 // 0 == drag and drop, 1 == text input
   }
 
+  // Read the file asyncronously
   processFile = file => {
     this.setState({
       analysisState: true
@@ -65,13 +66,14 @@ class CreateAndVerify extends Component {
     }
 
     const readEventHandler = ev => {
+      // if the user canceled the upload, stop analysis
+      if (this.state.analysisState === false) return
       if (ev.target.error === null) {
         offset += ev.target.result.byteLength
         hash.update(ev.target.result)
       } else {
         return console.log('read error')
       }
-
       if (offset < fileSize) {
         readChunk(offset, chunkSize, file)
       } else {
@@ -88,10 +90,8 @@ class CreateAndVerify extends Component {
     const { onAddProof } = this.props
     const { file } = this.state
 
-    const sha = validateHash(hash) ? hash : sha256(hash)
-
     const data = {
-      hash: sha,
+      hash: validateHash(hash) ? hash : sha256(hash),
       filename: file.name
     }
 
@@ -325,12 +325,6 @@ class CreateAndVerify extends Component {
       mode: 1
     })
   }
-  onHideTextInput = e => {
-    e.preventDefault()
-    this.setState({
-      mode: 0
-    })
-  }
   reset() {
     this.setState({
       inputState: true,
@@ -415,7 +409,7 @@ class CreateAndVerify extends Component {
             this.dropzoneRef = node
           }}
         >
-          {mode === 0 ? (
+          {mode === 0 && !analysisState ? (
             <div
               className={ns('createAndVerify-help-icon')}
               onMouseEnter={this.onMouseEnter}
@@ -425,7 +419,7 @@ class CreateAndVerify extends Component {
             </div>
           ) : (
             <div className={ns('createAndVerify-close-icon')}>
-              <ButtonIcon icon="close" onClick={this.onHideTextInput} />
+              <ButtonIcon icon="close" onClick={this.reset.bind(this)} />
             </div>
           )}
 
