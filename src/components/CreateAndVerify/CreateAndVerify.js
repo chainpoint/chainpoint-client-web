@@ -325,12 +325,6 @@ class CreateAndVerify extends Component {
       mode: 1
     })
   }
-  onHideTextInput = e => {
-    e.preventDefault()
-    this.setState({
-      mode: 0
-    })
-  }
   reset() {
     this.setState({
       inputState: true,
