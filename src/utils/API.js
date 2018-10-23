@@ -108,16 +108,12 @@ const checkProofs = ({
     .getProofs(handles)
     // Save proofs into ProofProxy
     .then(proofs => {
-      // if proof is gone, don't attempt to restore it
-      // if (proofs[0].proof) {
-      // ProofProxyAPI.storeProofs(proofs)
-      // }
-      return proofs
+      // if no proof is found, try to retrieve it from the proxy
+      if (proofs[0].proof === null) throw new Error('null proof')
+      else return proofs
     })
-    // if chainPoint client doesn't work as expected
-    // fallback to ProofProxy
     .catch(() => {
-      ProofProxyAPI.getProofs(handles)
+      return ProofProxyAPI.getProofs(handles)
     })
     .then(proofs => {
       onProofsReceived(hash, proofs)

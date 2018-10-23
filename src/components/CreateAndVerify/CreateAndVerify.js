@@ -46,12 +46,56 @@ class CreateAndVerify extends Component {
     originalData: null,
     mode: 0 // 0 == drag and drop, 1 == text input
   }
-  createProof = file => {
+
+  processFile = file => {
+    this.setState({
+      analysisState: true
+    })
+
+    const chunkSize = 64 * 2048
+    let fileSize = file.size
+    let offset = 0
+    let hash = sha256.create()
+
+    const readChunk = (offset, length, file) => {
+      const reader = new FileReader()
+      const blob = file.slice(offset, length + offset)
+      reader.onload = readEventHandler
+      reader.readAsArrayBuffer(blob)
+    }
+
+    const readEventHandler = ev => {
+      if (ev.target.error === null) {
+        offset += ev.target.result.byteLength
+        hash.update(ev.target.result)
+      } else {
+        return console.log('read error')
+      }
+
+      if (offset < fileSize) {
+        readChunk(offset, chunkSize, file)
+      } else {
+        this.setState({ file }, () => {
+          this.createProof(hash.hex())
+        })
+      }
+    }
+
+    readChunk(offset, chunkSize, file)
+  }
+
+  createProof = hash => {
     const { onAddProof } = this.props
+    const { file } = this.state
+
+    const sha = validateHash(hash) ? hash : sha256(hash)
+
+    const data = {
+      hash: sha,
+      filename: file.name
+    }
 
     this.setState({
-      file,
-      analysisState: true,
       isCreation: true,
       inputState: false
     })
@@ -60,58 +104,38 @@ class CreateAndVerify extends Component {
       this.setState({
         dropzoneActive: false
       })
-    }, 1200)
+    }, 600)
 
-    const reader = new FileReader()
-
-    reader.onload = () => {
-      const fileAsBinaryString = reader.result
-
-      file.data = validateHash(file.data)
-        ? file.data
-        : sha256(fileAsBinaryString)
-
-      const data = {
-        hash: file.data,
-        filename: file.name
-      }
-
-      submitHash({ hash: file.data, onSubmitFailed: this.onSubmitFailed }).then(
-        handles => {
-          if (handles) {
-            const currentProof = {
-              hashId: handles && handles.length ? handles[0].hashIdNode : null,
-              hash: file.data,
-              filename: data.filename,
-              anchorId: handles[0].anchorId,
-              type: 'cal'
-            }
-
-            this.setState({
-              creationState: true,
-              currentProof
-            })
-
-            data.handles = handles
-
-            this.props.onChangeCreateStatus(true)
-
-            onAddProof(data)
-
-            setTimeout(() => {
-              this.setState({
-                analysisState: false
-              })
-            }, 600)
+    submitHash({ hash: data.hash, onSubmitFailed: this.onSubmitFailed }).then(
+      handles => {
+        if (handles) {
+          const currentProof = {
+            hashId: handles && handles.length ? handles[0].hashIdNode : null,
+            hash: data.hash,
+            filename: file.name,
+            anchorId: handles[0].anchorId,
+            type: 'cal'
           }
+
+          this.setState({
+            creationState: true,
+            currentProof
+          })
+
+          data.handles = handles
+
+          this.props.onChangeCreateStatus(true)
+
+          onAddProof(data)
+
+          setTimeout(() => {
+            this.setState({
+              analysisState: false
+            })
+          }, 600)
         }
-      )
-    }
-
-    reader.onabort = () => console.log('file reading was aborted')
-    reader.onerror = () => console.log('file reading has failed')
-
-    reader.readAsArrayBuffer(file)
+      }
+    )
   }
   verifyData = (file, proofHash) => {
     const reader = new FileReader()
@@ -120,10 +144,10 @@ class CreateAndVerify extends Component {
       const fileAsArrayBuffer = reader.result
       file.data = fileAsArrayBuffer
 
-      const fileHash = validateHash(file.data) ? file.data : sha256(file.data)
+      const sha = validateHash(file.data) ? file.data : sha256(file.data)
 
       this.setState({
-        originalData: fileHash === proofHash,
+        originalData: sha === proofHash,
         file
       })
     }
@@ -262,23 +286,17 @@ class CreateAndVerify extends Component {
       if (file.name.indexOf('.chp') > -1) {
         this.verifyProof(file)
       } else {
-        this.createProof(file)
+        this.processFile(file)
       }
     }
   }
   onBrowseFiles = e => {
     e.preventDefault()
-    // e.stopPropagation()
     this.dropzoneRef.open()
   }
   onCreateText = () => {
     const { text } = this.state
-    const file = new Blob([text], { type: 'text/plain' })
-
-    file.data = text
-    file.name = text
-
-    this.createProof(file)
+    this.createProof(text)
   }
   onChangeText = e => {
     this.setState({
@@ -344,7 +362,8 @@ class CreateAndVerify extends Component {
     if (file.name.indexOf('.chp') > -1) {
       this.verifyProof(file)
     } else {
-      this.createProof(file)
+      // TODO: don't reprocess file, just resubmit the hash
+      this.processFile(file)
     }
   }
   noOp = () => {}
