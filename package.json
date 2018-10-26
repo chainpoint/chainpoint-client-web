@@ -1,6 +1,6 @@
 {
   "name": "chainpoint-client-web",
-  "version": "0.0.4-13",
+  "version": "0.0.4-14",
   "main": "./src/ProofApp.js",
   "author": "Cody Henshaw <cody@tierion.com>",
   "license": "Apache-2.0",
@@ -75,9 +75,11 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "npm run build:injectedDist && npm run build:react:dist",
+    "build": "yarn run build:injectedDist && yarn run build:react:dist && yarn run build:examples",
     "build:injectedDist": "node scripts/build.js",
     "build:react:dist": "node scripts/build-react.js",
+    "build:examples": "sed -i.bak -E \"s/bundle.*\\.(js|css)/bundle-$npm_package_version\\.\\1/\" ./examples/index.html && rm ./examples/index.html.bak",
+    "deploy": "gh-pages -d build",
     "test": "echo \"No tests specified\""
   },
   "jest": {

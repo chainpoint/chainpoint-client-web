@@ -1,0 +1,44 @@
+language: node_js
+node_js:
+  - '9.4'
+cache:
+  directories:
+    - node_modules
+script:
+  - yarn build
+before_deploy:
+  # create filename with latest commit short sha1
+  - export SHA1=$(git rev-parse --short HEAD)
+  - export FILENAME=chainpoint-client-web.${SHA1}
+  # make a folder for build artifacts
+  - mkdir -p ./build
+  # copy latest js file to latest.js to be served on gh-pages
+  - cp ./dist/*.js ./build/latest.js
+  # copy latest css file to latest.css to be served on gh-pages
+  - cp ./dist/*.css ./build/latest.css
+  # copy and rename latest to include commit hash
+  - cp ./build/latest.css ./build/${FILENAME}.css
+  - cp ./build/latest.js ./build/${FILENAME}.js
+  # copy index.html from examples and replace existing filename with new filename
+  - cp ./examples/index.html ./build/index.html
+  - sed -i -e "s/\.\.\/dist\/bundle.*.js/${FILENAME}.js/" ./build/index.html
+  - sed -i -e "s/\.\.\/dist\/bundle.*.css/${FILENAME}.css/" ./build/index.html
+  # zip files for release
+  - zip ./Client.zip ./build/${FILENAME}.css ./build/${FILENAME}.js ./build/index.html ./LICENSE
+deploy:
+  # deploy to github pages
+  - provider: pages
+    skip_cleanup: true
+    github_token: $github_token
+    local_dir: build
+    on:
+      branch: master
+      tags: true
+  # create a new release on github
+  - provider: releases
+    api_key:
+      secure: $secure_api_key
+    file: ./Client.zip
+    skip_cleanup: true
+    on:
+      tags: true
