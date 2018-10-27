@@ -32,7 +32,6 @@ deploy:
     github_token: $github_token
     local_dir: build
     on:
-      branch: master
       tags: true
   # create a new release on github
   - provider: releases
