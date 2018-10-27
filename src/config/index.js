@@ -3,7 +3,7 @@
  * application will renders.
  * @type {string}
  */
-export const APP_NAME = 'proof-app-client'
+export const APP_NAME = 'chainpoint-client-web'
 
 /**
  * Available [data-*] attributes for root container.
