@@ -6,7 +6,7 @@ This library provides react components for creating and verifying [Chainpoint](h
 
 ### Overview
 
-There are two ways to embed the UI components into the site.
+There are multiple ways to embed the UI components into the site.
 
 **NPM**
 
@@ -31,19 +31,18 @@ Steps:
 
 - Create _script_ and _link_ tag for bundled css and js files.
 
-- Add a container with id **proof-app-client**.
+- Add a container with id **chainpoint-client-web**.
 
 Chainpoint web client will render application directly in this container.
 
 ```js
 <html>
     <head>
-        <link rel="stylesheet" href="./node_modules/chainpoint-client-web/dist/bundle.css" />
+        <link rel="stylesheet" href="./node_modules/chainpoint-client-web/dist/chainpoint-client-web.css" />
     </head>
     <body>
-
         <div
-            id="proof-app-client"
+            id="chainpoint-client-web"
             data-onAppearCreate="onAppearCreate"
             data-onAppearVerify="onAppearVerify"
             data-onChangeProofCount="onChangeProofCount"
@@ -76,7 +75,7 @@ Chainpoint web client will render application directly in this container.
                 console.log('onChangeVerifyAnalysisStatus');
             }
         </script>
-        <script type="text/javascript" src="./node_modules/chainpoint-client-web/dist/bundle.js"></script>
+        <script type="text/javascript" src="./node_modules/chainpoint-client-web/dist/chainpoint-client-web.js"></script>
     </body>
 </html>
 ```
