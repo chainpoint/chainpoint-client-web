@@ -5,7 +5,7 @@ cache:
   directories:
     - node_modules
 script:
-  - yarn build
+  - if [ -n "$TRAVIS_TAG" ]; then yarn build; fi
 before_deploy:
   # create filename with latest commit short sha1
   - export SHA1=$(git rev-parse --short HEAD)
@@ -24,7 +24,7 @@ before_deploy:
   - sed -i -e "s/\.\.\/dist\/bundle.*.js/${FILENAME}.js/" ./build/index.html
   - sed -i -e "s/\.\.\/dist\/bundle.*.css/${FILENAME}.css/" ./build/index.html
   # zip files for release
-  - zip ./Client.zip ./build/${FILENAME}.css ./build/${FILENAME}.js ./build/index.html ./LICENSE
+  - zip ./chainpoint-client-web.zip ./build/${FILENAME}.css ./build/${FILENAME}.js ./build/index.html ./LICENSE
 deploy:
   # deploy to github pages
   - provider: pages
@@ -37,7 +37,7 @@ deploy:
   - provider: releases
     api_key:
       secure: Kn3VKMA09RrE0wInVIhJGb+heP25ZEj+YquVkhJsUvyj20yJUmH4oq2HTbVDZQR9cEACFNiKCZ1BJx9iOfvnReUddFaIARUUHacQemzdJkW1huwGYHCZ8UY6LS2hNp9vwS0ndU8kqiQY47R1xt9TMCnG2xZySCFU4M0fkW+jDo4O22ho5uCY6nLCwc3fOx/4YTPWfad9SsHEEmR46hDm/j3Dse8g0YNgIYsgv0jaEcym7Q0zrqqYzeankGmGl/72+8CXRWKlSOHgcnVH+QPua86zn7gpE+JDfgZNnRBqAEs4BcTDd+w7i4Jc/0SW0TzGYFWL4yShfmKmACwInJIE/y0I01Md0XNeLDpDUlx/Wscl/s3bOcwghjPoEpPm86fQgn3ld9iMmcciTAJtM+N4Mkx5X4cnqV/t4cbh1KmoWWm/KVE2nfKR6m0kKudTEHabAEhoiK6fOoNJvMnyt1zY8Ha9ZZsWB28Qg2JuRp5YZuSaR2Px9+swXa7uhTJGIg9t6lxNZWasK1gevZNqAQh17cbPEbfmsuzklk55HOa48G63XAttvrt3B5RR2ltuqNejYY7JMJawwuOtbDn94vGdqJMfaPkZ1B5DGszCkxJAIhU3mgy4fr1Ja/pCgOX1F6DF1XGKKu8etGkUP0zl5dqWGY43vo2QU3kvO2ztCv8cURQ=
-    file: ./Client.zip
+    file: ./chainpoint-client-web.zip
     skip_cleanup: true
     on:
       tags: true
