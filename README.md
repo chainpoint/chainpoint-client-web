@@ -1,5 +1,7 @@
 # chainpoint-client-web
 
+[![Build Status](https://travis-ci.com/chainpoint/chainpoint-client-web.svg?branch=master)](https://travis-ci.com/chainpoint/chainpoint-client-web)
+
 ## About
 
 This library provides react components for creating and verifying [Chainpoint](https://chainpoint.org) proofs using the [Tierion](https://tierion.com) Network.
