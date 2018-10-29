@@ -5,7 +5,7 @@ cache:
   directories:
     - node_modules
 script:
-  - if [-n "$TRAVIS_TAG"]; then yarn build; fi
+  - if [ -n "$TRAVIS_TAG" ]; then yarn build; fi
 before_deploy:
   # create filename with latest commit short sha1
   - export SHA1=$(git rev-parse --short HEAD)
