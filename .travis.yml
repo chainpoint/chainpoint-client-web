@@ -33,6 +33,7 @@ deploy:
     github_token: $github_token
     verbose: true
     local_dir: build
+    fqdn: web-client.chainpoint.org
     on:
       tags: true
   # create a new release on github
