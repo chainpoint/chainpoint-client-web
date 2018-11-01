@@ -23,6 +23,7 @@ yarn add chainpoint-client-web
 ```
 
 **CDN**
+
 The latest javascript and css files are available at https://web-client.chainpoint.org/latest.js and https://web-client.chainpoint.org/latest.css. You can also pin to a specific version by using the short sha1 from that particular release in the format https://web-client.chainpoint.org/chainpoint-client-web.SHORT_SHA1.js.
 
 ### HTML tag
