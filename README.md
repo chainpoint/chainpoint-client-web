@@ -35,7 +35,7 @@ Steps:
 
 - Add a container with id **chainpoint-client-web**.
 
-Chainpoint web client will render application directly in this container.
+The Chainpoint client will render application directly in this container.
 
 ```js
 <html>
