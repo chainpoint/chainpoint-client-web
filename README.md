@@ -4,7 +4,7 @@
 
 ## About
 
-This library provides react components for creating and verifying [Chainpoint](https://chainpoint.org) proofs using the [Tierion](https://tierion.com) Network.
+This library provides react components for creating and verifying [Chainpoint](https://chainpoint.org) proofs using the [Chainpoint](https://chainpoint.org) Network.
 
 ### Overview
 
