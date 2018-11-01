@@ -21,8 +21,8 @@ before_deploy:
   - cp ./build/latest.js ./build/${FILENAME}.js
   # copy index.html from examples and replace existing filename with new filename
   - cp ./examples/index.html ./build/index.html
-  - sed -i -e "s/\.\.\/dist\/bundle.*.js/${FILENAME}.js/" ./build/index.html
-  - sed -i -e "s/\.\.\/dist\/bundle.*.css/${FILENAME}.css/" ./build/index.html
+  - sed -i -e "s/\.\.\/dist\/bundle.js/${FILENAME}.js/" ./build/index.html
+  - sed -i -e "s/\.\.\/dist\/bundle.css/${FILENAME}.css/" ./build/index.html
   # zip files for release
   - zip ./chainpoint-client-web.zip ./build/${FILENAME}.css ./build/${FILENAME}.js ./build/index.html ./LICENSE
 deploy:
