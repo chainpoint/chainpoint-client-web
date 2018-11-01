@@ -22,6 +22,9 @@ npm i --save chainpoint-client-web
 yarn add chainpoint-client-web
 ```
 
+**CDN**
+The latest javascript and css files are available at https://web-client.chainpoint.org/latest.js and https://web-client.chainpoint.org/latest.css. You can also pin to a specific version by using the short sha1 from that particular release in the format https://web-client.chainpoint.org/chainpoint-client-web.SHORT_SHA1.js.
+
 ### HTML tag
 
 chainpoint-client-web provides two files for use in html pages:
@@ -40,7 +43,7 @@ The Chainpoint client will render application directly in this container.
 ```js
 <html>
     <head>
-        <link rel="stylesheet" href="./node_modules/chainpoint-client-web/dist/chainpoint-client-web.css" />
+        <link rel="stylesheet" href="./node_modules/chainpoint-client-web/dist/bundle.css" />
     </head>
     <body>
         <div
@@ -77,7 +80,7 @@ The Chainpoint client will render application directly in this container.
                 console.log('onChangeVerifyAnalysisStatus');
             }
         </script>
-        <script type="text/javascript" src="./node_modules/chainpoint-client-web/dist/chainpoint-client-web.js"></script>
+        <script type="text/javascript" src="./node_modules/chainpoint-client-web/dist/bundle.js"></script>
     </body>
 </html>
 ```
