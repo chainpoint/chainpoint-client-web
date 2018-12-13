@@ -51,4 +51,10 @@ const initApplication = () => {
   startApplication(root, attrs)
 }
 
+window.$ChainpointClient = {
+  init: function() {
+    initApplication();
+  }
+};
+
 document.addEventListener('DOMContentLoaded', initApplication)
