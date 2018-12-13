@@ -42,4 +42,13 @@ const initApplication = () => {
     startApplication(root, attrs);
 };
 
+/**
+ * Expose init method to window; used if render needs to occur after DOM load
+ */
+window.$ChainpointClient = {
+  init: function() {
+    initApplication();
+  }
+};
+
 document.addEventListener('DOMContentLoaded', initApplication);
