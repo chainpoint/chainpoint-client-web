@@ -21,3 +21,5 @@ export const AVAILABLE_DATA_ATTRS = [
 ]
 
 export const CSS_PREFIX = 'CCW'
+
+export const CHP_INIT_SYNTHETIC_EVENT_CLASSNAME = 'chainpoint_web_client_init'

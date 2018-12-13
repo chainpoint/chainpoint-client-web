@@ -6,7 +6,8 @@ import ProofApp from 'ProofApp'
 
 import {
   AVAILABLE_DATA_ATTRS,
-  APP_NAME
+  APP_NAME,
+  CHP_INIT_SYNTHETIC_EVENT_CLASSNAME
 } from './config'
 
 require('fonts.less')
@@ -50,5 +51,24 @@ const initApplication = () => {
   const attrs = extractAttrs(root)
   startApplication(root, attrs)
 }
+
+// When Chainpoint-client-web bundle is loaded by the browser, invoke this IIFE to determine if
+// a Chp-client-web specific syntehtic event should be emitted to bootstrap the client.
+(function() {
+  const root = document.getElementById(APP_NAME)
+
+  root.addEventListener('@CHPWEB/DOMContentLoaded', initApplication)
+
+  if (!root) {
+    throw new Error(`Container with id ${APP_NAME} doesn't exists`)
+  }
+
+  const classList = Array.from(root.classList)
+  if (classList.includes(CHP_INIT_SYNTHETIC_EVENT_CLASSNAME)) {
+    let event = new window.Event('@CHPWEB/DOMContentLoaded')
+
+    root.dispatchEvent(event);
+  }
+})()
 
 document.addEventListener('DOMContentLoaded', initApplication)
