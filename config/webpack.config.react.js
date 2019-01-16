@@ -153,7 +153,9 @@ module.exports = {
             ],
             loader: require.resolve('babel-loader'),
             options: {
-              compact: true
+              compact: true,
+              presets: [['es2015', { loose: true, modules: false }], "react", "stage-0"],
+              "plugins": ["add-module-exports"]
             }
           },
           // The notation here is somewhat confusing.
