@@ -26,7 +26,6 @@
     "js-sha256": "^0.9.0",
     "json-fmt": "^1.1.2",
     "lodash": "^4.17.10",
-    "postcss-flexbugs-fixes": "3.2.0",
     "promise": "8.0.1",
     "raf": "3.4.0",
     "react": "^16.3.1",
@@ -42,7 +41,6 @@
     "react-textarea-autosize": "^6.1.0",
     "react-transition-group": "^2.3.0",
     "react-visibility-sensor": "^3.11.0",
-    "validator": "^9.4.1",
     "velocity-animate": "^1.5.1"
   },
   "scripts": {
@@ -54,7 +52,7 @@
     "deploy": "gh-pages -d build",
     "test": "echo \"No tests specified\"",
     "new-build:injectedDist": "webpack config/new-webpack.config.prod.js",
-    "buildv2": "webpack --config new-webpack.config.prod.js"
+    "buildv2": "webpack --profile --json --config new-webpack.config.prod.js > webpack-stats.json"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -118,6 +116,7 @@
     "less-loader": "^4.1.0",
     "lodash-webpack-plugin": "^0.11.5",
     "mini-css-extract-plugin": "^0.5.0",
+    "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
     "postcss-prefixer": "^2.1.0",
     "raw-loader": "^0.5.1",
