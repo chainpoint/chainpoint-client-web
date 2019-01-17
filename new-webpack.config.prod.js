@@ -1,7 +1,9 @@
 const path = require('path')
+const webpack = require('webpack');
 const autoprefixer = require('autoprefixer')
 const prefixer = require('postcss-prefixer')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const version = require('./package.json').version
 
 const paths = require('./config/paths')
 
@@ -88,6 +90,7 @@ module.exports = {
       // both options are optional
       filename: 'bundle.css',
       chunkFilename: '[id].css',
-    })
+    }),
+    new webpack.BannerPlugin({ banner: `chainpoint-client-web v${version}` })
   ]
 };
