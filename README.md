@@ -26,6 +26,14 @@ yarn add chainpoint-client-web
 
 The latest javascript and css files are available at https://web-client.chainpoint.org/latest.js and https://web-client.chainpoint.org/latest.css. You can also pin to a specific version by using the short sha1 from that particular release in the format https://web-client.chainpoint.org/chainpoint-client-web.SHORT_SHA1.js.
 
+Three different fonts are being used by this component: 1) Source Sans Pro, 2) PT Mono, 3) Lato. Each of these fonts are available via CDN. Remember to include these Font files in the <head> of your HTML page.
+
+```
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=PT+Mono:400' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+```
+
 ### HTML tag
 
 chainpoint-client-web provides two files for use in html pages:
@@ -44,6 +52,10 @@ The Chainpoint client will render application directly in this container.
 ```js
 <html>
     <head>
+        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=PT+Mono:400' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        
         <link rel="stylesheet" href="./node_modules/chainpoint-client-web/dist/bundle.css" />
     </head>
     <body>
