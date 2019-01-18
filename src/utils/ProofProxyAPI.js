@@ -1,4 +1,4 @@
-import axois from 'axios'
+import fetch from 'node-fetch'
 import isEmpty from 'lodash/isEmpty'
 import find from 'lodash/find'
 import get from 'lodash/get'
@@ -15,7 +15,14 @@ import { PROOF_PROXY_BASE_URL } from '../constants'
 // tip: parse UUID and extract the timestamp to see if older than 24 hours
 const storeProofHandles = handles => {
   const data = handles.map(({ hashIdNode, uri }) => [hashIdNode, uri])
-  axois.post(PROOF_PROXY_BASE_URL.SUBMIT, data).catch(() => {
+  fetch(PROOF_PROXY_BASE_URL.SUBMIT, {
+    method: 'POST', 
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    }
+  }).catch(() => {
     console.log('failed storing proof handles')
   })
 }
@@ -28,7 +35,14 @@ const storeProofHandles = handles => {
 const storeProofs = proofs => {
   const data = proofs.map(({ hashIdNode, proof }) => [hashIdNode, proof])
   if (data) {
-    axois.post(PROOF_PROXY_BASE_URL.SUBMIT, data).catch(err => {
+    fetch(PROOF_PROXY_BASE_URL.SUBMIT, {
+      method: 'POST', 
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    }).catch(err => {
       console.log('failed storing proof')
     })
   }
@@ -48,12 +62,14 @@ const getProofs = handles => {
   const apiUrl = `${PROOF_PROXY_BASE_URL.GET}`
   const opts = {
     headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
       hashids: uuids
     }
   }
 
-  return axois
-    .get(apiUrl, opts)
+  return fetch(apiUrl, opts)
+    .then(res => res.json())
     .then(({ data }) => {
       if (isEmpty(data)) {
         return
